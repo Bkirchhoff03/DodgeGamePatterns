@@ -12,7 +12,7 @@ public class FallerController
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
         fallerSpeed = speed;
-        fallerObject.AddComponent<FallerBehavior>().init(fallerObject, fallerSpeed);
+        fallerObject.AddComponent<FallerBehavior>().Init(fallerObject, fallerSpeed);
     }
     
 }

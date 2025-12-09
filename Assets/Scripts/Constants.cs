@@ -16,5 +16,6 @@ namespace Assets.Scripts
         public const float minFallerSize = 0.5f;
         public const float maxFallerSize = 3.0f;
         public const float moveSpeed = 5.0f;
+        public const float dodgeSpeed = 10.0f;
     }
 }

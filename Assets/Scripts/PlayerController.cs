@@ -4,11 +4,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum MoveInput
+    public enum MoveType
     {
         Left,
         Right,
-        None
+        None,
+        Jump
     }
     public IPlayerState state = new DodgingState();
     delegate void MoveAction();
@@ -26,7 +27,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveAction();
+        state = state.Update(this);
+    }
+    public void HandleInput(PlayerController.MoveType moveInput)
+    {
+        state = state.HandleInput(this, moveInput);
     }
     public void changeMoveFunc(float num)
     {
@@ -41,6 +46,14 @@ public class PlayerController : MonoBehaviour
         {
             moveAction = MoveNo;
         }
+    }
+    public void Move(Vector3 direction)
+    {
+        transform.position += direction * Time.deltaTime * Constants.moveSpeed;
+    }
+    public void MoveTo(Vector3 position)
+    {
+        transform.position = position;
     }
     public void MoveLeft()
     {

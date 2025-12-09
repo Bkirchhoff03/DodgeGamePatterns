@@ -9,8 +9,8 @@ namespace Assets.Scripts
     public interface IPlayerState
     {
 
-        public void handleInput(PlayerController playerController, PlayerController.MoveInput moveInput);
-        public void update(PlayerController playerController);
+        public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveType moveInput);
+        public IPlayerState Update(PlayerController playerController);
     }
     
 }

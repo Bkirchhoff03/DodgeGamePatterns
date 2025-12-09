@@ -9,7 +9,7 @@ public class FallerBehavior : MonoBehaviour
     {
         
     }
-    public void init(GameObject fallerObj, float speed)
+    public void Init(GameObject fallerObj, float speed)
     {
         fallerObject = fallerObj;
         fallerSpeed = speed;

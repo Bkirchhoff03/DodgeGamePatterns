@@ -4,23 +4,24 @@ using UnityEngine.InputSystem;
 public class InputSystemController : MonoBehaviour
 {
     PlayerController playerController;
+    
     void Start()
     {
         playerController = GetComponent<PlayerController>();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        
     }
+
     public void HandleMoveLeft(InputAction.CallbackContext context)
     {
         print(context.phase);
 
         if (context.performed)
         {
-            playerController.state.handleInput(playerController, PlayerController.MoveInput.Left);  
+            playerController.HandleInput(PlayerController.MoveType.Left);
+            print("MoveLeft performed");
         }
         else if (context.started)
         {
@@ -28,7 +29,8 @@ public class InputSystemController : MonoBehaviour
         }
         else if (context.canceled)
         {
-            playerController.state.handleInput(playerController, PlayerController.MoveInput.None);
+            print("MoveLeft canceled");
+            playerController.HandleInput(PlayerController.MoveType.None);
         }
     }
     public void HandleMoveRight(InputAction.CallbackContext context)
@@ -36,7 +38,8 @@ public class InputSystemController : MonoBehaviour
 
         if (context.performed)
         {
-            playerController.state.handleInput(playerController, PlayerController.MoveInput.Right);
+            print("MoveRight performed");
+            playerController.HandleInput(PlayerController.MoveType.Right);
         }
         else if (context.started)
         {
@@ -44,7 +47,24 @@ public class InputSystemController : MonoBehaviour
         }
         else if (context.canceled)
         {
-            playerController.state.handleInput(playerController, PlayerController.MoveInput.None);
+            print("MoveRight canceled");
+            playerController.HandleInput(PlayerController.MoveType.None);
+        }
+    }
+
+    public void HandleJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerController.HandleInput(PlayerController.MoveType.Jump);
+        }
+        else if (context.started)
+        {
+            print("Jump started");
+        }
+        else if (context.canceled)
+        {
+            playerController.HandleInput(PlayerController.MoveType.None);
         }
     }
 }
