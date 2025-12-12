@@ -1,17 +1,18 @@
 using Assets.Scripts;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum MoveType
+    public class MoveDirection
     {
-        Left,
-        Right,
-        None,
-        Jump
+        public int Xdirection;
+        public int Ydirection;
+        
     }
-    public IPlayerState state = new DodgingState();
+    public IPlayerState state;
     delegate void MoveAction();
     MoveAction moveAction;
     float curX = 0;
@@ -19,9 +20,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        changeMoveFunc(0);
-    // inputActions = GetComponent<PlayerInput>();
+        state = new DodgingState();
     }
 
     // Update is called once per frame
@@ -29,22 +28,15 @@ public class PlayerController : MonoBehaviour
     {
         state = state.Update(this);
     }
-    public void HandleInput(PlayerController.MoveType moveInput)
+    public void HandleInput(PlayerController.MoveDirection moveInput)
     {
         state = state.HandleInput(this, moveInput);
     }
-    public void changeMoveFunc(float num)
+    public void setState(IPlayerState newState)
     {
-        if(num < 0)
+        if(newState.getName() != state.getName())
         {
-            moveAction = MoveLeft;
-        }else if(num > 0)
-        {
-            moveAction = MoveRight;
-        }
-        else
-        {
-            moveAction = MoveNo;
+            state = newState;
         }
     }
     public void Move(Vector3 direction)
@@ -54,23 +46,5 @@ public class PlayerController : MonoBehaviour
     public void MoveTo(Vector3 position)
     {
         transform.position = position;
-    }
-    public void MoveLeft()
-    {
-        transform.position += Vector3.left * Time.deltaTime * Constants.moveSpeed;
-    }
-    public void MoveRight()
-    {
-        transform.position += Vector3.right * Time.deltaTime * Constants.moveSpeed;
-    }
-    public void MoveNo()
-    {
-        //get the objects current position and put it in a variable so we can access it later with less code
-        Vector3 pos = transform.position;
-        //calculate what the new Y position will be
-        float newY = Mathf.Sin(Time.time * 2.0f);
-        //set the object's Y to the new calculated Y
-        transform.position = new Vector3(transform.position.x, (newY * 0.25f) - 4.0f, transform.position.z);
-        //gameObject.transform.GetComponent<MeshRenderer>().material.color = Color.white;
     }
 }

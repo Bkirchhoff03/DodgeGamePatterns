@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 public class FallerController
@@ -12,7 +13,11 @@ public class FallerController
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
         fallerSpeed = speed;
+        fallerObject.GetComponent<BoxCollider>().material = Resources.Load<PhysicsMaterial>(Constants.fallerPhysicsMaterialPath);
         fallerObject.AddComponent<FallerBehavior>().Init(fallerObject, fallerSpeed);
+        fallerObject.AddComponent<Rigidbody>();
+        fallerObject.GetComponent<Rigidbody>().useGravity = false;
+        fallerObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
     }
     
 }

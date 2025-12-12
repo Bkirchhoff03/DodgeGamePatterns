@@ -19,36 +19,33 @@ namespace Assets.Scripts
         {
             // Initialize jumping state if needed
         }
-        public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveType moveInput)
+        public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             if (startingPosition == null)
             {
                 startingPosition = playerController.transform.position;
                 UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
             }
-            if (moveInput == PlayerController.MoveType.Left)
+            if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
-                // Handle left movement while jumping
             }
-            else if (moveInput == PlayerController.MoveType.Right)
+            else if (moveInput.Xdirection > 0)
             {
                 currentDirection = Vector3.right;
-                // Handle right movement while jumping
             }
-            else if (moveInput == PlayerController.MoveType.None)
+            else
             {
                 currentDirection = Vector3.zero;
-                // Handle no movement while jumping
             }
-            else if (moveInput == PlayerController.MoveType.Jump)
-            {
-                // Already jumping, maybe ignore or handle double jump
-            }
+
             // Handle input specific to dodging state
             return this;
         }
-
+        public string getName()
+        {
+            return Constants.jumpingStateName;
+        }
         public IPlayerState Update(PlayerController playerController)
         {
             IPlayerState nextState = this;

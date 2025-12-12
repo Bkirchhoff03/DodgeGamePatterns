@@ -8,8 +8,8 @@ namespace Assets.Scripts
 {
     public interface IPlayerState
     {
-
-        public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveType moveInput);
+        public string getName();
+        public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput);
         public IPlayerState Update(PlayerController playerController);
     }
     

@@ -17,7 +17,7 @@ public class FallerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fallerObject.transform.position.y < -6.0f)
+        if (fallerObject.transform.position.y < -4.0f)
         {
             Destroy(fallerObject);
             Destroy(this);

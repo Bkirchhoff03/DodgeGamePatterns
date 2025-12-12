@@ -1,17 +1,41 @@
+using Assets.Scripts;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputSystemController : MonoBehaviour
 {
     PlayerController playerController;
-    
+    public enum keys{
+        Left,
+        Right,
+        Jump
+    }
+    private List<keys> pressedDirections = new List<keys>();
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
     }
     private void Update()
     {
-        
+        PlayerController.MoveDirection moveDirection = new PlayerController.MoveDirection();
+        if(Input.GetKey(KeyCode.A))
+        {
+            moveDirection.Xdirection -= 1;
+            //pressedDirections.Add(keys.Left);
+            //playerController.HandleInput(PlayerController.MoveType.Left, pressedDirections);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveDirection.Xdirection += 1;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            moveDirection.Ydirection = 1;
+            playerController.setState(new JumpingState());
+        }
+        playerController.HandleInput(moveDirection);
     }
 
     public void HandleMoveLeft(InputAction.CallbackContext context)
@@ -20,8 +44,10 @@ public class InputSystemController : MonoBehaviour
 
         if (context.performed)
         {
-            playerController.HandleInput(PlayerController.MoveType.Left);
+            pressedDirections.Add(keys.Left);
+//            playerController.HandleInput(PlayerController.MoveType.Left, pressedDirections);
             print("MoveLeft performed");
+            
         }
         else if (context.started)
         {
@@ -29,8 +55,9 @@ public class InputSystemController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            pressedDirections.Remove(keys.Left);
             print("MoveLeft canceled");
-            playerController.HandleInput(PlayerController.MoveType.None);
+//            playerController.HandleInput(PlayerController.MoveType.None, pressedDirections);
         }
     }
     public void HandleMoveRight(InputAction.CallbackContext context)
@@ -38,8 +65,9 @@ public class InputSystemController : MonoBehaviour
 
         if (context.performed)
         {
+            pressedDirections.Add(keys.Right);
             print("MoveRight performed");
-            playerController.HandleInput(PlayerController.MoveType.Right);
+//            playerController.HandleInput(PlayerController.MoveType.Right, pressedDirections);
         }
         else if (context.started)
         {
@@ -47,8 +75,9 @@ public class InputSystemController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            pressedDirections.Remove(keys.Right);
             print("MoveRight canceled");
-            playerController.HandleInput(PlayerController.MoveType.None);
+//            playerController.HandleInput(PlayerController.MoveType.None, pressedDirections);
         }
     }
 
@@ -56,7 +85,9 @@ public class InputSystemController : MonoBehaviour
     {
         if (context.performed)
         {
-            playerController.HandleInput(PlayerController.MoveType.Jump);
+            print("Jump performed");
+            pressedDirections.Add(keys.Jump);
+//            playerController.HandleInput(PlayerController.MoveType.Jump, pressedDirections);
         }
         else if (context.started)
         {
@@ -64,7 +95,8 @@ public class InputSystemController : MonoBehaviour
         }
         else if (context.canceled)
         {
-            playerController.HandleInput(PlayerController.MoveType.None);
+            pressedDirections.Remove(keys.Jump);
+//            playerController.HandleInput(PlayerController.MoveType.None, pressedDirections);
         }
     }
 }
