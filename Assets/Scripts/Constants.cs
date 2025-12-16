@@ -20,5 +20,7 @@ namespace Assets.Scripts
         public const string jumpingStateName = "Jumping";
         public const string dodgingStateName = "Dodging";
         public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial";
+        public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
+
     }
 }

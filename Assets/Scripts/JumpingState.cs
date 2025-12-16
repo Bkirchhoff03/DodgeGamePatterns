@@ -50,8 +50,8 @@ namespace Assets.Scripts
         {
             IPlayerState nextState = this;
             UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
-            playerController.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-            if(playerController.transform.position.y < startingPosition.y && currentJumpSpeed.y < 0)
+            playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
+            if (playerController.transform.position.y < startingPosition.y && currentJumpSpeed.y < 0)
             {
                 playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
                 nextState = new DodgingState();

@@ -22,6 +22,6 @@ public class FallerBehavior : MonoBehaviour
             Destroy(fallerObject);
             Destroy(this);
         }
-        fallerObject.transform.position += Vector3.down * Time.deltaTime * fallerSpeed;
+        //fallerObject.transform.position += Vector3.down * Time.deltaTime * fallerSpeed;
     }
 }

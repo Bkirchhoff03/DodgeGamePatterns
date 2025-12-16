@@ -7,17 +7,21 @@ public class FallerController
     float fallerSpeed = 2.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
-    public void init(Vector3 spawnPoint, Vector3 size, float speed)
+    public void init(Vector3 spawnPoint, Vector3 size, float speed, Sprite sprite)
     {
-        fallerObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        fallerObject = new GameObject("Square");
+        SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite; 
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
         fallerSpeed = speed;
-        fallerObject.GetComponent<BoxCollider>().material = Resources.Load<PhysicsMaterial>(Constants.fallerPhysicsMaterialPath);
+        fallerObject.AddComponent<BoxCollider2D>();
+        fallerObject.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         fallerObject.AddComponent<FallerBehavior>().Init(fallerObject, fallerSpeed);
-        fallerObject.AddComponent<Rigidbody>();
-        fallerObject.GetComponent<Rigidbody>().useGravity = false;
-        fallerObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+        fallerObject.AddComponent<Rigidbody2D>();
+        fallerObject.GetComponent<Rigidbody2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        fallerObject.GetComponent<Rigidbody2D>().gravityScale = 0.25f;
+        //fallerObject.GetComponent<Rigidbody>().
     }
     
 }

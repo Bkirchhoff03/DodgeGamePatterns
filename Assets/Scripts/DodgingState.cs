@@ -36,7 +36,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            playerController.transform.GetComponent<MeshRenderer>().material.color = Color.blue;
+            playerController.transform.GetComponent<SpriteRenderer>().color = Color.blue;
             playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state
