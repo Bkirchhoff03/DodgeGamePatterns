@@ -15,22 +15,47 @@ public class CollisionDetector : MonoBehaviour
     }
     public void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
-        Debug.Log("FROM COLLISION DETECTOR Collision Detected with " + collision.gameObject.name);
-        //Debug.Log("Contact Point: " + collision.GetContact(0).point);
-        Debug.Log("Contact Normal: " + collision.GetContact(0).normal);
-        //Debug.Log("Collision Impulse: " + collision.GetContact(0));
         //Figure out if object is hitting gameObject from left, right, top, bottom
-        Vector2 collisionNormal = collision.GetContact(0).normal;
-        Vector2 forceDirection = -collisionNormal.normalized;
+        //player hits objects bottom side: normal = (0,-1)
+        //player hits objects top side: normal = (0,1)
+        //player hits objects left side: normal = (-1,0)
+        //player hits objects right side: normal = (1,0)
+        Vector2 contactNormal = collision.GetContact(0).normal;
+        Debug.Log("Contact Normal: " + collision.GetContact(0).normal + " With: " + collision.gameObject.name);
+        if (Mathf.Abs(contactNormal.x) < Mathf.Abs(contactNormal.y))
+        {
+            //Vertical hit
+            if(contactNormal.y < -0.1f)
+            {
+                //Hit on bottom of object
+                Debug.Log("Hits bottom of object");
+                GameManager.instance().HandlePlayerFallerCollision(gameObject, collision.gameObject, GameManager.PlayerFallerCollisionType.Bottom);
+            }else if (contactNormal.y > 0.1f)
+            {
+                //Hit on top of object
+                Debug.Log("Hits top of object");
+                GameManager.instance().HandlePlayerFallerCollision(gameObject, collision.gameObject, GameManager.PlayerFallerCollisionType.Top);
+            }
 
-
-
-
-        
+        }else if(Mathf.Abs(contactNormal.x) > Mathf.Abs(contactNormal.y))
+        {
+            //Horizontal hit
+            if(contactNormal.x < -0.1f)
+            {
+                //Hit on left of object
+                Debug.Log("Hits left of object");
+                GameManager.instance().HandlePlayerFallerCollision(gameObject, collision.gameObject, GameManager.PlayerFallerCollisionType.Left);
+            }else if (contactNormal.x > 0.1f)
+            {
+                //Hit on right of object
+                Debug.Log("Hits right of object");
+                GameManager.instance().HandlePlayerFallerCollision(gameObject, collision.gameObject, GameManager.PlayerFallerCollisionType.Right);
+            }
+        }
     }
     public void OnCollisionExit(Collision collision)
     {
         Debug.Log("FROM COLLISION DETECTOR Collision Exited with " + collision.gameObject.name);
-        gameObject.GetComponent<Rigidbody2D>().totalForce = Vector2.zero;
+        //gameObject.GetComponent<Rigidbody2D>().totalForce = Vector2.zero;
     }
 }

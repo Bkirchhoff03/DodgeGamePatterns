@@ -41,5 +41,9 @@ namespace Assets.Scripts
             return this;
             // Update logic specific to dodging state
         }
+        public bool canBeDamaged()
+        {
+            return true;
+        }
     }
 }

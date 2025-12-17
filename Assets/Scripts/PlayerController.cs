@@ -14,9 +14,6 @@ public class PlayerController : MonoBehaviour
     }
     public IPlayerState state;
     delegate void MoveAction();
-    MoveAction moveAction;
-    float curX = 0;
-    float curY = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,5 +44,12 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = position;
     }
-    
+    public bool canBeDamaged()
+    {
+        return state.canBeDamaged();
+    }
+    public void crush()
+    {
+        state = new CrushedState();
+    }
 }

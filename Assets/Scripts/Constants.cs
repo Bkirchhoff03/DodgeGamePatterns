@@ -19,8 +19,10 @@ namespace Assets.Scripts
         public const float dodgeSpeed = 10.0f;
         public const string jumpingStateName = "Jumping";
         public const string dodgingStateName = "Dodging";
+        public const string crushedStateName = "Crushed";
         public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial";
         public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
+        public const string fallerNamePrefix = "Faller_";
 
     }
 }
