@@ -11,6 +11,9 @@ namespace Assets.Scripts
     {
         
         private Vector3 currentDirection = Vector3.zero;
+        public void EnterState(PlayerController playerController) { }
+        public void ExitState(PlayerController playerController) { }
+
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             IPlayerState nextState = this;

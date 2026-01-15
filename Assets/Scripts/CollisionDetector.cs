@@ -35,6 +35,8 @@ public class CollisionDetector : MonoBehaviour
                 //Hit on top of object
                 Debug.Log("Hits top of object");
                 GameManager.instance().HandlePlayerFallerCollision(gameObject, collision.gameObject, GameManager.PlayerFallerCollisionType.Top);
+                
+
             }
 
         }else if(Mathf.Abs(contactNormal.x) > Mathf.Abs(contactNormal.y))

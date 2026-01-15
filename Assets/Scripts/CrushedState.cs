@@ -35,6 +35,7 @@ namespace Assets.Scripts
             else
             {
                 nextState = new DodgingState();
+                nextState.EnterState(playerController);
             }
             return nextState;
         }

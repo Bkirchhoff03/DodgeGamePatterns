@@ -7,7 +7,7 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class GameManager : MonoBehaviour
 {
-    FallerController fallerController;
+    FallerManager fallerController;
     float currentTimeBetweenSpawns = 5.0f;
     float TimeBetweenSpawns;
     public Sprite sprite;
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance_;
     private int playerLives = 3;
     public TextMeshProUGUI lifeCounter;
-    private Dictionary<string, FallerBehavior> fallersInPlay = new Dictionary<string, FallerBehavior>();
+    private Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
-        fallerController = new FallerController();
+        fallerController = new FallerManager();
         fallerController.init();
     }
 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
         PlayerController playerController = player.GetComponent<PlayerController>();
-        FallerBehavior fallerBehavior = faller.GetComponent<FallerBehavior>();
+        FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged())
         {
             playerLives--;
@@ -67,11 +67,15 @@ public class GameManager : MonoBehaviour
             }
             playerController.crush();
             DeleteFaller(faller.name);
+        }else if(collisionType == PlayerFallerCollisionType.Top)
+        {
+            faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+            playerController.rideFaller(faller);
         }
     }
     void SpawnObject()
     {
-        KeyValuePair<string, FallerBehavior> faller = FallerController.instance().CreateFaller(sprite);
+        KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite);
         fallersInPlay.Add(faller.Key, faller.Value);
 
     }

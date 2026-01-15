@@ -35,6 +35,10 @@ public class InputSystemController : MonoBehaviour
             moveDirection.Ydirection = 1;
             playerController.setState(new JumpingState());
         }
+        /*if(Input.GetKey(KeyCode.W))
+        {
+            moveDirection.Ydirection = 1;
+        }*/
         playerController.HandleInput(moveDirection);
     }
 
