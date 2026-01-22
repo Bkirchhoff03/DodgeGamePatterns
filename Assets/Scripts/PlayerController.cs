@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     {
         public int Xdirection;
         public int Ydirection;
-        
     }
     public IPlayerState state;
     delegate void MoveAction();
