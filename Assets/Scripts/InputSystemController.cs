@@ -35,6 +35,16 @@ public class InputSystemController : MonoBehaviour
             moveDirection.Ydirection = 1;
             playerController.setState(new JumpingState());
         }
+        if(Input.GetMouseButton(0))
+        {
+            moveDirection.isPunch = true;
+            moveDirection.Xdirection -= 1;
+        }
+        if(Input.GetMouseButton(1))
+        {
+            moveDirection.isPunch = true;
+            moveDirection.Xdirection += 1;
+        }
         /*if(Input.GetKey(KeyCode.W))
         {
             moveDirection.Ydirection = 1;

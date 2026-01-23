@@ -21,6 +21,17 @@ namespace Assets.Scripts
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             IPlayerState nextState = this;
+            if (moveInput.isPunch)
+            {
+                if (moveInput.Xdirection > 0)
+                {
+                    playerController.punchRight();
+                }
+                else if (moveInput.Xdirection < 0)
+                {
+                    playerController.punchLeft();
+                }
+            }
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;

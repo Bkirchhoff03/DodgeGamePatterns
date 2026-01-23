@@ -11,10 +11,15 @@ public class PlayerController : MonoBehaviour
     {
         public int Xdirection;
         public int Ydirection;
+        public bool isPunch;
     }
     public IPlayerState state;
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
+    public GameObject punchingArm;
+    private bool isPunchingLeft = false;
+    private float punchingVelocity;
+    private bool isPunchingRight = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +30,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
+        if(isPunchingRight)
+        {
+            ExecuteRightPunch();
+            if(punchingArm.transform.localPosition.x <= 0.0f)
+            {
+                isPunchingRight = false;
+                punchingArm.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+        }else if(isPunchingLeft)
+        {
+            ExecutePunchLeft();
+            if(punchingArm.transform.localPosition.x >= 0.0f)
+            {
+                isPunchingLeft = false;
+                punchingArm.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+        }
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
@@ -73,7 +95,28 @@ public class PlayerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity;
         state = new RidingFallerState(faller);
     }
-    
+    public void punchRight()
+    {
+        isPunchingRight = true;
+        isPunchingLeft = false;
+        punchingVelocity = 2.0f;
+    }
+    private void ExecuteRightPunch()
+    {
+        punchingVelocity -= Time.deltaTime * 3.0f;
+        punchingArm.transform.position += new Vector3(punchingVelocity * Time.deltaTime, 0.0f);
+    }
+    public void punchLeft()
+    {
+        isPunchingLeft = true;
+        isPunchingRight = false;
+        punchingVelocity = -2.0f;
+    }
+    public void ExecutePunchLeft()
+    {
+        punchingVelocity += Time.deltaTime * 3.0f;
+        punchingArm.transform.position += new Vector3(punchingVelocity*Time.deltaTime, 0.0f);
+    }
     internal bool isGrounded()
     {
         if (gameObject.transform.position.y <= 0.1f) //Physics2D.Raycast(transform.position, Vector2.down, 0.1f))

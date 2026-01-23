@@ -39,6 +39,17 @@ namespace Assets.Scripts
                 startingPosition = playerController.transform.position;
                 UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
             }
+            if (moveInput.isPunch)
+            {
+                if (moveInput.Xdirection > 0)
+                {
+                    playerController.punchRight();
+                }
+                else if (moveInput.Xdirection < 0)
+                {
+                    playerController.punchLeft();
+                }
+            }
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
