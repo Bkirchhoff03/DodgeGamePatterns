@@ -22,7 +22,7 @@ public class FallerManager
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
         fallerObject.AddComponent<FallerController>();
-        
+        fallerObject.AddComponent<CollisionDetector>();
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
         
         fallerBehavior.Init(spawnPosition, new Vector3(

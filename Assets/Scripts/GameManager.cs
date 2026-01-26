@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         Top,
         Bottom,
         Left,
-        Right
+        Right,
+        None
     }
     public static GameManager instance() => instance_;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

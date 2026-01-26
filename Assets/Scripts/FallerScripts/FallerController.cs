@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -7,6 +8,7 @@ public class FallerController : MonoBehaviour
 {
     GameObject fallerObject;
     float fallerSpeed;
+    bool isFrozen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -67,5 +69,14 @@ public class FallerController : MonoBehaviour
         {
             return true;
         }
+    }
+
+    public void FloorPause()
+    {
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
+        gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        gameObject.GetComponent<SpriteRenderer>().color = UnityEngine.Color.green;
+        isFrozen = true;
     }
 }
