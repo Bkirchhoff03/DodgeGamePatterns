@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour
     {
         if(newState.getName() != state.getName())
         {
+            if(state.getName() == Constants.fallingStateName && newState.getName() == Constants.jumpingStateName)
+            {
+                return;
+            }
             if(newState.getName() == Constants.jumpingStateName && state.getName() == Constants.ridingFallerStateName)
             {
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -72,7 +76,7 @@ public class PlayerController : MonoBehaviour
     
     internal bool isGrounded()
     {
-        if (gameObject.transform.position.y <= 0.0f) //Physics2D.Raycast(transform.position, Vector2.down, 0.1f))
+        if (gameObject.transform.position.y <= 0.1f) //Physics2D.Raycast(transform.position, Vector2.down, 0.1f))
         {
             MoveTo(new Vector3(gameObject.transform.position.x, 0.0f, gameObject.transform.position.z));
             return true;

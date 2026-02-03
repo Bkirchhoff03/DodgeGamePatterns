@@ -14,15 +14,15 @@ public class FallerManager
     {
         instance_ = this;
     }
-    public KeyValuePair<string, FallerController> CreateFaller(Sprite sprite)
+    public KeyValuePair<string, FallerController> CreateFaller(Sprite sprite, float spawnHeight)
     {
         float randomX = UnityEngine.Random.Range(Constants.minX, Constants.maxX);
-        Vector3 spawnPosition = new Vector3(randomX, Constants.spawnY, 0);
+        Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
         fallerObject.AddComponent<FallerController>();
-        fallerObject.AddComponent<CollisionDetector>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
         
         fallerBehavior.Init(spawnPosition, new Vector3(

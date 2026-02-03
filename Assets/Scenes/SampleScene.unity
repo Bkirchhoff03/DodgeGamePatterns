@@ -132,9 +132,9 @@ GameObject:
   - component: {fileID: 226245252}
   - component: {fileID: 226245253}
   - component: {fileID: 226245254}
-  - component: {fileID: 226245256}
   - component: {fileID: 226245258}
   - component: {fileID: 226245257}
+  - component: {fileID: 226245260}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -223,18 +223,6 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &226245256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226245247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a6643c94b684c04b9cdc0db0d2bcf03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &226245257
 Rigidbody2D:
   serializedVersion: 5
@@ -354,6 +342,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &226245260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226245247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f0ba5cc1e3c2e4da7ec965f040e767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &303345610
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 7482667652216324306, guid: 6b1190f294900674ab15146b31ae1c42, type: 3}
   lifeCounter: {fileID: 303345612}
+  camera: {fileID: 519420028}
+  player: {fileID: 226245247}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1098,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 739160221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a6643c94b684c04b9cdc0db0d2bcf03, type: 3}
+  m_Script: {fileID: 11500000, guid: d983eeda8c3ad9e4198d35c78c42c69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1281536597

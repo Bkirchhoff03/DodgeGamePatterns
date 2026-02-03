@@ -76,7 +76,7 @@ public class FallerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
         gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        gameObject.GetComponent<SpriteRenderer>().color = UnityEngine.Color.green;
+        gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
         isFrozen = true;
     }
 }

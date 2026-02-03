@@ -69,6 +69,7 @@ namespace Assets.Scripts
                 playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
                 ExitState(playerController);
                 nextState = new DodgingState();
+                nextState.EnterState(playerController);
             }
             else
             {

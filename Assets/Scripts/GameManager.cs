@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
@@ -15,6 +16,11 @@ public class GameManager : MonoBehaviour
     static GameManager instance_;
     private int playerLives = 3;
     public TextMeshProUGUI lifeCounter;
+    public GameObject camera;
+    public GameObject player;
+    private float spawnHeight = Constants.spawnY;
+    private float fallerSpawnCameraDiff;
+    private PlayerController playerController;
     private Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     public enum PlayerFallerCollisionType
     {
@@ -32,6 +38,8 @@ public class GameManager : MonoBehaviour
         TimeBetweenSpawns = currentTimeBetweenSpawns;
         fallerController = new FallerManager();
         fallerController.init();
+        playerController = player.GetComponent<PlayerController>();
+        fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
     }
 
     // Update is called once per frame
@@ -45,6 +53,16 @@ public class GameManager : MonoBehaviour
         {
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
+        }
+        if(player.transform.position.y > 4.0f)
+        {
+            camera.transform.position = new Vector3(0.0f, player.transform.position.y, -10.0f);
+            spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
+        }
+        else
+        {
+            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
+            spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
     }
     public void HandlePlayerFallerCollision(GameObject player, GameObject faller, PlayerFallerCollisionType collisionType)
@@ -70,13 +88,19 @@ public class GameManager : MonoBehaviour
             DeleteFaller(faller.name);
         }else if(collisionType == PlayerFallerCollisionType.Top)
         {
-            faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+            if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
+            {
+                faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+            }
             playerController.rideFaller(faller);
+        }else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
+        {
+            //playerController.bounceOff();
         }
     }
     void SpawnObject()
     {
-        KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite);
+        KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, spawnHeight);
         fallersInPlay.Add(faller.Key, faller.Value);
 
     }
