@@ -70,6 +70,10 @@ public class FallerController : MonoBehaviour
             return true;
         }
     }
+    public bool amIFrozen()
+    {
+        return isFrozen;
+    }
 
     public void FloorPause()
     {

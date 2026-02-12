@@ -16,6 +16,7 @@ public class FallerManager
     }
     public KeyValuePair<string, FallerController> CreateFaller(Sprite sprite, float spawnHeight)
     {
+        Debug.Log("Spawning at: " + spawnHeight);
         float randomX = UnityEngine.Random.Range(Constants.minX, Constants.maxX);
         Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
         numberOfSpawns++;
@@ -31,6 +32,10 @@ public class FallerManager
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
         KeyValuePair<string, FallerController> keyValue = new KeyValuePair<string, FallerController>(nameOfFaller, fallerBehavior);
         return keyValue;
+    }
+    public void ResetSpawns()
+    {
+        numberOfSpawns = 0;
     }
 
 }

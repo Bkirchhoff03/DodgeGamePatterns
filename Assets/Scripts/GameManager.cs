@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private float spawnHeight = Constants.spawnY;
     private float fallerSpawnCameraDiff;
     private PlayerController playerController;
+    public GameObject trapdoor;
     private Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     public enum PlayerFallerCollisionType
     {
@@ -83,6 +84,8 @@ public class GameManager : MonoBehaviour
             {
                 playerLives = 3;
                 Debug.Log("GAME OVER");
+                ResetGame();
+                return;
             }
             playerController.crush();
             DeleteFaller(faller.name);
@@ -100,8 +103,31 @@ public class GameManager : MonoBehaviour
     }
     void SpawnObject()
     {
-        KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, spawnHeight);
-        fallersInPlay.Add(faller.Key, faller.Value);
+        float highestFallerY = -100.0f;
+        foreach (KeyValuePair<string, FallerController> fall in fallersInPlay)
+        {
+            if (fall.Value.gameObject.transform.position.y > highestFallerY) {
+                highestFallerY = fall.Value.gameObject.transform.position.y;        
+            }
+        }
+        //screen height = 10, so spawn half a screen above the highest faller and
+        //if thats below already set spawn height, spawn at spawn height
+
+        if (highestFallerY + 5.0f > trapdoor.transform.position.y + 1.0f)
+        {
+            KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, trapdoor.transform.position.y + 1.0f);
+            fallersInPlay.Add(faller.Key, faller.Value);
+        }
+        else if (highestFallerY + 5.0f < spawnHeight)
+        {
+            KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, spawnHeight);
+            fallersInPlay.Add(faller.Key, faller.Value);
+        }
+        else
+        {
+            KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, highestFallerY + 5.0f);
+            fallersInPlay.Add(faller.Key, faller.Value);
+        }
 
     }
     void DeleteFaller(string nameOfFaller)
@@ -112,5 +138,18 @@ public class GameManager : MonoBehaviour
     public void givePlayerTime()
     {
         TimeBetweenSpawns += currentTimeBetweenSpawns;
+    }
+    public void ResetGame()
+    {
+        playerLives = 3;
+        lifeCounter.text = "Lives: III";
+        foreach(KeyValuePair<string, FallerController> faller in fallersInPlay)
+        {
+            faller.Value.DeleteMe();
+        }
+        fallersInPlay.Clear();
+        playerController.setState(new DodgingState());
+        player.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        FallerManager.instance().ResetSpawns();
     }
 }
