@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 430679336}
   - component: {fileID: 430679335}
   m_Layer: 0
-  m_Name: Square
+  m_Name: SkyBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
