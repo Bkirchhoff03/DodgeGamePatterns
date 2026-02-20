@@ -9,6 +9,8 @@ public class FallerController : MonoBehaviour
     GameObject fallerObject;
     float fallerSpeed;
     bool isFrozen = false;
+    // Public read-only access so collision handlers can check if this faller is grounded
+    public bool IsFrozen => isFrozen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
