@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class GameManager : MonoBehaviour
@@ -12,16 +13,15 @@ public class GameManager : MonoBehaviour
     float currentTimeBetweenSpawns = 5.0f;
     float TimeBetweenSpawns;
     public Sprite sprite;
-    private int numberOfSpawns = 0;
     static GameManager instance_;
     private int playerLives = 3;
     public TextMeshProUGUI lifeCounter;
     public GameObject camera;
     public GameObject player;
+    public GameObject trapDoor; // Assign the TrapDoor GameObject in the Inspector
     private float spawnHeight = Constants.spawnY;
     private float fallerSpawnCameraDiff;
     private PlayerController playerController;
-    private Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -36,8 +36,11 @@ public class GameManager : MonoBehaviour
     {
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
+        // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
+        float trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
         fallerController = new FallerManager();
-        fallerController.init();
+        // FallerManager now owns the faller dictionary, sprite, and spawn height logic
+        fallerController.init(sprite, trapDoorHeight);
         playerController = player.GetComponent<PlayerController>();
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
     }
@@ -98,16 +101,20 @@ public class GameManager : MonoBehaviour
             //playerController.bounceOff();
         }
     }
+    // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()
     {
-        KeyValuePair<string, FallerController> faller = FallerManager.instance().CreateFaller(sprite, spawnHeight);
-        fallersInPlay.Add(faller.Key, faller.Value);
-
+        FallerManager.instance().SpawnFaller(spawnHeight);
     }
+    // Delegates faller destruction to FallerManager, which handles cleanup from its dictionary
     void DeleteFaller(string nameOfFaller)
     {
-        fallersInPlay[nameOfFaller].DeleteMe();
-        fallersInPlay.Remove(nameOfFaller);
+        FallerManager.instance().RemoveFaller(nameOfFaller);
+    }
+    // Called by TrapDoor when the player reaches the goal; reloads the current scene
+    public void ResetLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void givePlayerTime()
     {
