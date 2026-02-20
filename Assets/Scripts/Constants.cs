@@ -17,8 +17,16 @@ namespace Assets.Scripts
         public const float maxFallerSize = 3.0f;
         public const float moveSpeed = 5.0f;
         public const float dodgeSpeed = 10.0f;
+        public const float gameGravity = 0.05f;//0.1f;
+        public const float playerGravity = 4.8f;
         public const string jumpingStateName = "Jumping";
         public const string dodgingStateName = "Dodging";
+        public const string crushedStateName = "Crushed";
+        public const string ridingFallerStateName = "RidingFaller";
+        public const string fallingStateName = "Falling";
         public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial";
+        public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
+        public const string fallerNamePrefix = "Faller_";
+
     }
 }

@@ -11,6 +11,13 @@ namespace Assets.Scripts
     {
         
         private Vector3 currentDirection = Vector3.zero;
+        public void EnterState(PlayerController playerController) {
+            playerController.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            playerController.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            playerController.GetComponent<Rigidbody2D>().mass = 0.0001f;
+        }
+        public void ExitState(PlayerController playerController) { }
+
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             IPlayerState nextState = this;
@@ -36,10 +43,14 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            playerController.transform.GetComponent<MeshRenderer>().material.color = Color.blue;
+            playerController.transform.GetComponent<SpriteRenderer>().color = Color.blue;
             playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state
+        }
+        public bool canBeDamaged()
+        {
+            return true;
         }
     }
 }
