@@ -37,18 +37,11 @@ namespace Assets.Scripts
             if (startingPosition == null)
             {
                 startingPosition = playerController.transform.position;
-                UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+                //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
             }
-            if (moveInput.isPunch)
+            if (moveInput.isPunch != 0)
             {
-                if (moveInput.Xdirection > 0)
-                {
-                    playerController.punchRight();
-                }
-                else if (moveInput.Xdirection < 0)
-                {
-                    playerController.punchLeft();
-                }
+                playerController.HandlePunch(moveInput);
             }
             if (moveInput.Xdirection < 0)
             {

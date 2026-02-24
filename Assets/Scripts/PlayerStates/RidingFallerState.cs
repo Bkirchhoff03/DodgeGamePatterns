@@ -14,14 +14,23 @@ namespace Assets.Scripts
         private bool isFallingOffFaller = false;
         private Vector3 currentDirection = Vector3.zero;
         private GameObject ridingFaller;
-        public void EnterState(PlayerController playerController) { }
-        public void ExitState(PlayerController playerController) { }
+        public void EnterState(PlayerController playerController) {
+            ridingFaller.GetComponent<FallerController>().StartRiding();
+        }
+        public void ExitState(PlayerController playerController)
+        {
+            ridingFaller.GetComponent<FallerController>().StopRiding();
+        }
         public RidingFallerState(GameObject faller) {
             ridingFaller = faller;
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             IPlayerState nextState = this;
+            if (moveInput.isPunch != 0)
+            {
+                playerController.HandlePunch(moveInput);
+            }
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;

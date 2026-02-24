@@ -37,13 +37,11 @@ public class InputSystemController : MonoBehaviour
         }
         if(Input.GetMouseButton(0))
         {
-            moveDirection.isPunch = true;
-            moveDirection.Xdirection -= 1;
+            moveDirection.isPunch = -1;
         }
         if(Input.GetMouseButton(1))
         {
-            moveDirection.isPunch = true;
-            moveDirection.Xdirection += 1;
+            moveDirection.isPunch = 1;
         }
         /*if(Input.GetKey(KeyCode.W))
         {

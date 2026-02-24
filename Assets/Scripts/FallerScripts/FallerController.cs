@@ -9,6 +9,7 @@ public class FallerController : MonoBehaviour
     GameObject fallerObject;
     float fallerSpeed;
     bool isFrozen = false;
+    bool beingRidden = false;
     // Public read-only access so collision handlers can check if this faller is grounded
     public bool IsFrozen => isFrozen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,6 +29,7 @@ public class FallerController : MonoBehaviour
         fallerObject.AddComponent<Rigidbody2D>();
         fallerObject.GetComponent<Rigidbody2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         fallerObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity; // Could set the gravity to random speed sent to this function
+        fallerObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, -0.01f);
         fallerObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     // Update is called once per frame
@@ -37,7 +39,19 @@ public class FallerController : MonoBehaviour
         {
             DeleteMe();
         }
+        /*Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
+        if (!beingRidden && r != null && Mathf.Abs(r.linearVelocity.x) < 0.001 && Mathf.Abs(r.linearVelocity.y) < 0.001) 
+        {
+            FloorPause();
+        }*/
         //fallerObject.transform.position += Vector3.down * Time.deltaTime * fallerSpeed;
+    }
+    public void StartRiding()
+    {
+        beingRidden = true;
+    }
+    public void StopRiding() { 
+        beingRidden = false; 
     }
     public void DeleteMe()
     {
@@ -65,10 +79,12 @@ public class FallerController : MonoBehaviour
 
         if (playerPoint.x > leftBound && playerPoint.x < rightBound)
         {
+            beingRidden = false;
             return false;
         }
         else
         {
+            beingRidden = true;
             return true;
         }
     }
@@ -81,8 +97,25 @@ public class FallerController : MonoBehaviour
     {
         gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
         gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        gameObject.GetComponent<Rigidbody2D>().mass = 10000f;
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
         isFrozen = true;
+    }
+    public void Unfreeze()
+    {
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity;
+        gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
+        //gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
+        isFrozen = false;
+    }
+
+    public void HandleArmCollision(PunchingArmController arm)
+    {
+        if (isFrozen)
+        {
+            arm.CancelPunch();
+        }
     }
 }
