@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class DodgingState : IPlayerState
+    public class DodgingState : IPlayerState
     {
         
         private Vector3 currentDirection = Vector3.zero;

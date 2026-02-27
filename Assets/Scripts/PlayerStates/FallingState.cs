@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.LowLevel;
 
 namespace Assets.Scripts
 {
-    class FallingState : IPlayerState
+    public class FallingState : IPlayerState
     {
         private Vector3 currentDirection = Vector3.zero;
         private Vector3 startingPosition;

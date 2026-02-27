@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class RidingFallerState : IPlayerState
+    public class RidingFallerState : IPlayerState
     {
         private float leftSideFallerBound = Constants.minX;
         private float rightSideFallerBound = Constants.maxX;

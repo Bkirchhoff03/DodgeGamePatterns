@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class JumpingState : IPlayerState
+    public class JumpingState : IPlayerState
     {
 
         private Vector3 currentDirection = Vector3.zero;
