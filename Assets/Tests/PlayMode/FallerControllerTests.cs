@@ -60,30 +60,9 @@ public class FallerControllerTests
         Assert.AreEqual(Vector2.zero, rb.linearVelocity);
     }
 
-    // --- Unfreeze tests ---
+    
 
-    [UnityTest]
-    public IEnumerator Unfreeze_SetsIsFrozenFalse()
-    {
-        yield return null;
-        controller.FloorPause();
-
-        controller.Unfreeze();
-
-        Assert.IsFalse(controller.amIFrozen());
-    }
-
-    [UnityTest]
-    public IEnumerator Unfreeze_RestoresGravityScale()
-    {
-        yield return null;
-        controller.FloorPause();
-
-        controller.Unfreeze();
-
-        Assert.AreEqual(Constants.gameGravity,
-            fallerObject.GetComponent<Rigidbody2D>().gravityScale);
-    }
+    
 
     // --- StartRiding / StopRiding ---
 

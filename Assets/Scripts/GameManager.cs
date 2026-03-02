@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     FallerManager fallerController;
-    float currentTimeBetweenSpawns = 5.0f;
+    float currentTimeBetweenSpawns = 2.5f;
     float TimeBetweenSpawns;
     public Sprite sprite;
     static GameManager instance_;
