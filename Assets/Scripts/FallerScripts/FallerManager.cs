@@ -11,7 +11,7 @@ public class FallerManager
     Sprite sprite;
     float trapDoorHeight;
     // Tracks all active fallers by name; cleaned up each spawn cycle
-    Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
+    public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;

@@ -3,20 +3,25 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Assets.Scripts;
+using UnityEditor.SceneManagement;
 
 [TestFixture]
 public class FallerControllerTests
 {
+    
     private GameObject fallerObject;
     private FallerController controller;
 
-    [SetUp]
-    public void SetUp()
+    [UnitySetUp]
+    public IEnumerator SetUp()
     {
-        fallerObject = new GameObject("TestFaller");
-        fallerObject.AddComponent<SpriteRenderer>();
-        fallerObject.AddComponent<Rigidbody2D>();
-        controller = fallerObject.AddComponent<FallerController>();
+        yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Assets/Scenes/SampleScene.unity");
+        yield return null; // Wait a frame for scene to load
+
+        
+        FallerManager.instance().SpawnFaller(10f);
+        FallerManager.instance().fallersInPlay.TryGetValue("Faller_1", out controller);
+        fallerObject = controller.gameObject;
     }
 
     [TearDown]
@@ -25,6 +30,13 @@ public class FallerControllerTests
         Object.DestroyImmediate(fallerObject);
     }
 
+    [Test]
+    public void VerifyScene()
+    {
+        var gameObject = GameObject.Find("Player");
+
+        Assert.That(gameObject, Is.Not.Null);
+    }
     // --- FloorPause tests ---
 
     [UnityTest]

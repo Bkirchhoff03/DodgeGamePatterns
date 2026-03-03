@@ -12,18 +12,14 @@ public class PlayerStateIntegrationTests
     private GameObject playerObject;
     private PlayerController playerController;
 
-    [SetUp]
-    public void SetUp()
+    [UnitySetUp]
+    public IEnumerator SetUp()
     {
-        playerObject = new GameObject("TestPlayer");
-        playerObject.AddComponent<SpriteRenderer>();
-        playerObject.AddComponent<Rigidbody2D>();
-        playerController = playerObject.AddComponent<PlayerController>();
+        yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Assets/Scenes/SampleScene.unity");
+        yield return null; // Wait a frame for scene to load
 
-        // Provide a dummy punching arm to avoid null references
-        var armObject = new GameObject("TestArm");
-        armObject.AddComponent<PunchingArmController>();
-        playerController.punchingArm = armObject;
+        playerObject = GameObject.Find("Player");
+        playerController = playerObject.GetComponent<PlayerController>();
     }
 
     [TearDown]

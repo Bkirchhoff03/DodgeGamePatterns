@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    FallerManager fallerController;
+    public FallerManager fallerManager { get; private set; }
     float currentTimeBetweenSpawns = 2.5f;
     float TimeBetweenSpawns;
     public Sprite sprite;
@@ -38,10 +38,17 @@ public class GameManager : MonoBehaviour
         TimeBetweenSpawns = currentTimeBetweenSpawns;
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
         float trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
-        fallerController = new FallerManager();
+        fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerController.init(sprite, trapDoorHeight);
+        fallerManager.init(sprite, trapDoorHeight);
+
         playerController = player.GetComponent<PlayerController>();
+        if(camera == null)
+        {
+            camera = new GameObject("Main Camera");
+            camera.AddComponent<Camera>();
+            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
+        }
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
     }
 
@@ -57,12 +64,12 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
-        if(player.transform.position.y > 4.0f)
+        if(player != null && player.transform.position.y > 4.0f)
         {
             camera.transform.position = new Vector3(0.0f, player.transform.position.y, -10.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
-        else
+        else if(player != null)
         {
             camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;

@@ -12,7 +12,7 @@ public class PunchingArmController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = transform.parent.gameObject;
+        player = gameObject.transform.parent.gameObject;
     }
 
     // Update is called once per frame

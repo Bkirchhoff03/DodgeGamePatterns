@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 
 public class FallerController : MonoBehaviour
 {
-    GameObject fallerObject;
+    public GameObject fallerObject { get; private set; }
     float fallerSpeed;
     bool isFrozen = false;
     bool beingRidden = false;
