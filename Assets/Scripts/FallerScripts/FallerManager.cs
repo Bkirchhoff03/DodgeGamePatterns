@@ -1,17 +1,36 @@
 using Assets.Scripts;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.U2D;
 
 public class FallerManager
 {
     static FallerManager instance_;
-
+    [System.Serializable]
+    public class FallerData
+    {
+        public string name;
+        public Vector3 position;
+        public Vector3 size;
+        public float currentSpeed;
+        public bool isFrozen;
+    }
+    [System.Serializable]
+    public class FallerDataList
+    {
+        public List<FallerData> fallers;
+        public FallerDataList() { 
+            fallers = new List<FallerData>();
+        }
+    }
     int numberOfSpawns = 0;
     Sprite sprite;
     float trapDoorHeight;
+    int lastSpawnedFallerNumber = 0;
     // Tracks all active fallers by name; cleaned up each spawn cycle
     public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
+    private readonly string directory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
@@ -56,6 +75,104 @@ public class FallerManager
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
     }
 
+    public void SpawnFallerAtPosition(Vector3 worldPosition)
+    {
+        numberOfSpawns++;
+        string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
+        GameObject fallerObject = new GameObject(nameOfFaller);
+        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
+        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+
+        float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
+        float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
+
+        fallerBehavior.Init(worldPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),
+            Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
+
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+    }
+    public void SpawnFallerAtPosition(Vector3 worldPosition, Vector3 size)
+    {
+        numberOfSpawns++;
+        string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
+        GameObject fallerObject = new GameObject(nameOfFaller);
+        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
+        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        fallerBehavior.Init(worldPosition, size,
+            Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+    }
+    private void SpawnFallerAtData(FallerData data)
+    {
+        numberOfSpawns++;
+        string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
+        GameObject fallerObject = new GameObject(nameOfFaller);
+        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
+        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        fallerBehavior.Init(data.position, data.size, data.currentSpeed, sprite, fallerObject);
+        // If the faller was frozen when saved, freeze it again after spawning
+        if (data.isFrozen)
+        {
+            fallerBehavior.FloorPause();
+        }
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+    }
+    public void SaveFallersToFile()
+    {
+        if(lastSpawnedFallerNumber == numberOfSpawns)
+        {
+            Debug.Log("No new fallers to save since last save.");
+            return;
+        }
+        Debug.Log("Saving faller data to file...");
+        lastSpawnedFallerNumber = numberOfSpawns;
+        // Serialize faller data to JSON
+        FallerDataList fallerDataList = new FallerDataList();
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue; // Skip destroyed fallers
+            FallerController faller = kvp.Value;
+            FallerData data = new FallerData
+            {
+                name = kvp.Key,
+                position = faller.transform.position,
+                size = faller.transform.localScale,
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
+                isFrozen = faller.amIFrozen()
+            };
+            fallerDataList.fallers.Add(data);
+        }
+        if(File.Exists(Constants.fallerDataSavePath))
+        {
+            File.Delete(Constants.fallerDataSavePath); // Clear old data before saving new
+        }
+        /*foreach (FallerData data in fallerDataList)
+        {
+            string json = JsonUtility.ToJson(data);
+            File.AppendAllText(directory, json);
+        }*/
+        string json = JsonUtility.ToJson(fallerDataList, true);
+        File.WriteAllText(directory, json);
+        Debug.Log($"Saved {fallerDataList.fallers.Count} fallers to file at {directory}");
+    }
+    public void LoadFallersFromFile()
+    {
+        if (!File.Exists(directory))
+        {
+            Debug.LogWarning("No faller data file found to load.");
+            return;
+        }
+        string json = File.ReadAllText(directory);
+        FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(json);
+        foreach (FallerData data in fallerDataList.fallers) 
+        {
+            Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}");
+            SpawnFallerAtData(data);
+        }
+    }
     // Destroys a faller and removes it from tracking (e.g. when player is crushed by it)
     public void RemoveFaller(string name)
     {

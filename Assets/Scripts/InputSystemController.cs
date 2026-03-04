@@ -43,10 +43,14 @@ public class InputSystemController : MonoBehaviour
         {
             moveDirection.isPunch = 1;
         }
-        /*if(Input.GetKey(KeyCode.W))
+        if(Input.GetKey(KeyCode.P))
         {
-            moveDirection.Ydirection = 1;
-        }*/
+            GameManager.instance().SpawnFallerAtClick(Input.mousePosition);
+        }
+        if (Input.GetKey(KeyCode.M))
+        {
+            FallerManager.instance().SaveFallersToFile();
+        }
         playerController.HandleInput(moveDirection);
     }
 

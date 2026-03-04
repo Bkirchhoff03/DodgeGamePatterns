@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     private float spawnHeight = Constants.spawnY;
     private float fallerSpawnCameraDiff;
     private PlayerController playerController;
+    public string currentFallerSaveFileName = "fallerSaveData.json"; // For testing purposes, the name of the file to save/load faller data
+    private float clickSpawnCooldown = 0.0f; // Minimum time between spawns when using clickToSpawn
+    public bool clickToSpawn = false; // For testing purposes, allows spawning a faller on click instead of timer
+    public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -50,16 +54,25 @@ public class GameManager : MonoBehaviour
             camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
         }
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
+        if(spawnFallersFromFile)
+        {
+            fallerManager.LoadFallersFromFile();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(clickSpawnCooldown > 0)
+        {
+            clickSpawnCooldown -= Time.deltaTime;
+        }
+        
         if (TimeBetweenSpawns > 0)
         {
             TimeBetweenSpawns -= Time.deltaTime;
         }
-        else
+        else if (!clickToSpawn)
         {
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
@@ -126,5 +139,17 @@ public class GameManager : MonoBehaviour
     public void givePlayerTime()
     {
         TimeBetweenSpawns += currentTimeBetweenSpawns;
+    }
+
+    public void SpawnFallerAtClick(Vector3 clickPosition)
+    {
+        if (clickSpawnCooldown > 0)
+        {
+            return; // Prevent spawning if cooldown is active
+        }
+        clickSpawnCooldown = 0.5f; // Reset cooldown
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
+        worldPosition.z = 0; // Set z to 0 for 2D
+        FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
 }
