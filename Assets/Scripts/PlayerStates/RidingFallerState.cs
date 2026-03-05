@@ -22,6 +22,11 @@ namespace Assets.Scripts
             ridingFaller.GetComponent<FallerController>().StopRiding();
         }
         public RidingFallerState(GameObject faller) {
+            if(faller == null)
+            {
+                Debug.LogError("Faller cannot be null when entering RidingFallerState");
+                return;
+            }
             ridingFaller = faller;
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
@@ -56,6 +61,11 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
+            if (ridingFaller == null)
+            {
+                Debug.LogError("RidingFallerState Update called with null ridingFaller");
+                return new FallingState();
+            }
             IPlayerState newState = this;
             if (playerController.isGrounded())
             {

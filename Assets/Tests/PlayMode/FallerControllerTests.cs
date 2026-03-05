@@ -82,7 +82,7 @@ public class FallerControllerTests
     public void StartRiding_StopRiding_TogglesState()
     {
         controller.StartRiding();
-        // No public getter for beingRidden, but we verify no exception thrown
+        // No public getter for BeingRidden, but we verify no exception thrown
         // and StopRiding can be called after
         controller.StopRiding();
     }

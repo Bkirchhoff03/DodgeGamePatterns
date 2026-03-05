@@ -57,7 +57,7 @@ public class InputSystemController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.M))
         {
-            FallerManager.instance().SaveFallersToFile();
+            FallerManager.instance().SaveFallersToFile(playerController);
         }
         playerController.HandleInput(moveDirection);
     }

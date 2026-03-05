@@ -9,13 +9,13 @@ public class FallerController : MonoBehaviour
     public GameObject fallerObject { get; private set; }
     float fallerSpeed;
     bool isFrozen = false;
-    bool beingRidden = false;
+    public bool BeingRidden {get; private set;}
     // Public read-only access so collision handlers can check if this faller is grounded
     public bool IsFrozen => isFrozen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        BeingRidden = false;
     }
     public void Init(Vector3 spawnPoint, Vector3 size, float speed, Sprite sprite, GameObject fallerObj)
     {
@@ -40,7 +40,7 @@ public class FallerController : MonoBehaviour
             DeleteMe();
         }
         /*Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
-        if (!beingRidden && r != null && Mathf.Abs(r.linearVelocity.x) < 0.001 && Mathf.Abs(r.linearVelocity.y) < 0.001) 
+        if (!BeingRidden && r != null && Mathf.Abs(r.linearVelocity.x) < 0.001 && Mathf.Abs(r.linearVelocity.y) < 0.001) 
         {
             FloorPause();
         }*/
@@ -48,10 +48,10 @@ public class FallerController : MonoBehaviour
     }
     public void StartRiding()
     {
-        beingRidden = true;
+        BeingRidden = true;
     }
     public void StopRiding() { 
-        beingRidden = false; 
+        BeingRidden = false; 
     }
     public void DeleteMe()
     {
@@ -79,12 +79,12 @@ public class FallerController : MonoBehaviour
         
         if ((playerPoint.x + Constants.halfPlayerWidth) > leftBound && (playerPoint.x - Constants.halfPlayerWidth) < rightBound)
         { 
-            beingRidden = true;
+            BeingRidden = true;
             return true;
         }
         else
         {
-            beingRidden = false;
+            BeingRidden = false;
             return false;
         }
     }

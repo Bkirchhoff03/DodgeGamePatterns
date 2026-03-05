@@ -15,6 +15,7 @@ public class FallerManager
         public Vector3 size;
         public float currentSpeed;
         public bool isFrozen;
+        public bool beingRidden;
     }
     [System.Serializable]
     public class FallerDataList
@@ -30,7 +31,9 @@ public class FallerManager
     int lastSpawnedFallerNumber = 0;
     // Tracks all active fallers by name; cleaned up each spawn cycle
     public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
-    private readonly string directory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
+    private readonly string FallerDirectory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
+    private readonly string PlayerDirectory = Constants.playerDataSavePath + GameManager.instance().currentPlayerSaveFileName;
+
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
@@ -118,9 +121,14 @@ public class FallerManager
         {
             fallerBehavior.FloorPause();
         }
+        if(data.beingRidden)
+        {
+            fallerBehavior.StartRiding();
+            //GameManager.instance().player.GetComponent<PlayerController>().rideFaller(fallerObject);
+        }
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
     }
-    public void SaveFallersToFile()
+    public void SaveFallersToFile(PlayerController playerController)
     {
         if(lastSpawnedFallerNumber == numberOfSpawns)
         {
@@ -141,7 +149,8 @@ public class FallerManager
                 position = faller.transform.position,
                 size = faller.transform.localScale,
                 currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
-                isFrozen = faller.amIFrozen()
+                isFrozen = faller.amIFrozen(),
+                beingRidden = faller.BeingRidden
             };
             fallerDataList.fallers.Add(data);
         }
@@ -149,28 +158,35 @@ public class FallerManager
         {
             File.Delete(Constants.fallerDataSavePath); // Clear old data before saving new
         }
-        /*foreach (FallerData data in fallerDataList)
-        {
-            string json = JsonUtility.ToJson(data);
-            File.AppendAllText(directory, json);
-        }*/
         string json = JsonUtility.ToJson(fallerDataList, true);
-        File.WriteAllText(directory, json);
-        Debug.Log($"Saved {fallerDataList.fallers.Count} fallers to file at {directory}");
+        File.WriteAllText(FallerDirectory, json);
+        Debug.Log($"Saved {fallerDataList.fallers.Count} fallers to file at {FallerDirectory}");
+        
+        if (File.Exists(Constants.playerDataSavePath))
+        {
+            File.Delete(Constants.playerDataSavePath); // Clear old data before saving new
+        }
+        File.WriteAllText(PlayerDirectory, JsonUtility.ToJson(playerController.GetMyData(), true));
     }
-    public void LoadFallersFromFile()
+    public void LoadFallersFromFile(PlayerController playerController)
     {
-        if (!File.Exists(directory))
+        if (!File.Exists(FallerDirectory))
         {
             Debug.LogWarning("No faller data file found to load.");
             return;
         }
-        string json = File.ReadAllText(directory);
+        string json = File.ReadAllText(FallerDirectory);
         FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(json);
         foreach (FallerData data in fallerDataList.fallers) 
         {
-            Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}");
+            Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
             SpawnFallerAtData(data);
+        }
+        if(File.Exists(PlayerDirectory))
+        {
+            string playerJson = File.ReadAllText(PlayerDirectory);
+            PlayerController.PlayerData playerData = JsonUtility.FromJson<PlayerController.PlayerData>(playerJson);
+            playerController.SetFromData(playerData);
         }
     }
     // Destroys a faller and removes it from tracking (e.g. when player is crushed by it)
@@ -214,5 +230,19 @@ public class FallerManager
         {
             fallersInPlay.Remove(key);
         }
+    }
+    public FallerController GetFallerBeingRidden()
+    {
+        Debug.Log("Checking for faller being ridden...");
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value != null && kvp.Value.BeingRidden)
+            {
+                Debug.Log($"Faller being ridden: {kvp.Key}");
+                return kvp.Value;
+            }
+        }
+        Debug.Log("No faller is currently being ridden.");
+        return null;
     }
 }

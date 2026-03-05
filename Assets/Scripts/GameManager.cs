@@ -23,11 +23,14 @@ public class GameManager : MonoBehaviour
     private float fallerSpawnCameraDiff;
     private PlayerController playerController;
     public string currentFallerSaveFileName = "fallerSaveData.json"; // For testing purposes, the name of the file to save/load faller data
+    public string currentPlayerSaveFileName = "playerSaveData.json"; // For testing purposes, the name of the file to save/load player data
     private float clickSpawnCooldown = 0.0f; // Minimum time between spawns when using clickToSpawn
     public bool clickToSpawn = false; // For testing purposes, allows spawning a faller on click instead of timer
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public bool isPaused = false;
     private GameObject pausePanel;
+    private TextMeshProUGUI HeightTracker;
+    private float trapDoorHeight;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -43,13 +46,16 @@ public class GameManager : MonoBehaviour
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
-        float trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
+        trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
+
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
         fallerManager.init(sprite, trapDoorHeight);
 
         playerController = player.GetComponent<PlayerController>();
-        if(camera == null)
+        HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
+        HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText;
+        if (camera == null)
         {
             camera = new GameObject("Main Camera");
             camera.AddComponent<Camera>();
@@ -58,7 +64,7 @@ public class GameManager : MonoBehaviour
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
         if(spawnFallersFromFile)
         {
-            fallerManager.LoadFallersFromFile();
+            fallerManager.LoadFallersFromFile(playerController);
         }
         pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
@@ -91,6 +97,7 @@ public class GameManager : MonoBehaviour
             camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
+        HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 
     }
     public void HandlePlayerFallerCollision(GameObject player, GameObject faller, PlayerFallerCollisionType collisionType)
     {
