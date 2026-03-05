@@ -33,6 +33,7 @@ namespace Assets.Scripts
         public const string fallerNamePrefix = "Faller_";
         public static string fallerDataSavePath => "Assets/FallerSaveData/";
         public static string playerDataSavePath => "Assets/PlayerSaveData/";
+        public static string saveFilePath => "Assets/SaveFiles/";
 
     }
 }

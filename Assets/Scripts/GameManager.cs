@@ -62,11 +62,21 @@ public class GameManager : MonoBehaviour
             camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
         }
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
-        if(spawnFallersFromFile)
+        string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
+        if (!string.IsNullOrEmpty(pendingSave))
+        {
+            PlayerPrefs.DeleteKey("pendingSaveFile");
+            fallerManager.LoadFallersFromFile(playerController, pendingSave);
+            
+        }else if (spawnFallersFromFile)
         {
             fallerManager.LoadFallersFromFile(playerController);
         }
-        pausePanel = GameObject.Find("PausePanel");
+            /*if(spawnFallersFromFile)
+            {
+                fallerManager.LoadFallersFromFile(playerController);
+            }*/
+            pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
     }
 

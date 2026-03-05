@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -6,11 +6,23 @@ public class MainMenuController : MonoBehaviour
 {
     private GameObject mainPanel;
     private GameObject howToPlayPanel;
+    private GameObject loadSavePanel;
+    private GameObject saveFileListContainer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mainPanel = GameObject.Find("MainPanel");
         howToPlayPanel = GameObject.Find("HowToPlayPanel");
+        loadSavePanel = GameObject.Find("LoadSavePanel");
+        
+        var loadSaveBtn = GameObject.Find("LoadSaveButton");
+        loadSaveBtn.GetComponent<Button>().onClick.AddListener(ShowLoadSave);
+
+        var backFromLoadBtn = GameObject.Find("BackFromLoadButton");
+        backFromLoadBtn.GetComponent<Button>().onClick.AddListener(HideLoadSave);
+
+        saveFileListContainer = GameObject.Find("SaveFileListContainer");
+
         var playBtn = GameObject.Find("PlayButton");
         playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
 
@@ -20,7 +32,7 @@ public class MainMenuController : MonoBehaviour
         var quitBtn = GameObject.Find("QuitButton");
         quitBtn.GetComponent<Button>().onClick.AddListener(QuitGame);
 
-        var backBtn = GameObject.Find("BackButton");
+        var backBtn = GameObject.Find("BackFromHowToPlayButton");
         backBtn.GetComponent<Button>().onClick.AddListener(HideHowToPlay);
 
         howToPlayPanel.SetActive(false);
@@ -29,9 +41,109 @@ public class MainMenuController : MonoBehaviour
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() { mainPanel.SetActive(false); howToPlayPanel.SetActive(true); }
     public void HideHowToPlay() { howToPlayPanel.SetActive(false); mainPanel.SetActive(true); }
-    // Update is called once per frame
-    void Update()
+    public void ShowLoadSave()
     {
-        
+        mainPanel.SetActive(false);
+        loadSavePanel.SetActive(true);
+        PopulateSaveFileList();
+    }
+
+    public void HideLoadSave()
+    {
+        loadSavePanel.SetActive(false);
+        mainPanel.SetActive(true);
+    }
+
+    private void PopulateSaveFileList()
+    {
+        // Clear any buttons from a previous showing
+        foreach (Transform child in saveFileListContainer.transform)
+            Destroy(child.gameObject);
+
+        string[] files = System.IO.Directory.GetFiles(
+            Assets.Scripts.Constants.saveFilePath, "*.json");
+
+        if (files.Length == 0)
+        {
+            // Show a "no saves found" label
+            var noSavesObj = new GameObject("NoSavesText");
+            noSavesObj.transform.SetParent(saveFileListContainer.transform, false);
+            var tmp = noSavesObj.AddComponent<TMPro.TextMeshProUGUI>();
+            tmp.text = "No save files found.";
+            tmp.fontSize = 28;
+            tmp.alignment = TMPro.TextAlignmentOptions.Center;
+            return;
+        }
+
+        // Sort newest-first (filenames contain timestamp so lexicographic = chronological)
+        System.Array.Sort(files);
+        System.Array.Reverse(files);
+
+        float buttonHeight = 60f;
+        float padding = 10f;
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            string filePath = files[i];
+            string label = FormatSaveFileName(System.IO.Path.GetFileName(filePath));
+
+            var btnObj = new GameObject("SaveBtn_" + i);
+            btnObj.transform.SetParent(saveFileListContainer.transform, false);
+
+            var img = btnObj.AddComponent<UnityEngine.UI.Image>();
+            img.color = new Color(0.25f, 0.25f, 0.25f, 1f);
+
+            var btn = btnObj.AddComponent<UnityEngine.UI.Button>();
+
+            var rect = btnObj.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0f, 1f);
+            rect.anchorMax = new Vector2(1f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+            rect.sizeDelta = new Vector2(0f, buttonHeight);
+            rect.anchoredPosition = new Vector2(0f, -(i * (buttonHeight + padding)));
+
+            var textObj = new GameObject("Label");
+            textObj.transform.SetParent(btnObj.transform, false);
+            var tmp = textObj.AddComponent<TMPro.TextMeshProUGUI>();
+            tmp.text = label;
+            tmp.fontSize = 28;
+            tmp.alignment = TMPro.TextAlignmentOptions.Center;
+            var textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = textRect.offsetMax = Vector2.zero;
+
+            // Capture path for closure
+            string capturedPath = filePath;
+            btn.onClick.AddListener(() => LoadFromSaveFile(capturedPath));
+        }
+    }
+
+    private string FormatSaveFileName(string filename)
+    {
+        // Input: "Save202603051500.json"  →  Output: "Save: 05/03/2026 15:00"
+        try
+        {
+            // Strip prefix "-Save" and extension ".json"
+            string stamp = filename.Replace("Save", "").Replace(".json", "");
+            // stamp = "202603051500"
+            int year = int.Parse(stamp.Substring(0, 4));
+            int month = int.Parse(stamp.Substring(4, 2));
+            int day = int.Parse(stamp.Substring(6, 2));
+            int hour = int.Parse(stamp.Substring(8, 2));
+            int min = int.Parse(stamp.Substring(10, 2));
+            return $"Save: {day:D2}/{month:D2}/{year}  {hour:D2}:{min:D2}";
+        }
+        catch
+        {
+            return filename; // Fall back to raw name if parsing fails
+        }
+    }
+
+    private void LoadFromSaveFile(string filePath)
+    {
+        PlayerPrefs.SetString("pendingSaveFile", filePath);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("SampleScene");
     }
 }

@@ -1,8 +1,10 @@
 using Assets.Scripts;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.U2D;
+using Random = UnityEngine.Random;
 
 public class FallerManager
 {
@@ -24,6 +26,12 @@ public class FallerManager
         public FallerDataList() { 
             fallers = new List<FallerData>();
         }
+    }
+    [System.Serializable]
+    public class SaveData
+    {
+        public string playerDataFileRef;
+        public string fallerDataFileRef;
     }
     int numberOfSpawns = 0;
     Sprite sprite;
@@ -130,7 +138,8 @@ public class FallerManager
     }
     public void SaveFallersToFile(PlayerController playerController)
     {
-        if(lastSpawnedFallerNumber == numberOfSpawns)
+        string dateTime = DateTime.Now.ToString("yyyyMMddHHmm");
+        if (lastSpawnedFallerNumber == numberOfSpawns)
         {
             Debug.Log("No new fallers to save since last save.");
             return;
@@ -154,19 +163,29 @@ public class FallerManager
             };
             fallerDataList.fallers.Add(data);
         }
-        if(File.Exists(Constants.fallerDataSavePath))
+        if(File.Exists(FallerDirectory))
         {
-            File.Delete(Constants.fallerDataSavePath); // Clear old data before saving new
+            File.Delete(FallerDirectory); // Clear old data before saving new
+        }
+        string NewFallerFileSave = Constants.fallerDataSavePath + "FallerSave" + dateTime + ".json";
+        if (File.Exists(NewFallerFileSave))
+        {
+            File.Delete(NewFallerFileSave); // Clear old data before saving new
         }
         string json = JsonUtility.ToJson(fallerDataList, true);
+        File.WriteAllText(NewFallerFileSave, json);
         File.WriteAllText(FallerDirectory, json);
+
         Debug.Log($"Saved {fallerDataList.fallers.Count} fallers to file at {FallerDirectory}");
         
         if (File.Exists(Constants.playerDataSavePath))
         {
             File.Delete(Constants.playerDataSavePath); // Clear old data before saving new
         }
+        string NewPlayerFileSave = Constants.playerDataSavePath + "PlayerSave" + dateTime + ".json";
+        File.WriteAllText(NewPlayerFileSave, JsonUtility.ToJson(playerController.GetMyData(), true));
         File.WriteAllText(PlayerDirectory, JsonUtility.ToJson(playerController.GetMyData(), true));
+        File.WriteAllText(Constants.saveFilePath + "Save" + dateTime + ".json", JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave }, true));
     }
     public void LoadFallersFromFile(PlayerController playerController)
     {
@@ -188,6 +207,45 @@ public class FallerManager
             PlayerController.PlayerData playerData = JsonUtility.FromJson<PlayerController.PlayerData>(playerJson);
             playerController.SetFromData(playerData);
         }
+    }
+    public void LoadFallersFromFile(PlayerController playerController, string fileToUse)
+    {
+        
+        if (!File.Exists(fileToUse))
+        {
+            Debug.LogWarning("No faller data file found to load.");
+            return;
+        }
+        string json = File.ReadAllText(fileToUse);
+        SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+        string FallerFileToUse = saveData.fallerDataFileRef;
+        string PlayerFileToUse = saveData.playerDataFileRef;
+
+        if (!File.Exists(FallerFileToUse))
+        {
+            Debug.LogWarning("No faller data file found to load.");
+        }
+        else
+        {
+            string FallerJson = File.ReadAllText(FallerFileToUse);
+            FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(FallerJson);
+            foreach (FallerData data in fallerDataList.fallers)
+            {
+                Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
+                SpawnFallerAtData(data);
+            }
+        }
+        if(!File.Exists(PlayerFileToUse))
+        {
+            Debug.LogWarning("No player data file found to load.");
+        }
+        else
+        {
+             string playerJson = File.ReadAllText(PlayerFileToUse);
+             PlayerController.PlayerData playerData = JsonUtility.FromJson<PlayerController.PlayerData>(playerJson);
+             playerController.SetFromData(playerData);
+        }
+
     }
     // Destroys a faller and removes it from tracking (e.g. when player is crushed by it)
     public void RemoveFaller(string name)
