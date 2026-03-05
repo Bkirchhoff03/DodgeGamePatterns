@@ -156,7 +156,11 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame() => TogglePause();
 
-    public void QuitGame() => Application.Quit();
+    public void QuitGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
     public void givePlayerTime()
     {
         TimeBetweenSpawns += currentTimeBetweenSpawns;
