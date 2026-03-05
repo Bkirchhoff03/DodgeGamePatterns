@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class DodgingState : IPlayerState
+    public class DodgingState : IPlayerState
     {
         
         private Vector3 currentDirection = Vector3.zero;
@@ -21,6 +21,10 @@ namespace Assets.Scripts
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
             IPlayerState nextState = this;
+            if (moveInput.isPunch != 0)
+            {
+                playerController.HandlePunch(moveInput);
+            }
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
@@ -33,6 +37,7 @@ namespace Assets.Scripts
             {
                 currentDirection = Vector3.zero;
             }
+
             
             // Handle input specific to dodging state
             return nextState;

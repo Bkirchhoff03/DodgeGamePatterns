@@ -19,6 +19,14 @@ public class InputSystemController : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance() != null) { 
+            GameManager.instance().TogglePause(); 
+        }
+        
+        if (GameManager.instance() != null && GameManager.instance().isPaused) { 
+            return; 
+        }
+        
         PlayerController.MoveDirection moveDirection = new PlayerController.MoveDirection();
         if(Input.GetKey(KeyCode.A))
         {
@@ -35,10 +43,22 @@ public class InputSystemController : MonoBehaviour
             moveDirection.Ydirection = 1;
             playerController.setState(new JumpingState());
         }
-        /*if(Input.GetKey(KeyCode.W))
+        if(Input.GetMouseButton(0))
         {
-            moveDirection.Ydirection = 1;
-        }*/
+            moveDirection.isPunch = -1;
+        }
+        if(Input.GetMouseButton(1))
+        {
+            moveDirection.isPunch = 1;
+        }
+        if(Input.GetKey(KeyCode.P))
+        {
+            GameManager.instance().SpawnFallerAtClick(Input.mousePosition);
+        }
+        if (Input.GetKey(KeyCode.M))
+        {
+            FallerManager.instance().SaveFallersToFile(playerController);
+        }
         playerController.HandleInput(moveDirection);
     }
 

@@ -11,13 +11,31 @@ public class PlayerController : MonoBehaviour
     {
         public int Xdirection;
         public int Ydirection;
+        public int isPunch;
+    }
+
+    [System.Serializable]
+    public class PlayerData
+    {
+        public string name;
+        public Vector3 position;
+        public Vector2 currentSpeed;
+        public string currentStateName;
     }
     public IPlayerState state;
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
+    public GameObject punchingArm;
+    private bool isPunchingLeft = false;
+    private float punchingVelocity;
+    private bool isPunchingRight = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (GameManager.instance() != null && GameManager.instance().spawnFallersFromFile)
+        {
+            return;
+        }
         state = new DodgingState();
     }
 
@@ -25,6 +43,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
+        
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
@@ -73,7 +92,52 @@ public class PlayerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity;
         state = new RidingFallerState(faller);
     }
-    
+    public void HandlePunch(MoveDirection moveInput)
+    {
+        if(moveInput.isPunch == 1)
+        {
+            punchingArm.GetComponent<PunchingArmController>().PunchRight();
+        }else if(moveInput.isPunch == -1)
+        {
+            punchingArm.GetComponent<PunchingArmController>().PunchLeft();
+        }
+    }
+    public PlayerData GetMyData()
+    {
+        PlayerData data = new PlayerData();
+        data.name = gameObject.name;
+        data.position = gameObject.transform.position;
+        data.currentSpeed = GetComponent<Rigidbody2D>().linearVelocity;
+        data.currentStateName = state.getName();
+        return data;
+    }
+    public void SetFromData(PlayerData data)
+    {
+        gameObject.name = data.name;
+        gameObject.transform.position = data.position;
+        GetComponent<Rigidbody2D>().linearVelocity = data.currentSpeed;
+        state = GetStateFromName(data.currentStateName);
+        state.EnterState(this);
+    }
+
+    public IPlayerState GetStateFromName(string currentStateName)
+    {
+        Debug.Log("Setting player state from name: " + currentStateName);
+        switch (currentStateName)
+        {
+            case Constants.crushedStateName:
+                return new CrushedState();
+            case Constants.dodgingStateName:
+                return new DodgingState();
+            case Constants.jumpingStateName:
+                return new JumpingState();
+            case Constants.ridingFallerStateName:
+                return new RidingFallerState(FallerManager.instance().GetFallerBeingRidden().fallerObject);
+            default:
+                return new DodgingState();
+        }
+    }
+
     internal bool isGrounded()
     {
         if (gameObject.transform.position.y <= 0.1f) //Physics2D.Raycast(transform.position, Vector2.down, 0.1f))
