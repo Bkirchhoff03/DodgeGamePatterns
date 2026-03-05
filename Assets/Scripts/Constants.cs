@@ -20,6 +20,7 @@ namespace Assets.Scripts
         public const float dodgeSpeed = 10.0f;
         public const float gameGravity = 0.05f;//0.1f;
         public const float playerGravity = 4.8f;
+        public const float halfPlayerWidth = 0.25f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string jumpingStateName = "Jumping";
         public const string dodgingStateName = "Dodging";

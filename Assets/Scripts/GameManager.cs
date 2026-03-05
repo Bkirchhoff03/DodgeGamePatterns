@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private float clickSpawnCooldown = 0.0f; // Minimum time between spawns when using clickToSpawn
     public bool clickToSpawn = false; // For testing purposes, allows spawning a faller on click instead of timer
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
+    public bool isPaused = false;
+    private GameObject pausePanel;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -58,6 +60,8 @@ public class GameManager : MonoBehaviour
         {
             fallerManager.LoadFallersFromFile();
         }
+        pausePanel = GameObject.Find("PausePanel");
+        pausePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -136,6 +140,16 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
+        pausePanel.SetActive(isPaused);
+    }
+
+    public void ResumeGame() => TogglePause();
+
+    public void QuitGame() => Application.Quit();
     public void givePlayerTime()
     {
         TimeBetweenSpawns += currentTimeBetweenSpawns;

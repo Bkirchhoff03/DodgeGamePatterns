@@ -76,16 +76,16 @@ public class FallerController : MonoBehaviour
     {
         float leftBound = gameObject.transform.position.x - (gameObject.transform.localScale.x / 2.0f);
         float rightBound = gameObject.transform.position.x + (gameObject.transform.localScale.x / 2.0f);
-
-        if (playerPoint.x > leftBound && playerPoint.x < rightBound)
-        {
-            beingRidden = false;
-            return false;
+        
+        if ((playerPoint.x + Constants.halfPlayerWidth) > leftBound && (playerPoint.x - Constants.halfPlayerWidth) < rightBound)
+        { 
+            beingRidden = true;
+            return true;
         }
         else
         {
-            beingRidden = true;
-            return true;
+            beingRidden = false;
+            return false;
         }
     }
     public bool amIFrozen()

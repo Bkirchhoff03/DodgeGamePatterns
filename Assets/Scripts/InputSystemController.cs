@@ -19,6 +19,14 @@ public class InputSystemController : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance() != null) { 
+            GameManager.instance().TogglePause(); 
+        }
+        
+        if (GameManager.instance() != null && GameManager.instance().isPaused) { 
+            return; 
+        }
+        
         PlayerController.MoveDirection moveDirection = new PlayerController.MoveDirection();
         if(Input.GetKey(KeyCode.A))
         {

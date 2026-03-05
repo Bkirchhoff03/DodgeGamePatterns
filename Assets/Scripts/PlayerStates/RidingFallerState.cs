@@ -69,7 +69,7 @@ namespace Assets.Scripts
             {
                 playerController.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
                 playerController.Move(currentDirection);
-                if (ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
+                if (!ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
                 {
                     newState = new FallingState();
                     newState.EnterState(playerController);
