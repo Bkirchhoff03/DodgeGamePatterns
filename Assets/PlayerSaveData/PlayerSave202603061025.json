@@ -1,0 +1,13 @@
+{
+    "name": "Player",
+    "position": {
+        "x": 2.261733293533325,
+        "y": 25.015352249145509,
+        "z": 0.0
+    },
+    "currentSpeed": {
+        "x": 0.0,
+        "y": -12.67038631439209
+    },
+    "currentStateName": "Jumping"
+}

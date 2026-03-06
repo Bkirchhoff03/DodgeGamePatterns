@@ -22,6 +22,7 @@ public class MainMenuController : MonoBehaviour
         backFromLoadBtn.GetComponent<Button>().onClick.AddListener(HideLoadSave);
 
         saveFileListContainer = GameObject.Find("SaveFileListContainer");
+        saveFileListContainer = SetupScrollView(saveFileListContainer);
 
         var playBtn = GameObject.Find("PlayButton");
         playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
@@ -80,7 +81,6 @@ public class MainMenuController : MonoBehaviour
         System.Array.Reverse(files);
 
         float buttonHeight = 60f;
-        float padding = 10f;
 
         for (int i = 0; i < files.Length; i++)
         {
@@ -95,12 +95,9 @@ public class MainMenuController : MonoBehaviour
 
             var btn = btnObj.AddComponent<UnityEngine.UI.Button>();
 
-            var rect = btnObj.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0f, 1f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.sizeDelta = new Vector2(0f, buttonHeight);
-            rect.anchoredPosition = new Vector2(0f, -(i * (buttonHeight + padding)));
+            var le = btnObj.AddComponent<LayoutElement>();
+            le.preferredHeight = buttonHeight;
+            le.flexibleWidth = 1f;
 
             var textObj = new GameObject("Label");
             textObj.transform.SetParent(btnObj.transform, false);
@@ -117,6 +114,46 @@ public class MainMenuController : MonoBehaviour
             string capturedPath = filePath;
             btn.onClick.AddListener(() => LoadFromSaveFile(capturedPath));
         }
+    }
+
+    private GameObject SetupScrollView(GameObject container)
+    {
+        var scrollRect = container.AddComponent<ScrollRect>();
+        scrollRect.horizontal = false;
+        scrollRect.vertical = true;
+        scrollRect.scrollSensitivity = 20f;
+
+        // Viewport — clips the content so overflow is hidden
+        var viewport = new GameObject("Viewport", typeof(RectTransform));
+        viewport.transform.SetParent(container.transform, false);
+        viewport.AddComponent<RectMask2D>();
+        var viewportRect = viewport.GetComponent<RectTransform>();
+        viewportRect.anchorMin = Vector2.zero;
+        viewportRect.anchorMax = Vector2.one;
+        viewportRect.offsetMin = viewportRect.offsetMax = Vector2.zero;
+
+        // Content — grows to fit all buttons; VerticalLayoutGroup stacks them
+        var content = new GameObject("Content", typeof(RectTransform));
+        content.transform.SetParent(viewport.transform, false);
+        var contentRect = content.GetComponent<RectTransform>();
+        contentRect.anchorMin = new Vector2(0f, 1f);
+        contentRect.anchorMax = new Vector2(1f, 1f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
+        contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
+
+        var vlg = content.AddComponent<VerticalLayoutGroup>();
+        vlg.spacing = 10f;
+        vlg.childForceExpandWidth = true;
+        vlg.childForceExpandHeight = false;
+        vlg.padding = new RectOffset(5, 5, 5, 5);
+
+        var csf = content.AddComponent<ContentSizeFitter>();
+        csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        scrollRect.viewport = viewportRect;
+        scrollRect.content = contentRect;
+
+        return content;
     }
 
     private string FormatSaveFileName(string filename)
