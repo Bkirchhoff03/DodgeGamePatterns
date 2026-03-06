@@ -12,7 +12,7 @@ namespace Assets.Scripts
 
         private Vector3 currentDirection = Vector3.zero;
         private Vector3 startingPosition;
-        private Vector3 startingjumpVelocity = new Vector3(0, 25.0f, 0);
+        private Vector3 startingjumpVelocity = new Vector3(0, 22f, 0);
         private Vector3 currentJumpSpeed = new Vector3(0, 5.0f, 0);
 
         public JumpingState()

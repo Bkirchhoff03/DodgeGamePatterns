@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(sprite, trapDoorHeight);
+        fallerManager.init(sprite, trapDoorHeight+10.0f);
 
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         {
             camera = new GameObject("Main Camera");
             camera.AddComponent<Camera>();
-            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
+            camera.transform.position = new Vector3(0.0f, 5.0f, -20.0f);
         }
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
         string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
@@ -97,14 +97,14 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
-        if(player != null && player.transform.position.y > 4.0f)
+        if(player != null && player.transform.position.y > 5.0f)
         {
-            camera.transform.position = new Vector3(0.0f, player.transform.position.y, -10.0f);
+            camera.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
         else if(player != null)
         {
-            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
+            camera.transform.position = new Vector3(0.0f, 5.0f, -20.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 

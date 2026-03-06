@@ -76,6 +76,7 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
+        fallerObject.layer = LayerMask.NameToLayer("Fallers");
         fallerObject.AddComponent<FallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();

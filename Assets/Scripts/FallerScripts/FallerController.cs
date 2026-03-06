@@ -35,8 +35,9 @@ public class FallerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fallerObject.transform.position.y < -4.0f)
+        if (fallerObject.transform.position.y < -4.0f || fallerObject.transform.position.x > 12.5f || fallerObject.transform.position.x < -12.5f)
         {
+            //Out of bounds either in the wall of water, or below the floor, so should be deleted
             DeleteMe();
         }
         /*Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
