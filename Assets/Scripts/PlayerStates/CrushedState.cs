@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class CrushedState : IPlayerState
+    public class CrushedState : IPlayerState
     {
 
         private Vector3 currentDirection = Vector3.zero;

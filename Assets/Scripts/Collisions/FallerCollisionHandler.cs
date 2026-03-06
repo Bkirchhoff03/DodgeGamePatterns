@@ -23,7 +23,14 @@ public class FallerCollisionHandler : MonoBehaviour
         FallerController otherFaller = collision.gameObject.GetComponent<FallerController>();
         if (otherFaller != null && otherFaller.IsFrozen)
         {
-            thisFaller.FloorPause();
+            if (collision.gameObject.GetComponent<Rigidbody2D>() != null && Mathf.Abs(collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity.x) > 0.1)
+            {
+                //Don't freeze, its moving left/right.
+            }
+            else
+            {
+                thisFaller.FloorPause();
+            }
         }
     }
 }

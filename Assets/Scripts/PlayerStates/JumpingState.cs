@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class JumpingState : IPlayerState
+    public class JumpingState : IPlayerState
     {
 
         private Vector3 currentDirection = Vector3.zero;
@@ -37,7 +37,11 @@ namespace Assets.Scripts
             if (startingPosition == null)
             {
                 startingPosition = playerController.transform.position;
-                UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+                //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+            }
+            if (moveInput.isPunch != 0)
+            {
+                playerController.HandlePunch(moveInput);
             }
             if (moveInput.Xdirection < 0)
             {
