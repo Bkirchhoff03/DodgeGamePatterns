@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private GameObject pausePanel;
     private TextMeshProUGUI HeightTracker;
     private float trapDoorHeight;
+    private float cameraInitialY;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
             camera.AddComponent<Camera>();
             camera.transform.position = new Vector3(0.0f, 5.0f, -20.0f);
         }
+        cameraInitialY = camera.transform.position.y;
         fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
         string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
         if (!string.IsNullOrEmpty(pendingSave))
@@ -97,14 +99,14 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
-        if(player != null && player.transform.position.y > 5.0f)
+        if(player != null && player.transform.position.y > cameraInitialY)
         {
             camera.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
         else if(player != null)
         {
-            camera.transform.position = new Vector3(0.0f, 5.0f, -20.0f);
+            camera.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
         }
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 

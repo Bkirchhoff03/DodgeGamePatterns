@@ -21,6 +21,7 @@ public class FallerController : MonoBehaviour
     {
         fallerObject = fallerObj;
         SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sortingOrder = 1;
         spriteRenderer.sprite = sprite;
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
