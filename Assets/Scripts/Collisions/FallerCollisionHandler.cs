@@ -16,10 +16,31 @@ public class FallerCollisionHandler : MonoBehaviour
             return;
         }
 
-        // Only freeze this faller if the other faller is already frozen (grounded).
-        // This creates natural stacking: blocks only freeze when landing on
-        // something connected to the ground. Two unfrozen fallers colliding
-        // mid-air will bounce off each other via physics instead.
+        FreezeIfOnFrozenFaller(thisFaller, collision);
+    }
+
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            return;
+        }
+
+        FallerController thisFaller = gameObject.GetComponent<FallerController>();
+        if (thisFaller == null || thisFaller.IsFrozen)
+        {
+            return;
+        }
+
+        FreezeIfOnFrozenFaller(thisFaller, collision);
+    }
+
+    // Only freeze this faller if the other faller is already frozen (grounded).
+    // This creates natural stacking: blocks only freeze when landing on
+    // something connected to the ground. Two unfrozen fallers colliding
+    // mid-air will bounce off each other via physics instead.
+    private void FreezeIfOnFrozenFaller(FallerController thisFaller, Collision2D collision)
+    {
         FallerController otherFaller = collision.gameObject.GetComponent<FallerController>();
         if (otherFaller != null && otherFaller.IsFrozen)
         {

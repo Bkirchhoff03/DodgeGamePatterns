@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         //    GetComponent<Camera>().AddComponent<Camera>();
         //    GetComponent<Camera>().transform.position = new Vector3(0.0f, 7.0f, -20.0f);
         //}
-        cameraInitialY = GetComponent<Camera>().transform.position.y;
-        fallerSpawnCameraDiff = spawnHeight - GetComponent<Camera>().transform.position.y;
+        cameraInitialY = Camera.main.transform.position.y;
+        fallerSpawnCameraDiff = spawnHeight - Camera.main.transform.position.y;
         string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
         if (!string.IsNullOrEmpty(pendingSave))
         {
@@ -102,13 +102,13 @@ public class GameManager : MonoBehaviour
         if(player != null && player.transform.position.y > cameraInitialY)
         {
 
-            GetComponent<Camera>().transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
-            spawnHeight = GetComponent<Camera>().transform.position.y + fallerSpawnCameraDiff;
+            Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
+            spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
         else if(player != null)
         {
-            GetComponent<Camera>().transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
-            spawnHeight = GetComponent<Camera>().transform.position.y + fallerSpawnCameraDiff;
+            Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
+            spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 
     }
