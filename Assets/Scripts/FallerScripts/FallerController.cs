@@ -119,5 +119,13 @@ public class FallerController : MonoBehaviour
         {
             arm.CancelPunch();
         }
+        else
+        {
+            //add to velocity of the faller based on the punch direction and velocity
+            Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
+            float punchVelocity = arm.getPunchingVelocity();
+            r.AddForce(new Vector2(punchVelocity * Constants.punchForceMultiplier, 0.0f), ForceMode2D.Impulse);
+            arm.CancelPunch();
+        }
     }
 }

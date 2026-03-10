@@ -15,6 +15,10 @@ namespace Assets.Scripts
         private Vector3 currentDirection = Vector3.zero;
         private GameObject ridingFaller;
         public void EnterState(PlayerController playerController) {
+            if (ridingFaller == null)
+            {
+                ridingFaller = FallerManager.instance().GetFallerBeingRidden().fallerObject;
+            }
             ridingFaller.GetComponent<FallerController>().StartRiding();
         }
         public void ExitState(PlayerController playerController)

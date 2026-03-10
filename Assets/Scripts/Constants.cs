@@ -21,6 +21,7 @@ namespace Assets.Scripts
         public const float gameGravity = 0.05f;//0.1f;
         public const float playerGravity = 4.8f;
         public const float halfPlayerWidth = 0.25f;
+        public const float punchForceMultiplier = 1.5f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";

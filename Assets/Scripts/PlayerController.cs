@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
     }
     public void crush()
     {
-        state = new CrushedState();
+        IPlayerState previousState = state;
+        state = new CrushedState(previousState);
     }
     public void rideFaller(GameObject faller)
     {
@@ -126,7 +127,7 @@ public class PlayerController : MonoBehaviour
         switch (currentStateName)
         {
             case Constants.crushedStateName:
-                return new CrushedState();
+                return new CrushedState(null);
             case Constants.dodgingStateName:
                 return new DodgingState();
             case Constants.jumpingStateName:
