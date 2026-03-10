@@ -59,6 +59,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
+            //Debug.Log("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
             IPlayerState nextState = this;
             playerController.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
             if (playerController.isGrounded())

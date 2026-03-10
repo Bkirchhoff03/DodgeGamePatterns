@@ -4,7 +4,6 @@
 
 - Player hovers slightly above the floor, at a height of 0.01 units, which can cause some issues with collision detection, and state changes.
 
-- Arm can go far from the player with more mouse clicks. 
+- Player can fall between blocks that are close together occasionally.
 
-- Arm can go through walls and other colliders.
-
+- Player can fall between stacks of blocks and won't be able to climb out. More of a gameplay issue than bug. 

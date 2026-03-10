@@ -66,7 +66,7 @@ namespace Assets.Scripts
         public IPlayerState Update(PlayerController playerController)
         {
             IPlayerState nextState = this;
-            UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+            //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
             playerController.transform.GetComponent<SpriteRenderer>().color = Color.green;
             if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
             {

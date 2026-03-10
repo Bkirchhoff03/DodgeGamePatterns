@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 public class FloorCollisionHandler : MonoBehaviour
@@ -8,6 +9,13 @@ public class FloorCollisionHandler : MonoBehaviour
         if (faller != null)
         {
             faller.FloorPause();
+        }
+        else 
+        {
+            if (collision.gameObject.TryGetComponent<PlayerController>(out var player))
+            {
+                player.setState(new DodgingState());
+            }
         }
     }
 }
