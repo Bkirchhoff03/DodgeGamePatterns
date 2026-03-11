@@ -4,7 +4,7 @@ public class ArmCollisionHandler : MonoBehaviour
 {
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<FallerController>() == null)
+        if (collision.gameObject.GetComponent<NormalFallerController>() == null)
         {
             return;
         }
@@ -14,6 +14,6 @@ public class ArmCollisionHandler : MonoBehaviour
     }
     private void HandleArmFallerCollision(Collision2D collision)
     {
-        collision.gameObject.GetComponent<FallerController>().HandleArmCollision(GetComponent<PunchingArmController>());
+        collision.gameObject.GetComponent<NormalFallerController>().HandleArmCollision(GetComponent<PunchingArmController>());
     }
 }

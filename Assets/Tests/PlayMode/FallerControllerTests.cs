@@ -10,7 +10,7 @@ public class FallerControllerTests
 {
     
     private GameObject fallerObject;
-    private FallerController controller;
+    private NormalFallerController controller;
 
     [UnitySetUp]
     public IEnumerator SetUp()

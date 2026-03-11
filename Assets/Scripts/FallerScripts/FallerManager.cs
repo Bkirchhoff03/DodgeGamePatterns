@@ -38,7 +38,7 @@ public class FallerManager
     float trapDoorHeight;
     int lastSpawnedFallerNumber = 0;
     // Tracks all active fallers by name; cleaned up each spawn cycle
-    public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
+    public Dictionary<string, NormalFallerController> fallersInPlay = new Dictionary<string, NormalFallerController>();
     private readonly string FallerDirectory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
     private readonly string PlayerDirectory = Constants.playerDataSavePath + GameManager.instance().currentPlayerSaveFileName;
 
@@ -77,9 +77,9 @@ public class FallerManager
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
         fallerObject.layer = LayerMask.NameToLayer("Fallers");
-        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<NormalFallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        NormalFallerController fallerBehavior = fallerObject.GetComponent<NormalFallerController>();
 
         fallerBehavior.Init(spawnPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
@@ -92,9 +92,9 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
-        fallerObject.AddComponent<FallerController>();
-        fallerObject.AddComponent<FallerCollisionHandler>();
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        fallerObject.AddComponent<NormalFallerController>();
+        
+        NormalFallerController fallerBehavior = fallerObject.GetComponent<NormalFallerController>();
 
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
@@ -109,9 +109,9 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
-        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<NormalFallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        NormalFallerController fallerBehavior = fallerObject.GetComponent<NormalFallerController>();
         fallerBehavior.Init(worldPosition, size,
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
@@ -121,9 +121,9 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         GameObject fallerObject = new GameObject(nameOfFaller);
-        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<NormalFallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
+        NormalFallerController fallerBehavior = fallerObject.GetComponent<NormalFallerController>();
         fallerBehavior.Init(data.position, data.size, data.currentSpeed, sprite, fallerObject);
         // If the faller was frozen when saved, freeze it again after spawning
         if (data.isFrozen)
@@ -152,7 +152,7 @@ public class FallerManager
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue; // Skip destroyed fallers
-            FallerController faller = kvp.Value;
+            NormalFallerController faller = kvp.Value;
             FallerData data = new FallerData
             {
                 name = kvp.Key,
@@ -290,7 +290,7 @@ public class FallerManager
             fallersInPlay.Remove(key);
         }
     }
-    public FallerController GetFallerBeingRidden()
+    public NormalFallerController GetFallerBeingRidden()
     {
         Debug.Log("Checking for faller being ridden...");
         foreach (var kvp in fallersInPlay)

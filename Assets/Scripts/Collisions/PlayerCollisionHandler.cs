@@ -4,7 +4,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 {
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<FallerController>() == null)
+        if (collision.gameObject.GetComponent<NormalFallerController>() == null)
         {
             return;
         }
@@ -18,7 +18,7 @@ public class PlayerCollisionHandler : MonoBehaviour
     // Only acts when the player is already in FallingState and resting on a faller's top surface.
     public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<FallerController>() == null)
+        if (collision.gameObject.GetComponent<NormalFallerController>() == null)
         {
             return;
         }

@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
         PlayerController playerController = player.GetComponent<PlayerController>();
-        FallerController fallerBehavior = faller.GetComponent<FallerController>();
+        NormalFallerController fallerBehavior = faller.GetComponent<NormalFallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged())
         {
             playerLives--;

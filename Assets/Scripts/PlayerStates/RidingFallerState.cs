@@ -19,11 +19,11 @@ namespace Assets.Scripts
             {
                 ridingFaller = FallerManager.instance().GetFallerBeingRidden().fallerObject;
             }
-            ridingFaller.GetComponent<FallerController>().StartRiding();
+            ridingFaller.GetComponent<NormalFallerController>().StartRiding();
         }
         public void ExitState(PlayerController playerController)
         {
-            ridingFaller.GetComponent<FallerController>().StopRiding();
+            ridingFaller.GetComponent<NormalFallerController>().StopRiding();
         }
         public RidingFallerState(GameObject faller) {
             if(faller == null)
@@ -83,7 +83,7 @@ namespace Assets.Scripts
             {
                 playerController.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
                 playerController.Move(currentDirection);
-                if (!ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
+                if (!ridingFaller.GetComponent<NormalFallerController>().isRidingMe(playerController.transform.position))
                 {
                     newState = new FallingState();
                     newState.EnterState(playerController);

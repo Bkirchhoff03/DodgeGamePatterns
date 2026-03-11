@@ -4,14 +4,33 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class FallerController : MonoBehaviour
+public class NormalFallerController : MonoBehaviour, IFallerType
 {
-    public GameObject fallerObject { get; private set; }
+    /*public GameObject fallerObject { get; private set; }
     float fallerSpeed;
     bool isFrozen = false;
     public bool BeingRidden {get; private set;}
     // Public read-only access so collision handlers can check if this faller is grounded
-    public bool IsFrozen => isFrozen;
+    public bool IsFrozen => isFrozen;*/
+
+    private string typeName = "NormalFallerController";
+
+    public GameObject fallerObject { get; private set; }
+    private bool beingRidden;
+    public bool BeingRidden
+    {
+        get => beingRidden;
+        private set => beingRidden = value;
+    }
+
+    private bool isFrozen;
+    public bool IsFrozen
+    {
+        get => isFrozen;
+        private set => isFrozen = value;
+    }
+    public string TypeName { get => typeName; }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +44,7 @@ public class FallerController : MonoBehaviour
         spriteRenderer.sprite = sprite;
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
+        fallerObject.AddComponent<FallerCollisionHandler>();
         fallerObject.AddComponent<BoxCollider2D>();
         fallerObject.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         fallerObject.AddComponent<Rigidbody2D>();
@@ -32,6 +52,11 @@ public class FallerController : MonoBehaviour
         fallerObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity; // Could set the gravity to random speed sent to this function
         fallerObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, -0.01f);
         fallerObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+    public void DeleteMe()
+    {
+        Destroy(fallerObject);
+        Destroy(this);
     }
     // Update is called once per frame
     void Update()
@@ -48,39 +73,13 @@ public class FallerController : MonoBehaviour
         }*/
         //fallerObject.transform.position += Vector3.down * Time.deltaTime * fallerSpeed;
     }
-    public void StartRiding()
-    {
-        BeingRidden = true;
-    }
-    public void StopRiding() { 
-        BeingRidden = false; 
-    }
-    public void DeleteMe()
-    {
-        Destroy(fallerObject);
-        Destroy(this);
-    }
-    public bool shouldPointDamage(Vector2 collisionPoint)
-    {
-        bool pointDamages = false;
-        Vector2 twoDPos = new Vector2(fallerObject.transform.position.x, fallerObject.transform.position.y);
-        Vector2 direction = collisionPoint - twoDPos;
-        Vector2 normal = direction.normalized;
-
-        if(collisionPoint.y < fallerObject.transform.position.y)
-        {
-            pointDamages = true;
-        }
-
-        return pointDamages;
-    }
     public bool isRidingMe(Vector3 playerPoint)
     {
         float leftBound = gameObject.transform.position.x - (gameObject.transform.localScale.x / 2.0f);
         float rightBound = gameObject.transform.position.x + (gameObject.transform.localScale.x / 2.0f);
-        
+
         if ((playerPoint.x + Constants.halfPlayerWidth) > leftBound && (playerPoint.x - Constants.halfPlayerWidth) < rightBound)
-        { 
+        {
             BeingRidden = true;
             return true;
         }
@@ -90,11 +89,6 @@ public class FallerController : MonoBehaviour
             return false;
         }
     }
-    public bool amIFrozen()
-    {
-        return isFrozen;
-    }
-
     public void FloorPause()
     {
         gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
@@ -112,7 +106,6 @@ public class FallerController : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
         isFrozen = false;
     }
-
     public void HandleArmCollision(PunchingArmController arm)
     {
         if (isFrozen)
@@ -127,5 +120,33 @@ public class FallerController : MonoBehaviour
             r.AddForce(new Vector2(punchVelocity * Constants.punchForceMultiplier, 0.0f), ForceMode2D.Impulse);
             arm.CancelPunch();
         }
+    }
+    
+    public void StartRiding()
+    {
+        BeingRidden = true;
+    }
+    public void StopRiding() { 
+        BeingRidden = false; 
+    }
+    
+    public bool shouldPointDamage(Vector2 collisionPoint)
+    {
+        bool pointDamages = false;
+        Vector2 twoDPos = new Vector2(fallerObject.transform.position.x, fallerObject.transform.position.y);
+        Vector2 direction = collisionPoint - twoDPos;
+        Vector2 normal = direction.normalized;
+
+        if(collisionPoint.y < fallerObject.transform.position.y)
+        {
+            pointDamages = true;
+        }
+
+        return pointDamages;
+    }
+    
+    public bool amIFrozen()
+    {
+        return isFrozen;
     }
 }
