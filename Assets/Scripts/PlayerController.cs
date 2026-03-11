@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
     public GameObject punchingArm;
-    private bool isPunchingLeft = false;
-    private float punchingVelocity;
-    private bool isPunchingRight = false;
+    //private bool isPunchingLeft = false;
+    //private float punchingVelocity;
+    //private bool isPunchingRight = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
     }
     public void crush()
     {
-        state = new CrushedState();
+        IPlayerState previousState = state;
+        state = new CrushedState(previousState);
     }
     public void rideFaller(GameObject faller)
     {
@@ -126,7 +127,7 @@ public class PlayerController : MonoBehaviour
         switch (currentStateName)
         {
             case Constants.crushedStateName:
-                return new CrushedState();
+                return new CrushedState(null);
             case Constants.dodgingStateName:
                 return new DodgingState();
             case Constants.jumpingStateName:
@@ -148,5 +149,28 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void BounceOff(GameObject faller, GameManager.PlayerFallerCollisionType collisionType)
+    {
+        Debug.Log("Bouncing off faller. Collision type: " + collisionType);
+        //ensure player does not go through the faller, but stays on the same side of the faller as they were before the collision
+        Vector3 newPosition = transform.position;
+        switch (collisionType)
+        {
+            case GameManager.PlayerFallerCollisionType.Top:
+                newPosition.y = faller.transform.position.y + faller.GetComponent<SpriteRenderer>().bounds.size.y / 2 + GetComponent<SpriteRenderer>().bounds.size.y / 2;
+                break;
+            case GameManager.PlayerFallerCollisionType.Bottom:
+                newPosition.y = faller.transform.position.y - faller.GetComponent<SpriteRenderer>().bounds.size.y / 2 - GetComponent<SpriteRenderer>().bounds.size.y / 2;
+                break;
+            case GameManager.PlayerFallerCollisionType.Left:
+                newPosition.x = faller.transform.position.x - faller.GetComponent<SpriteRenderer>().bounds.size.x / 2 - GetComponent<SpriteRenderer>().bounds.size.x / 2;
+                break;
+            case GameManager.PlayerFallerCollisionType.Right:
+                newPosition.x = faller.transform.position.x + faller.GetComponent<SpriteRenderer>().bounds.size.x / 2 + GetComponent<SpriteRenderer>().bounds.size.x / 2;
+                break;
+        }
+        MoveTo(newPosition);
     }
 }

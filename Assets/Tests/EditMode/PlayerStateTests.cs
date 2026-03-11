@@ -24,7 +24,7 @@ public class PlayerStateTests
     [Test]
     public void CrushedState_GetName_ReturnsCrushed()
     {
-        var state = new CrushedState();
+        var state = new CrushedState(null);
         Assert.AreEqual(Constants.crushedStateName, state.getName());
     }
 
@@ -75,7 +75,7 @@ public class PlayerStateTests
     [Test]
     public void CrushedState_CanBeDamaged_ReturnsFalse()
     {
-        var state = new CrushedState();
+        var state = new CrushedState(null);
         Assert.IsFalse(state.canBeDamaged());
     }
 }

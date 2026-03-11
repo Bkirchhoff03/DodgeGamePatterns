@@ -9,12 +9,29 @@ namespace Assets.Scripts
 {
     public class CrushedState : IPlayerState
     {
-
+        private IPlayerState lastState;
         private Vector3 currentDirection = Vector3.zero;
         private float crushedTimer = 0.5f;
-        public CrushedState()
+        public CrushedState(IPlayerState lastState)
         {
+            if(lastState == null)
+            {
+                this.lastState = new DodgingState();
+            }
+            else 
+            {
+                this.lastState = lastState;
+            }
+                
             // Initialize jumping state if needed
+        }
+        public void EnterState(PlayerController playerController)
+        {
+
+        }
+        public void ExitState(PlayerController playerController)
+        {
+
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
@@ -34,7 +51,7 @@ namespace Assets.Scripts
             }
             else
             {
-                nextState = new DodgingState();
+                nextState = lastState;
                 nextState.EnterState(playerController);
             }
             return nextState;

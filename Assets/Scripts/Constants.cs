@@ -9,9 +9,9 @@ namespace Assets.Scripts
 {
     public static class Constants
     {
-        public const float minX = -11.25f;
-        public const float maxX = 11.25f;
-        public const float spawnY = 12.0f;
+        public const float minX = -11f;
+        public const float maxX = 11f;
+        public const float spawnY = 25.0f;
         public const float minFallerSpeed = 1.0f;
         public const float maxFallerSpeed = 2.0f;
         public const float minFallerSize = 0.5f;
@@ -21,6 +21,7 @@ namespace Assets.Scripts
         public const float gameGravity = 0.05f;//0.1f;
         public const float playerGravity = 4.8f;
         public const float halfPlayerWidth = 0.25f;
+        public const float punchForceMultiplier = 1.5f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";

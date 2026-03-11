@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance_;
     private int playerLives = 3;
     public TextMeshProUGUI lifeCounter;
-    public GameObject camera;
+    //public GameObject camera;
     public GameObject player;
     public GameObject trapDoor; // Assign the TrapDoor GameObject in the Inspector
     private float spawnHeight = Constants.spawnY;
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private GameObject pausePanel;
     private TextMeshProUGUI HeightTracker;
     private float trapDoorHeight;
+    private float cameraInitialY;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -50,18 +51,19 @@ public class GameManager : MonoBehaviour
 
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(sprite, trapDoorHeight);
+        fallerManager.init(sprite, trapDoorHeight+10.0f);
 
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText;
-        if (camera == null)
-        {
-            camera = new GameObject("Main Camera");
-            camera.AddComponent<Camera>();
-            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
-        }
-        fallerSpawnCameraDiff = spawnHeight - camera.transform.position.y;
+        //if (GetComponent<Camera>() == null)
+        //{
+        //    camera = new GameObject("Main Camera");
+        //    GetComponent<Camera>().AddComponent<Camera>();
+        //    GetComponent<Camera>().transform.position = new Vector3(0.0f, 7.0f, -20.0f);
+        //}
+        cameraInitialY = Camera.main.transform.position.y;
+        fallerSpawnCameraDiff = spawnHeight - Camera.main.transform.position.y;
         string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
         if (!string.IsNullOrEmpty(pendingSave))
         {
@@ -97,15 +99,16 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
-        if(player != null && player.transform.position.y > 4.0f)
+        if(player != null && player.transform.position.y > cameraInitialY)
         {
-            camera.transform.position = new Vector3(0.0f, player.transform.position.y, -10.0f);
-            spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
+
+            Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
+            spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
         else if(player != null)
         {
-            camera.transform.position = new Vector3(0.0f, 4.0f, -10.0f);
-            spawnHeight = camera.transform.position.y + fallerSpawnCameraDiff;
+            Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
+            spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 
     }
@@ -139,7 +142,7 @@ public class GameManager : MonoBehaviour
             playerController.rideFaller(faller);
         }else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
-            //playerController.bounceOff();
+            playerController.BounceOff(faller, collisionType);
         }
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
@@ -183,8 +186,10 @@ public class GameManager : MonoBehaviour
             return; // Prevent spawning if cooldown is active
         }
         clickSpawnCooldown = 0.5f; // Reset cooldown
+        clickPosition.z = 20f; // Set z to a positive value to ensure it's in front of the camera
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
-        worldPosition.z = 0; // Set z to 0 for 2D
+        //Debug.Log("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
+        worldPosition.z = 0f; // Set z to 0 for 2D
         FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
 }

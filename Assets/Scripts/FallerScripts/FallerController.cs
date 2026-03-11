@@ -21,6 +21,7 @@ public class FallerController : MonoBehaviour
     {
         fallerObject = fallerObj;
         SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sortingOrder = 1;
         spriteRenderer.sprite = sprite;
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size;
@@ -35,8 +36,9 @@ public class FallerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fallerObject.transform.position.y < -4.0f)
+        if (fallerObject.transform.position.y < -4.0f || fallerObject.transform.position.x > 12.5f || fallerObject.transform.position.x < -12.5f)
         {
+            //Out of bounds either in the wall of water, or below the floor, so should be deleted
             DeleteMe();
         }
         /*Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
@@ -115,6 +117,14 @@ public class FallerController : MonoBehaviour
     {
         if (isFrozen)
         {
+            arm.CancelPunch();
+        }
+        else
+        {
+            //add to velocity of the faller based on the punch direction and velocity
+            Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
+            float punchVelocity = arm.getPunchingVelocity();
+            r.AddForce(new Vector2(punchVelocity * Constants.punchForceMultiplier, 0.0f), ForceMode2D.Impulse);
             arm.CancelPunch();
         }
     }
