@@ -99,13 +99,15 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
-        if(player != null && player.transform.position.y > cameraInitialY)
+        /*Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
+        spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;*/
+        if (player != null && player.transform.position.y > cameraInitialY)
         {
 
             Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
-        else if(player != null)
+        else if (player != null)
         {
             Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
