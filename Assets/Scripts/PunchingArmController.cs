@@ -40,6 +40,7 @@ public class PunchingArmController : MonoBehaviour
         else
         {
             GetComponent<Collider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
             transform.position = playerCenter;
         }
         transform.position = new Vector3(transform.position.x, playerCenter.y, playerCenter.z);
@@ -51,6 +52,7 @@ public class PunchingArmController : MonoBehaviour
         {
             return;
         }
+        GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
         isPunchingRight = true;
         isPunchingLeft = false;
@@ -72,6 +74,7 @@ public class PunchingArmController : MonoBehaviour
             return;
         }
         GetComponent<Collider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
         isPunchingLeft = true;
         isPunchingRight = false;
         punchingVelocity = -3.0f;

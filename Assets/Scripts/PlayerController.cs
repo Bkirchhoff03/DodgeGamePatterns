@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
     public GameObject punchingArm;
+    public GameObject RunningAnimation;
     //private bool isPunchingLeft = false;
     //private float punchingVelocity;
     //private bool isPunchingRight = false;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         state = new DodgingState();
+        punchingArm.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
