@@ -26,7 +26,9 @@ public class PlayerController : MonoBehaviour
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
     public GameObject punchingArm;
-    public GameObject RunningAnimation;
+    public GameObject PlayerAnimation;
+    public UnityEditor.Animations.AnimatorController PlayerAnimationController;
+    private float leftOrRightOrNone = 0f;
     //private bool isPunchingLeft = false;
     //private float punchingVelocity;
     //private bool isPunchingRight = false;
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviour
         }
         state = new DodgingState();
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
+        PlayerAnimationController = PlayerAnimation.GetComponent<UnityEditor.Animations.AnimatorController>();
+        
     }
 
     // Update is called once per frame
@@ -71,6 +75,54 @@ public class PlayerController : MonoBehaviour
     public void Move(Vector3 direction)
     {
         transform.position += direction * Time.deltaTime * Constants.moveSpeed;
+        if (direction.x < 0 && leftOrRightOrNone >= 0)
+        {
+            SetAnimationDirection(direction);
+            leftOrRightOrNone = -1;
+        }
+        else if (direction.x > 0 && leftOrRightOrNone <= 0)
+        {
+            SetAnimationDirection(direction);
+            leftOrRightOrNone = 1;
+        }else if (direction.x == 0 && leftOrRightOrNone != 0)
+        {
+            SetAnimationDirection(direction);
+            leftOrRightOrNone = 0;
+        }
+    }
+    private void SetAnimationDirection(Vector3 direction)
+    {
+        if (direction.x > 0.0f)
+        {
+            //PlayerAnimation.GetComponent<Animator>().speed = 1f;
+            PlayerAnimation.GetComponent<SpriteRenderer>().flipX = false;
+            if(PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                PlayerAnimation.GetComponent<Animator>().Play("PlayerRunningAnimation");
+            }
+            Debug.Log("Moving right flip x off");
+        }
+        else if (direction.x < 0.0f)
+        {
+            //PlayerAnimation.GetComponent<Animator>().speed = 1f;
+            Debug.Log("Moving left flip x on");
+            PlayerAnimation.GetComponent<SpriteRenderer>().flipX = true;
+            if (PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                PlayerAnimation.GetComponent<Animator>().Play("PlayerRunningAnimation");
+            }
+        }
+        else
+        {
+            Debug.Log("Not moving horizontally, pause animation");
+            //PlayerAnimation.GetComponent<SpriteRenderer>().flipX = false;
+            if(!PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                PlayerAnimation.GetComponent<Animator>().Play("Idle");
+            }
+            //PlayerAnimation.GetComponent<Animator>().Play("Idle");
+            //PlayerAnimation.GetComponent<Animator>().speed = 0f;
+        }
     }
     public void MoveTo(Vector3 position)
     {
@@ -84,6 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         IPlayerState previousState = state;
         state = new CrushedState(previousState);
+        state.EnterState(this);
     }
     public void rideFaller(GameObject faller)
     {

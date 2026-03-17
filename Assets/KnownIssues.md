@@ -15,3 +15,7 @@
 - Player can walk through the water.
 
 - Water shader may slow the game down.
+
+- Water shader collisions don't work with the player.
+
+- Animations don't line up well with states yet.
