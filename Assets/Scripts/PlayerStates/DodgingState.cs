@@ -9,8 +9,11 @@ namespace Assets.Scripts
 {
     public class DodgingState : IPlayerState
     {
-        
+        private bool moving = false;
+        private int leftNoneRight = 0;
         private Vector3 currentDirection = Vector3.zero;
+        private float timeSinceStopped = 0f;
+        private const float idleDelay = Constants.idleDelay;
         public void EnterState(PlayerController playerController) {
             playerController.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             playerController.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -28,14 +31,26 @@ namespace Assets.Scripts
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
+                moving = true;
+                leftNoneRight = -1;
+                timeSinceStopped = 0f;
             }
             else if (moveInput.Xdirection > 0)
             {
                 currentDirection = Vector3.right;
+                moving = true;
+                leftNoneRight = 1;
+                timeSinceStopped = 0f;
             }
             else
             {
                 currentDirection = Vector3.zero;
+                timeSinceStopped += Time.deltaTime;
+                if (timeSinceStopped >= idleDelay)
+                {
+                    moving = false;
+                    leftNoneRight = 0;
+                }
             }
 
             
@@ -49,6 +64,18 @@ namespace Assets.Scripts
         public IPlayerState Update(PlayerController playerController)
         {
             playerController.transform.GetComponent<SpriteRenderer>().color = Color.blue;
+            if (moving && !playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", true);
+            }
+            else if (!moving && playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", false);
+            }
+            if(leftNoneRight != 0)
+            {
+                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = leftNoneRight == -1;
+            }
             playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state

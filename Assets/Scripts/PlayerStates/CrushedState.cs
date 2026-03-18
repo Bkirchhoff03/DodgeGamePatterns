@@ -11,7 +11,7 @@ namespace Assets.Scripts
     {
         private IPlayerState lastState;
         private Vector3 currentDirection = Vector3.zero;
-        private float crushedTimer = 2.5f;
+        private float crushedTimer = 0.5f;
         private int animationStateHash;
         public CrushedState(IPlayerState lastState)
         {
@@ -20,24 +20,23 @@ namespace Assets.Scripts
                 this.lastState = new DodgingState();
             }
             else 
-            {
-                this.lastState = lastState;
+            { 
+                this.lastState = lastState; 
             }
                 
             // Initialize jumping state if needed
         }
         public void EnterState(PlayerController playerController)
-        {
-
+        { 
             Debug.Log("Entering Crushed State");
-            playerController.PlayerAnimation.GetComponent<Animator>().Play("PlayerCrushedAnimation");
-            animationStateHash = playerController.PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
+            playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
+            animationStateHash = playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
         }
         public void ExitState(PlayerController playerController)
         {
-            playerController.PlayerAnimation.GetComponent<Animator>().Play(animationStateHash);
-            /*playerController.PlayerAnimation.GetComponent<Animator>().ResetTrigger("Crush");
-            playerController.PlayerAnimation.GetComponent<Animator>().SetTrigger("CrushFinished");*/
+            playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
+            /*playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
+            playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");*/
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
@@ -49,14 +48,14 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            Debug.Log(playerController.PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash);
+            Debug.Log(playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash);
             playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
-            IPlayerState nextState = this;
+            IPlayerState nextState = this; 
             if (crushedTimer > 0)
             {
                 crushedTimer -= Time.deltaTime;
             }
-            else //if(!playerController.PlayerAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
+            else //if(!playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
             {
                 nextState = lastState;
                 nextState.EnterState(playerController);
