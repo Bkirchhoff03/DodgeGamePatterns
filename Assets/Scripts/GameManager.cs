@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI HeightTracker;
     private float trapDoorHeight;
     private float cameraInitialY;
+    public Sprite LeftGrassTile;
+    public Sprite RightGrassTile;
+    public Sprite CenterGrassTile;
+
     public enum PlayerFallerCollisionType
     {
         Top,

@@ -33,6 +33,15 @@ public class FallerManager
         public string playerDataFileRef;
         public string fallerDataFileRef;
     }
+    private enum FallerSize
+    {
+        HALF = 1,
+        ONE = 2,
+        ONE_AND_HALF = 3,
+        TWO = 4,
+        TWO_AND_HALF = 5,
+        THREE = 6
+    }
     int numberOfSpawns = 0;
     Sprite sprite;
     float trapDoorHeight;
@@ -71,14 +80,21 @@ public class FallerManager
         float randomX = Random.Range(Constants.minX, Constants.maxX);
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
-
+        randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
+        randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
         Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
-        GameObject fallerObject = new GameObject(nameOfFaller);
+        //GameObject fallerObject = new GameObject(nameOfFaller);
+        string randomXSizeName = randomSizeX.ToString("0.#");
+        string randomYSizeName = randomSizeY.ToString("0.#");
+        Debug.Log($"Spawning faller with size {randomXSizeName}_by_{randomYSizeName} at position {spawnPosition}");
+        GameObject fallerObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/" + randomXSizeName + "_by_" + randomYSizeName));
         fallerObject.layer = LayerMask.NameToLayer("Fallers");
-        fallerObject.AddComponent<FallerController>();
-        fallerObject.AddComponent<FallerCollisionHandler>();
+        fallerObject.name = nameOfFaller;
+        //fallerObject.AddComponent<FallerController>();
+        //fallerObject.AddComponent<FallerCollisionHandler>();
+
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
 
         fallerBehavior.Init(spawnPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),

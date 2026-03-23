@@ -479,13 +479,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 7482667652216324306, guid: 6b1190f294900674ab15146b31ae1c42, type: 3}
   lifeCounter: {fileID: 792165140823627600}
-  camera: {fileID: 0}
   player: {fileID: 0}
   trapDoor: {fileID: 0}
   currentFallerSaveFileName: fallerSaveData.json
+  currentPlayerSaveFileName: playerSaveData.json
   clickToSpawn: 0
   spawnFallersFromFile: 0
   isPaused: 0
+  LeftGrassTile: {fileID: 372390009, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+  RightGrassTile: {fileID: 1809391310, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+  CenterGrassTile: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
 --- !u!1 &7953197828975584025
 GameObject:
   m_ObjectHideFlags: 0

@@ -867,7 +867,7 @@ Transform:
   m_GameObject: {fileID: 739160221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.77, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 9.7016, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2181,6 +2181,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: LeftGrassTile
+      value: 
+      objectReference: {fileID: 372390009, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: RightGrassTile
+      value: 
+      objectReference: {fileID: 1809391310, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: CenterGrassTile
+      value: 
+      objectReference: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: spawnFallersFromFile
       value: 0
       objectReference: {fileID: 0}
@@ -2298,6 +2310,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -378844540780082882, guid: ec220d46bdc006b4e8218caa18bb3579, type: 3}
     - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2337,6 +2361,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4452441033669662077, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2363,15 +2391,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401370215647515371, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.097
+      value: 0.121
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744374358322550298, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 8886834767523977720, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_Size.y
-      value: 1.255315
+      value: 1.2765799
       objectReference: {fileID: 0}
     - target: {fileID: 8886834767523977720, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_Offset.y
-      value: 0.12765758
+      value: 0.15257326
       objectReference: {fileID: 0}
     - target: {fileID: 8886834767523977720, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x

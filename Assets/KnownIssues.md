@@ -19,3 +19,5 @@
 - Water shader collisions don't work with the player.
 
 - Animations don't line up well with states yet.
+
+- Faller can freeze ontop of the trapdoor.
