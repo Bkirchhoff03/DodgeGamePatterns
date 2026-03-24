@@ -73,6 +73,12 @@ public class FallerManager
 
         // Ensure new faller spawns at least minSpawnGap above the highest existing one
         float highestY = GetHighestFallerY();
+        if(GetHighestFrozenFallerY() >= trapDoorHeight)
+        {
+            Debug.Log("Highest frozen faller is above trapdoor, You Lose");
+            GameManager.instance().ResetLevel();
+            return;
+        }
         float spawnHeight = Mathf.Max(baseSpawnHeight, highestY + minSpawnGap);
         // Never spawn above the trapdoor
         spawnHeight = Mathf.Min(spawnHeight, trapDoorHeight);
@@ -289,7 +295,21 @@ public class FallerManager
         }
         return highest;
     }
-
+    float GetHighestFrozenFallerY()
+    {
+        float highest = float.NegativeInfinity;
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            if (!kvp.Value.amIFrozen()) continue;
+            float y = kvp.Value.transform.position.y;
+            if (y > highest)
+            {
+                highest = y;
+            }
+        }
+        return highest;
+    }
     // Removes null entries left behind when fallers self-destroy after falling off-screen
     void CleanupDestroyedFallers()
     {
