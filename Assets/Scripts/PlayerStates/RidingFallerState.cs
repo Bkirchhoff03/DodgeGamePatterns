@@ -9,6 +9,10 @@ namespace Assets.Scripts
 {
     public class RidingFallerState : IPlayerState
     {
+        private bool moving = false;
+        private int leftNoneRight = 0;
+        private float timeSinceStopped = 0f;
+        private const float idleDelay = Constants.idleDelay;
         private float leftSideFallerBound = Constants.minX;
         private float rightSideFallerBound = Constants.maxX;
         private bool isFallingOffFaller = false;
@@ -43,14 +47,26 @@ namespace Assets.Scripts
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
+                moving = true;
+                leftNoneRight = -1;
+                timeSinceStopped = 0f;
             }
             else if (moveInput.Xdirection > 0)
             {
                 currentDirection = Vector3.right;
+                moving = true;
+                leftNoneRight = 1;
+                timeSinceStopped = 0f;
             }
             else
             {
                 currentDirection = Vector3.zero;
+                timeSinceStopped += Time.deltaTime;
+                if (timeSinceStopped >= idleDelay)
+                {
+                    moving = false;
+                    leftNoneRight = 0;
+                }
             }
             /*if (moveInput.Ydirection > 0)
             {
@@ -71,6 +87,19 @@ namespace Assets.Scripts
                 return new FallingState();
             }
             IPlayerState newState = this;
+            if (moving && !playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", true);
+            }
+            else if (!moving && playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", false);
+            }
+            if (leftNoneRight != 0)
+            {
+                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = leftNoneRight == -1;
+            }
+
             if (playerController.isGrounded())
             {
                 playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;

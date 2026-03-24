@@ -9,3 +9,15 @@
 - Sometimes the arc of the players jump places them directly on top of a block, which causes them to stay in the jumping state, instead of changing to the riding faller state. 
 
 - Game doesn't reset when the player loses all lives.
+
+- Punching while running into a faller and continuing to run into the faller makes the arm go farther and farther out.
+
+- Player can walk through the water.
+
+- Water shader may slow the game down.
+
+- Water shader collisions don't work with the player.
+
+- Animations don't line up well with states yet.
+
+- Faller can freeze ontop of the trapdoor.

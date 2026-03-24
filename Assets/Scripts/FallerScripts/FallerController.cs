@@ -9,6 +9,7 @@ public class FallerController : MonoBehaviour
     public GameObject fallerObject { get; private set; }
     float fallerSpeed;
     bool isFrozen = false;
+    public Vector2 FallerSize;
     public bool BeingRidden {get; private set;}
     // Public read-only access so collision handlers can check if this faller is grounded
     public bool IsFrozen => isFrozen;
@@ -20,11 +21,12 @@ public class FallerController : MonoBehaviour
     public void Init(Vector3 spawnPoint, Vector3 size, float speed, Sprite sprite, GameObject fallerObj)
     {
         fallerObject = fallerObj;
-        SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sortingOrder = 1;
-        spriteRenderer.sprite = sprite;
+        FallerSize = size;
+        //SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
+        //spriteRenderer.sortingOrder = 1;
+        //spriteRenderer.sprite = sprite;
         fallerObject.transform.position = spawnPoint;
-        fallerObject.transform.localScale = size;
+        fallerObject.transform.localScale = size; 
         fallerObject.AddComponent<BoxCollider2D>();
         fallerObject.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         fallerObject.AddComponent<Rigidbody2D>();
@@ -101,7 +103,27 @@ public class FallerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         gameObject.GetComponent<Rigidbody2D>().mass = 10000f;
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
+        //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
+        if(FallerSize.x == 0.5f)
+        {
+            Transform t1 = transform.Find("T1");
+            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
+            //Debug.Log("Faller size is 0.5, setting tile to center grass tile");
+        }
+        else
+        {
+            Transform t1 = transform.Find("T1");
+            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().LeftGrassTile;
+            Transform leftTop = transform.Find("T" + ((int)(FallerSize.x*2)).ToString());
+            leftTop.GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightGrassTile;
+            
+            for (int i = 2; i < (int)(FallerSize.x*2); i += 1)
+            {
+                Transform t = transform.Find("T" + i.ToString());
+                t.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
+            }
+            //Debug.Log("Faller size is " + FallerSize.x + ", setting tile 1 to left grass tile, tile (" + ((int)(FallerSize.x * 2)).ToString() +  ")right grass tile, and center grass tiles");
+        }
         isFrozen = true;
     }
     public void Unfreeze()

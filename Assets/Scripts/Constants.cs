@@ -22,6 +22,7 @@ namespace Assets.Scripts
         public const float playerGravity = 4.8f;
         public const float halfPlayerWidth = 0.25f;
         public const float punchForceMultiplier = 1.5f;
+        public const float idleDelay = 0.045f; // ~3 frames at 60fps — prevents idle flicker when switching directions
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";
