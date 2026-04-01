@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Goal object at the top of the level. Player reaching it resets the level.
 // Height is configurable in the Inspector.
@@ -20,7 +21,7 @@ public class TrapDoor : MonoBehaviour
             new Rect(0, 0, Texture2D.whiteTexture.width, Texture2D.whiteTexture.height),
             new Vector2(0.5f, 0.5f));
         spriteRenderer.color = new Color(1.0f, 0.84f, 0.0f);
-*/
+        */
         // Trigger collider so player passes through rather than bouncing off
         BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
         collider.isTrigger = true;
@@ -31,7 +32,8 @@ public class TrapDoor : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            GameManager.instance().ResetLevel();
+            //GameManager.instance().ResetLevel();
+            SceneManager.LoadScene("Level2");
         }
     }
 }

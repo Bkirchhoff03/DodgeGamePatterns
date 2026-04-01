@@ -38,7 +38,7 @@ public class MainMenuController : MonoBehaviour
 
         howToPlayPanel.SetActive(false);
     }
-    public void PlayGame() => SceneManager.LoadScene("SampleScene");
+    public void PlayGame() => SceneManager.LoadScene("Level1");
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() { mainPanel.SetActive(false); howToPlayPanel.SetActive(true); }
     public void HideHowToPlay() { howToPlayPanel.SetActive(false); mainPanel.SetActive(true); }

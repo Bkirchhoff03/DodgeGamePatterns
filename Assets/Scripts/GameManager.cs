@@ -166,6 +166,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void SaveLevel()
+    {
+        FallerManager.instance().SaveFallersToFile(playerController);
+    }
     public void TogglePause()
     {
         isPaused = !isPaused;
