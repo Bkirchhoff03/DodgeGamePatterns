@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public Sprite LeftGrassTile;
     public Sprite RightGrassTile;
     public Sprite CenterGrassTile;
-
+    public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(sprite, trapDoorHeight+10.0f);
+        fallerManager.init(fallerType, trapDoorHeight+10.0f);
 
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
@@ -146,10 +146,10 @@ public class GameManager : MonoBehaviour
                 faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
-        }else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
+        }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
             playerController.BounceOff(faller, collisionType);
-        }
+        }*/
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()

@@ -21,3 +21,7 @@
 - Animations don't line up well with states yet.
 
 - Faller can freeze ontop of the trapdoor.
+
+- level 1 is with rectangles that freeze on collision, level 2 is boulders that freeze after 30 frames of collision or at rest for half a second or so.
+
+- Player can get stuck between two bolders.

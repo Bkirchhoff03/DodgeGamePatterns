@@ -8,14 +8,15 @@ public class FloorCollisionHandler : MonoBehaviour
         FallerController faller = collision.gameObject.GetComponent<FallerController>();
         if (faller != null)
         {
-            faller.FloorPause();
-        }
-        else 
-        {
-            if (collision.gameObject.TryGetComponent<PlayerController>(out var player))
+            if (!faller.UseSettleTimer)
             {
-                player.setState(new DodgingState());
+                faller.FloorPause();
             }
         }
+        else if (collision.gameObject.TryGetComponent<PlayerController>(out var player))
+        { 
+            player.setState(new DodgingState());
+        }
+        
     }
 }

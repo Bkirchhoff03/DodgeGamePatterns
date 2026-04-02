@@ -39,7 +39,6 @@ namespace Assets.Scripts
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
-            IPlayerState nextState = this;
             if (moveInput.isPunch != 0)
             {
                 playerController.HandlePunch(moveInput);
@@ -73,7 +72,7 @@ namespace Assets.Scripts
                 currentDirection += Vector3.up;
             }*/
             // Handle input specific to dodging state
-            return nextState;
+            return this;
         }
         public string getName()
         {
@@ -84,6 +83,7 @@ namespace Assets.Scripts
             if (ridingFaller == null)
             {
                 Debug.LogError("RidingFallerState Update called with null ridingFaller");
+                ExitState(playerController);
                 return new FallingState();
             }
             IPlayerState newState = this;
@@ -104,31 +104,32 @@ namespace Assets.Scripts
             {
                 playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
                 playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                playerController.transform.GetComponent<SpriteRenderer>().color = Color.white;
+                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                ExitState(playerController);
                 newState = new DodgingState();
                 newState.EnterState(playerController);
             }
             else if (!isFallingOffFaller)
             {
-                playerController.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
-                playerController.Move(currentDirection);
+                playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
+                if (leftNoneRight != 0)
+                { 
+                    Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
+                    rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
+                }else
+                {
+                    Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
+                    rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));
+                }
                 if (!ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
                 {
                     newState = new FallingState();
                     newState.EnterState(playerController);
                     isFallingOffFaller = true;
                 }
-                /*if(playerController.transform.position.x < leftSideFallerBound || playerController.transform.position.x > rightSideFallerBound)
-                {
-                    isFallingOffFaller = true;
-                    playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 9.8f;
-                    playerController.transform.GetComponent<SpriteRenderer>().color = Color.white;
-                }*/
+                
             }
-            else
-            {
-                playerController.Move(currentDirection);
-            }
+            
             return newState;
             // Update logic specific to dodging state
         }

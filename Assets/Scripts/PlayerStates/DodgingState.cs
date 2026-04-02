@@ -63,7 +63,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            playerController.transform.GetComponent<SpriteRenderer>().color = Color.blue;
+            playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.blue;
             if (moving && !playerController.PlayerAnimator.GetBool("Running"))
             {
                 playerController.PlayerAnimator.SetBool("Running", true);
@@ -76,6 +76,7 @@ namespace Assets.Scripts
             {
                 playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = leftNoneRight == -1;
             }
+            playerController.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, 0f);
             playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state
