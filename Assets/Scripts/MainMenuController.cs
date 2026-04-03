@@ -38,7 +38,8 @@ public class MainMenuController : MonoBehaviour
 
         howToPlayPanel.SetActive(false);
     }
-    public void PlayGame() => SceneManager.LoadScene("SampleScene");
+    public void PlayGame() => SceneManager.LoadScene("Level1");
+    public void PlayLevel2() => SceneManager.LoadScene("Level2");
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() { mainPanel.SetActive(false); howToPlayPanel.SetActive(true); }
     public void HideHowToPlay() { howToPlayPanel.SetActive(false); mainPanel.SetActive(true); }
@@ -179,8 +180,21 @@ public class MainMenuController : MonoBehaviour
 
     private void LoadFromSaveFile(string filePath)
     {
+        string scene = "Level1"; // Default scene to load; could be encoded in the save file name or contents if needed
+        try
+        {
+            string json = System.IO.File.ReadAllText(filePath);
+            FallerManager.SaveData saveData = JsonUtility.FromJson<FallerManager.SaveData>(json);
+            if(!string.IsNullOrEmpty(saveData.levelScene)){
+                scene = saveData.levelScene;
+            }
+        }
+        catch
+        {
+            // Ignore errors and use default scene
+        }
         PlayerPrefs.SetString("pendingSaveFile", filePath);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(scene);
     }
 }

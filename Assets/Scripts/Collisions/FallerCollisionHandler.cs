@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 public class FallerCollisionHandler : MonoBehaviour
@@ -10,29 +11,49 @@ public class FallerCollisionHandler : MonoBehaviour
         }
 
         // Get this faller's controller; skip if already frozen
-        FallerController thisFaller = gameObject.GetComponent<FallerController>();
+        FallerController thisFaller = GetComponent<FallerController>();
         if (thisFaller == null || thisFaller.IsFrozen)
         {
             return;
         }
-
-        FreezeIfOnFrozenFaller(thisFaller, collision);
+        if (thisFaller.UseSettleTimer)
+        {
+            GetComponent<Rigidbody2D>().gravityScale = Constants.fallerGravityPostCollision;
+        }
+        else
+        {
+            FreezeIfOnFrozenFaller(thisFaller, collision);
+        }
+            
     }
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            return;
+        if (collision.gameObject.name == "Player") 
+        { 
+            return; 
         }
-
-        FallerController thisFaller = gameObject.GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen)
-        {
-            return;
+        FallerController thisFaller = GetComponent<FallerController>();
+        if (thisFaller == null || thisFaller.IsFrozen) 
+        { 
+            return; 
         }
-
-        FreezeIfOnFrozenFaller(thisFaller, collision);
+        Debug.Log($"Collision stay on {gameObject.name} with {collision.gameObject.name}");
+        if (thisFaller.UseSettleTimer) 
+        {
+            if (collision.gameObject.TryGetComponent<FallerController>(out var other)
+                && other.IsFrozen && !thisFaller.IsFrozen)
+            {
+                thisFaller.Collided();
+            }else if (collision.gameObject.TryGetComponent<FallerController>(out var other2) && !other2.IsFrozen && thisFaller.IsFrozen)
+            {
+                other2.Collided();
+            }
+        }
+        else
+        {
+            FreezeIfOnFrozenFaller(thisFaller, collision);
+        }
     }
 
     // Only freeze this faller if the other faller is already frozen (grounded).
@@ -44,11 +65,8 @@ public class FallerCollisionHandler : MonoBehaviour
         FallerController otherFaller = collision.gameObject.GetComponent<FallerController>();
         if (otherFaller != null && otherFaller.IsFrozen)
         {
-            if (collision.gameObject.GetComponent<Rigidbody2D>() != null && Mathf.Abs(collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity.x) > 0.1)
-            {
-                //Don't freeze, its moving left/right.
-            }
-            else
+            Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (otherRb != null || Mathf.Abs(otherRb.linearVelocity.x) <= 0.1f)
             {
                 thisFaller.FloorPause();
             }

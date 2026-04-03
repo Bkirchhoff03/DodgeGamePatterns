@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.U2D;
+using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class FallerController : MonoBehaviour
 {
@@ -13,42 +14,66 @@ public class FallerController : MonoBehaviour
     public bool BeingRidden {get; private set;}
     // Public read-only access so collision handlers can check if this faller is grounded
     public bool IsFrozen => isFrozen;
+    public bool UseSettleTimer => behavior != null && behavior.UseSettleTimer;
+
+    private IFallerBehavior behavior;
+    private Rigidbody2D rb;
+    private float settleTimer = 0f;
+    private int collisionCount = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         BeingRidden = false;
     }
-    public void Init(Vector3 spawnPoint, Vector3 size, float speed, Sprite sprite, GameObject fallerObj)
+    public void SetBehaviour(IFallerBehavior b) { behavior = b; }
+    public void Init(Vector3 spawnPoint, Vector3 size, float speed, GameObject fallerObj)
     {
         fallerObject = fallerObj;
-        FallerSize = size;
+        fallerSpeed = speed;
+        FallerSize = new Vector2(size.x, size.y);
         //SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
         //spriteRenderer.sortingOrder = 1;
         //spriteRenderer.sprite = sprite;
         fallerObject.transform.position = spawnPoint;
         fallerObject.transform.localScale = size; 
-        fallerObject.AddComponent<BoxCollider2D>();
-        fallerObject.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
-        fallerObject.AddComponent<Rigidbody2D>();
-        fallerObject.GetComponent<Rigidbody2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
-        fallerObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity; // Could set the gravity to random speed sent to this function
-        fallerObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, -0.01f);
-        fallerObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        behavior.BuildVisuals(fallerObject, FallerSize);
+        rb = fallerObject.AddComponent<Rigidbody2D>();
+        rb.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        rb.gravityScale = Constants.gameGravity; 
+        rb.linearVelocity = new Vector2(0.0f, -0.01f);
+        rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
+        if(behavior.FreezeRotation)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        
     }
     // Update is called once per frame
     void Update()
     {
-        if (fallerObject.transform.position.y < -4.0f || fallerObject.transform.position.x > 12.5f || fallerObject.transform.position.x < -12.5f)
+        if (fallerObject.transform.position.y < -4.0f 
+            || fallerObject.transform.position.x > 12.5f 
+            || fallerObject.transform.position.x < -12.5f)
         {
             //Out of bounds either in the wall of water, or below the floor, so should be deleted
             DeleteMe();
+            return;
         }
-        /*Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
-        if (!BeingRidden && r != null && Mathf.Abs(r.linearVelocity.x) < 0.001 && Mathf.Abs(r.linearVelocity.y) < 0.001) 
+        if (!isFrozen && behavior != null && behavior.UseSettleTimer
+              && rb != null && rb.bodyType == RigidbodyType2D.Dynamic)
         {
-            FloorPause();
-        }*/
-        //fallerObject.transform.position += Vector3.down * Time.deltaTime * fallerSpeed;
+            if (rb.linearVelocity.magnitude < Constants.boulderSettleLinearThreshold
+                && Mathf.Abs(rb.angularVelocity) < Constants.boulderSettleAngularThreshold)
+            {
+                settleTimer += Time.deltaTime;
+                if (settleTimer >= Constants.boulderSettleTime)
+                    FloorPause();
+            }
+            else
+            {
+                settleTimer = 0f;
+            }
+        }
     }
     public void StartRiding()
     {
@@ -64,7 +89,8 @@ public class FallerController : MonoBehaviour
     }
     public bool shouldPointDamage(Vector2 collisionPoint)
     {
-        bool pointDamages = false;
+        return collisionPoint.y < fallerObject.transform.position.y && !isFrozen;
+        /*bool pointDamages = false;
         Vector2 twoDPos = new Vector2(fallerObject.transform.position.x, fallerObject.transform.position.y);
         Vector2 direction = collisionPoint - twoDPos;
         Vector2 normal = direction.normalized;
@@ -74,7 +100,7 @@ public class FallerController : MonoBehaviour
             pointDamages = true;
         }
 
-        return pointDamages;
+        return pointDamages;*/
     }
     public bool isRidingMe(Vector3 playerPoint)
     {
@@ -99,12 +125,14 @@ public class FallerController : MonoBehaviour
 
     public void FloorPause()
     {
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
-        gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-        gameObject.GetComponent<Rigidbody2D>().mass = 10000f;
-        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
+        rb.mass = 10000f;
+        //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
+        behavior?.OnFloorPause(fallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
-        if(FallerSize.x == 0.5f)
+        /*if(FallerSize.x == 0.5f)
         {
             Transform t1 = transform.Find("T1");
             t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
@@ -123,21 +151,26 @@ public class FallerController : MonoBehaviour
                 t.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
             }
             //Debug.Log("Faller size is " + FallerSize.x + ", setting tile 1 to left grass tile, tile (" + ((int)(FallerSize.x * 2)).ToString() +  ")right grass tile, and center grass tiles");
-        }
+        }*/
         isFrozen = true;
     }
     public void Unfreeze()
     {
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity;
-        gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
-        //gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        rb.gravityScale = Constants.gameGravity;
+        rb.mass = behavior != null && behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
+        behavior?.OnUnfreeze(gameObject);
+        //rb.bodyType = RigidbodyType2D.Dynamic;
+        //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
         isFrozen = false;
+        settleTimer = 0f;
     }
 
     public void HandleArmCollision(PunchingArmController arm)
     {
-        if (isFrozen)
+        behavior?.HandleArmCollision(this, arm);
+        /*if (isFrozen)
         {
             arm.CancelPunch();
         }
@@ -148,6 +181,15 @@ public class FallerController : MonoBehaviour
             float punchVelocity = arm.getPunchingVelocity();
             r.AddForce(new Vector2(punchVelocity * Constants.punchForceMultiplier, 0.0f), ForceMode2D.Impulse);
             arm.CancelPunch();
+        }*/
+    }
+    public void Collided()
+    {
+        //Debug.Log(gameObject.name+"collided with something, collision count is now " + collisionCount);
+        collisionCount++;
+        if(collisionCount >= Constants.fallerCollisionFreezeThreshold && !isFrozen)
+        {
+            FloorPause();
         }
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public FallerManager fallerManager { get; private set; }
-    float currentTimeBetweenSpawns = 2.5f;
+    float currentTimeBetweenSpawns = 1.5f;
     float TimeBetweenSpawns;
     public Sprite sprite;
     static GameManager instance_;
@@ -29,13 +29,14 @@ public class GameManager : MonoBehaviour
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public bool isPaused = false;
     private GameObject pausePanel;
+    private GameObject gameOverPanel;
     private TextMeshProUGUI HeightTracker;
     private float trapDoorHeight;
     private float cameraInitialY;
     public Sprite LeftGrassTile;
     public Sprite RightGrassTile;
     public Sprite CenterGrassTile;
-
+    public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(sprite, trapDoorHeight+10.0f);
+        fallerManager.init(fallerType, trapDoorHeight+10.0f);
 
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
@@ -82,8 +83,10 @@ public class GameManager : MonoBehaviour
             {
                 fallerManager.LoadFallersFromFile(playerController);
             }*/
-            pausePanel = GameObject.Find("PausePanel");
+        pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
+        gameOverPanel = GameObject.Find("GameOverPanel");
+        gameOverPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -136,6 +139,8 @@ public class GameManager : MonoBehaviour
             {
                 playerLives = 3;
                 Debug.Log("GAME OVER");
+                GameOver("You ran out of lives!");
+                //SceneManager.LoadScene("MainMenu");
             }
             playerController.crush();
             DeleteFaller(faller.name);
@@ -146,10 +151,10 @@ public class GameManager : MonoBehaviour
                 faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
-        }else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
+        }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
             playerController.BounceOff(faller, collisionType);
-        }
+        }*/
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()
@@ -166,6 +171,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void ResetGame()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+    public void SaveLevel()
+    {
+        FallerManager.instance().SaveFallersToFile(playerController);
+    }
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -174,7 +187,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void ResumeGame() => TogglePause();
-
+    public void GameOver(string reason)
+    {
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
+        TextMeshProUGUI gameOverText = gameOverPanel.transform.Find("GameOverReasonText").GetComponent<TextMeshProUGUI>();
+        gameOverText.text = reason;
+    }
     public void QuitGame()
     {
         Time.timeScale = 1f;

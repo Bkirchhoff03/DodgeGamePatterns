@@ -55,10 +55,10 @@ public class InputSystemController : MonoBehaviour
         {
             GameManager.instance().SpawnFallerAtClick(Input.mousePosition);
         }
-        if (Input.GetKey(KeyCode.M))
+        /*if (Input.GetKey(KeyCode.M))
         {
-            FallerManager.instance().SaveFallersToFile(playerController);
-        }
+            GameManager.instance().SaveLevel();
+        }*/
         playerController.HandleInput(moveDirection);
     }
 

@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 
 public class FallerManager
 {
+    public enum FallerType { Block, Boulder }
     static FallerManager instance_;
     [System.Serializable]
     public class FallerData
@@ -15,9 +17,11 @@ public class FallerManager
         public string name;
         public Vector3 position;
         public Vector3 size;
+        public float rotation;
         public float currentSpeed;
         public bool isFrozen;
         public bool beingRidden;
+        public FallerType fallerType;
     }
     [System.Serializable]
     public class FallerDataList
@@ -32,6 +36,7 @@ public class FallerManager
     {
         public string playerDataFileRef;
         public string fallerDataFileRef;
+        public string levelScene;
     }
     private enum FallerSize
     {
@@ -42,7 +47,9 @@ public class FallerManager
         TWO_AND_HALF = 5,
         THREE = 6
     }
+
     int numberOfSpawns = 0;
+    FallerType _fallerType;
     Sprite sprite;
     float trapDoorHeight;
     int lastSpawnedFallerNumber = 0;
@@ -56,12 +63,18 @@ public class FallerManager
     const float minSpawnGap = 5.0f;
 
     public static FallerManager instance() => instance_;
-    public void init(Sprite sprite, float trapDoorHeight)
+    public void init(FallerType fallerType, float trapDoorHeight)
+    {
+        instance_ = this;
+        _fallerType = fallerType;
+        this.trapDoorHeight = trapDoorHeight;
+    }
+    /*public void init(Sprite sprite, float trapDoorHeight)
     {
         instance_ = this;
         this.sprite = sprite;
         this.trapDoorHeight = trapDoorHeight;
-    }
+    }*/
 
     // Spawns a new faller at a safe height above existing fallers.
     // baseSpawnHeight is the camera-relative default; actual height is raised
@@ -76,7 +89,7 @@ public class FallerManager
         if(GetHighestFrozenFallerY() >= trapDoorHeight)
         {
             Debug.Log("Highest frozen faller is above trapdoor, You Lose");
-            GameManager.instance().ResetLevel();
+            GameManager.instance().GameOver("Highest frozen faller is above trapdoor");
             return;
         }
         float spawnHeight = Mathf.Max(baseSpawnHeight, highestY + minSpawnGap);
@@ -86,13 +99,22 @@ public class FallerManager
         float randomX = Random.Range(Constants.minX, Constants.maxX);
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
-        randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
-        randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
-        Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
+        if(_fallerType == FallerType.Block)
+        {
+            randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
+            randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
+        }
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         //GameObject fallerObject = new GameObject(nameOfFaller);
-        string randomXSizeName = randomSizeX.ToString("0.#");
+        Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
+        Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
+
+        FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
+        fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+
+        /*string randomXSizeName = randomSizeX.ToString("0.#");
         string randomYSizeName = randomSizeY.ToString("0.#");
         Debug.Log($"Spawning faller with size {randomXSizeName}_by_{randomYSizeName} at position {spawnPosition}");
         GameObject fallerObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/" + randomXSizeName + "_by_" + randomYSizeName));
@@ -106,58 +128,98 @@ public class FallerManager
         fallerBehavior.Init(spawnPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
 
-        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
 
     public void SpawnFallerAtPosition(Vector3 worldPosition)
     {
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
-        GameObject fallerObject = new GameObject(nameOfFaller);
+        float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
+        float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
+        Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
+        FallerController fc = CreateFaller(nameOfFaller, _fallerType, size);
+        fc.Init(worldPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fc.gameObject);
+        fallersInPlay.Add(nameOfFaller, fc);
+
+        /*GameObject fallerObject = new GameObject(nameOfFaller);
         fallerObject.AddComponent<FallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
 
-        float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
-        float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
+        
 
         fallerBehavior.Init(worldPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
 
-        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
     public void SpawnFallerAtPosition(Vector3 worldPosition, Vector3 size)
     {
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
-        GameObject fallerObject = new GameObject(nameOfFaller);
+        FallerController fc = CreateFaller(nameOfFaller, _fallerType, size);
+        fc.Init(worldPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fc.gameObject);
+        fallersInPlay.Add(nameOfFaller, fc);
+
+        /*        GameObject fallerObject = new GameObject(nameOfFaller);
         fallerObject.AddComponent<FallerController>();
         fallerObject.AddComponent<FallerCollisionHandler>();
         FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
         fallerBehavior.Init(worldPosition, size,
             Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
-        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
     private void SpawnFallerAtData(FallerData data)
     {
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
-        GameObject fallerObject = new GameObject(nameOfFaller);
-        fallerObject.AddComponent<FallerController>();
-        fallerObject.AddComponent<FallerCollisionHandler>();
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
-        fallerBehavior.Init(data.position, data.size, data.currentSpeed, sprite, fallerObject);
+        FallerController fc = CreateFaller(nameOfFaller, _fallerType, data.size);
+        fc.Init(data.position, data.size, data.currentSpeed, fc.gameObject);
+        fc.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, data.rotation);
         // If the faller was frozen when saved, freeze it again after spawning
         if (data.isFrozen)
         {
-            fallerBehavior.FloorPause();
-        }
+            fc.FloorPause();
+        }   
         if(data.beingRidden)
         {
-            fallerBehavior.StartRiding();
+            fc.StartRiding();
             //GameManager.instance().player.GetComponent<PlayerController>().rideFaller(fallerObject);
         }
-        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+        fallersInPlay.Add(nameOfFaller, fc);
+    }
+    // Creates the right GameObject + components + behaviour based on FallerType
+    private FallerController CreateFaller(string name, FallerType type, Vector3 size)
+    {
+        GameObject fallerObject;
+        FallerController fc;
+
+        if (type == FallerType.Block)
+        {
+            string xName = Mathf.Round(size.x * 2f) / 2f == size.x
+                ? size.x.ToString("0.#") : size.x.ToString("0.#");
+            string yName = size.y.ToString("0.#");
+            fallerObject = GameObject.Instantiate(
+                Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
+            fallerObject.layer = LayerMask.NameToLayer("Fallers");
+            fallerObject.name = name;
+            fc = fallerObject.GetComponent<FallerController>();
+        }
+        else
+        {
+            fallerObject = new GameObject(name);
+            fallerObject.layer = LayerMask.NameToLayer("Fallers");
+            fallerObject.AddComponent<FallerController>();
+            fallerObject.AddComponent<FallerCollisionHandler>();
+            fc = fallerObject.GetComponent<FallerController>();
+        }
+
+        IFallerBehavior behaviour = type == FallerType.Block
+            ? (IFallerBehavior)new BlockFallerBehavior()
+            : new BolderFallerBehavior();
+        fc.SetBehaviour(behaviour);
+        return fc;
     }
     public void SaveFallersToFile(PlayerController playerController)
     {
@@ -180,9 +242,11 @@ public class FallerManager
                 name = kvp.Key,
                 position = faller.transform.position,
                 size = faller.transform.localScale,
+                rotation = faller.transform.rotation.eulerAngles.z,
                 currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
                 isFrozen = faller.amIFrozen(),
-                beingRidden = faller.BeingRidden
+                beingRidden = faller.BeingRidden,
+                fallerType = _fallerType
             };
             fallerDataList.fallers.Add(data);
         }
@@ -208,7 +272,7 @@ public class FallerManager
         string NewPlayerFileSave = Constants.playerDataSavePath + "PlayerSave" + dateTime + ".json";
         File.WriteAllText(NewPlayerFileSave, JsonUtility.ToJson(playerController.GetMyData(), true));
         File.WriteAllText(PlayerDirectory, JsonUtility.ToJson(playerController.GetMyData(), true));
-        File.WriteAllText(Constants.saveFilePath + "Save" + dateTime + ".json", JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave }, true));
+        File.WriteAllText(Constants.saveFilePath + "Save" + dateTime + ".json", JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
     }
     public void LoadFallersFromFile(PlayerController playerController)
     {

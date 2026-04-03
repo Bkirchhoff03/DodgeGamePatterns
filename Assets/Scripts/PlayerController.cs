@@ -41,9 +41,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         state = new DodgingState();
+        state.EnterState(this);
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
         PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
-
+        GetComponent<Rigidbody2D>().mass = 0.00001f;
 
     }
 
@@ -152,8 +153,9 @@ public class PlayerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         gameObject.GetComponent<Rigidbody2D>().linearVelocity = faller.GetComponent<Rigidbody2D>().linearVelocity;
         gameObject.GetComponent<Rigidbody2D>().mass = 0.00001f;
-        gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.gameGravity;
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
         state = new RidingFallerState(faller);
+        state.EnterState(this);
     }
     public void HandlePunch(MoveDirection moveInput)
     {
