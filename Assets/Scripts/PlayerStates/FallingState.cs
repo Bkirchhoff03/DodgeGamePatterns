@@ -12,6 +12,9 @@ namespace Assets.Scripts
     {
         private Vector3 currentDirection = Vector3.zero;
         private Vector3 startingPosition;
+        private float timeInState = 0f;
+        private const float wedgeDetectionDelay = 0.3f;
+        private const float wedgeVelocityThreshold = 1.0f;
 
         public void EnterState(PlayerController playerController)
         {
@@ -59,12 +62,22 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            //Debug.Log("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
+            Debug.Log("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
             IPlayerState nextState = this;
-            playerController.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
+            timeInState += Time.deltaTime;
+            //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
             if (playerController.isGrounded())
             {
                 //playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
+                ExitState(playerController);
+                nextState = new DodgingState();
+                nextState.EnterState(playerController);
+            }
+            else if (timeInState > wedgeDetectionDelay &&
+                     Mathf.Abs(playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity.y) < wedgeVelocityThreshold)
+            {
+                // Player is wedged between fallers (V-shape) — side contacts prevent a Top collision
+                // from being detected. Escape to DodgingState so they can move out horizontally.
                 ExitState(playerController);
                 nextState = new DodgingState();
                 nextState.EnterState(playerController);

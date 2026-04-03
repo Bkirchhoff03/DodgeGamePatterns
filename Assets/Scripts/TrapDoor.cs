@@ -32,8 +32,14 @@ public class TrapDoor : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            //GameManager.instance().ResetLevel();
-            SceneManager.LoadScene("Level2");
+            if(SceneManager.GetActiveScene().name == "Level1")
+            {
+                SceneManager.LoadScene("Level2");
+            }
+            else
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 }

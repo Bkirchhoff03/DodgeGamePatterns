@@ -89,7 +89,7 @@ public class FallerManager
         if(GetHighestFrozenFallerY() >= trapDoorHeight)
         {
             Debug.Log("Highest frozen faller is above trapdoor, You Lose");
-            GameManager.instance().ResetLevel();
+            GameManager.instance().GameOver("Highest frozen faller is above trapdoor");
             return;
         }
         float spawnHeight = Mathf.Max(baseSpawnHeight, highestY + minSpawnGap);

@@ -49,7 +49,7 @@ namespace Assets.Scripts
         public IPlayerState Update(PlayerController playerController)
         {
             Debug.Log(playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash);
-            playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
+            //playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
             IPlayerState nextState = this; 
             if (crushedTimer > 0)
             {

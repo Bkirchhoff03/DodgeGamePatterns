@@ -16,7 +16,7 @@ namespace Assets.Scripts
         public const float maxFallerSpeed = 2.0f;
         public const float minFallerSize = 0.5f;
         public const float maxFallerSize = 3.0f;
-        public const float moveSpeed = 5.0f;
+        public const float moveSpeed = 7.5f;
         public const float dodgeSpeed = 10.0f;
         public const float gameGravity = 0.05f;//0.1f;
         public const float fallerGravityPostCollision = 0.25f;

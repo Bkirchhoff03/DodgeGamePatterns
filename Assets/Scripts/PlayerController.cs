@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         state.EnterState(this);
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
         PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
-
+        GetComponent<Rigidbody2D>().mass = 0.00001f;
 
     }
 

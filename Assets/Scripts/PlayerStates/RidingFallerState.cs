@@ -111,7 +111,7 @@ namespace Assets.Scripts
             }
             else if (!isFallingOffFaller)
             {
-                playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
+                //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
                 if (leftNoneRight != 0)
                 { 
                     Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();

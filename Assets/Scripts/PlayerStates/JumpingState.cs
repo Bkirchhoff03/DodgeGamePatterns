@@ -30,8 +30,8 @@ namespace Assets.Scripts
             playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
         }
         public void ExitState(PlayerController playerController) {
-            playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
-            playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            /*playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
+            playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;*/
             
         }
 
@@ -83,19 +83,22 @@ namespace Assets.Scripts
             IPlayerState nextState = this;
             //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
             Rigidbody2D rb = playerController.gameObject.GetComponent<Rigidbody2D>();
-            playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.green;
-            if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
+            //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.green;
+            /*if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
             {
                 playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
                 ExitState(playerController);
                 nextState = new DodgingState();
                 nextState.EnterState(playerController);
             }
-            else if(rb.linearVelocity.y <= 0f)
+            else */
+            Debug.Log("Current Jump Speed: " + rb.linearVelocity.y);
+            if (rb.linearVelocity.y <= 0f)
             {
                 ExitState(playerController);
                 nextState = new FallingState();
                 nextState.EnterState(playerController);
+                Debug.Log("Transitioning to Falling State");
             }
             else
             {
