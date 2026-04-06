@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 853650035324080684}
   - component: {fileID: 7262782183813020685}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7200327148594385646}
   - component: {fileID: 7720239664729234069}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3808712404256505791}
   - component: {fileID: 4931334089057204595}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7167967731992475909}
   - component: {fileID: 5081384864203280134}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2252828390075404717}
   - component: {fileID: 2583695240498030722}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3913703680281425199}
   - component: {fileID: 4594377998404875952}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 631492657785525878}
   - component: {fileID: 8749440333190727992}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6609525137586906965}
   - component: {fileID: 590039362820963111}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +706,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3272955011889535754}
   - component: {fileID: 4796244171943489922}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7332304540417269690}
   - component: {fileID: 1953056003540503480}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (59)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -880,7 +880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7716996365454702527}
   - component: {fileID: 6463305576444197939}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGround14 (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267399282668614076}
   - component: {fileID: 7202133240301516542}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: 1096520372124983598}
   - component: {fileID: 377572248373122469}
   - component: {fileID: 3327268595762001298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 1_by_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1157,6 +1157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f969817f4ad34a24c9dfdb25ce14422d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FallerSize: {x: 0, y: 0}
 --- !u!114 &3327268595762001298
 MonoBehaviour:
   m_ObjectHideFlags: 0

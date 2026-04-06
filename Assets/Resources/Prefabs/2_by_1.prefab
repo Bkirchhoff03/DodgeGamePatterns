@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7725932283511876404}
   - component: {fileID: 1348368491521690179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2698054237471149792}
   - component: {fileID: 951731485240229550}
   - component: {fileID: 7296813146274905379}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 2_by_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f969817f4ad34a24c9dfdb25ce14422d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FallerSize: {x: 0, y: 0}
 --- !u!114 &7296813146274905379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 725882557684750995}
   - component: {fileID: 1150733552605109341}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 341778309183893888}
   - component: {fileID: 8930589393023237039}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7462064845029589805}
   - component: {fileID: 3083938264123744675}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4069228757041619040}
   - component: {fileID: 1538854791166200010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 778094769353854884}
   - component: {fileID: 4149869763370544014}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: T3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3675316873390038859}
   - component: {fileID: 328083303954699512}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7947074484236362239}
   - component: {fileID: 6958317716829529742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: B3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
