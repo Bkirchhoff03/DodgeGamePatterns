@@ -28,7 +28,7 @@ namespace Assets.Scripts
         }
         public void EnterState(PlayerController playerController)
         { 
-            Debug.Log("Entering Crushed State");
+            GameManager.instance().Print("Entering Crushed State");
             playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
             animationStateHash = playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
         }
@@ -48,7 +48,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            Debug.Log(playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash);
+            GameManager.instance().Print(playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash.ToString());
             //playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
             IPlayerState nextState = this; 
             if (crushedTimer > 0)

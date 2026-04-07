@@ -40,7 +40,7 @@ namespace Assets.Scripts
             if (startingPosition == null)
             {
                 startingPosition = playerController.transform.position;
-                //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+                //UnityEngine.GameManager.instance().Print("Starting Jump Position: " + startingPosition.ToString());
             }
             if (moveInput.isPunch != 0)
             {
@@ -81,7 +81,7 @@ namespace Assets.Scripts
         public IPlayerState Update(PlayerController playerController)
         {
             IPlayerState nextState = this;
-            //UnityEngine.Debug.Log("Starting Jump Position: " + startingPosition.ToString());
+            //UnityEngine.GameManager.instance().Print("Starting Jump Position: " + startingPosition.ToString());
             Rigidbody2D rb = playerController.gameObject.GetComponent<Rigidbody2D>();
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.green;
             /*if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
@@ -92,13 +92,13 @@ namespace Assets.Scripts
                 nextState.EnterState(playerController);
             }
             else */
-            Debug.Log("Current Jump Speed: " + rb.linearVelocity.y);
+            GameManager.instance().Print("Current Jump Speed: " + rb.linearVelocity.y);
             if (rb.linearVelocity.y <= 0f)
             {
                 ExitState(playerController);
                 nextState = new FallingState();
                 nextState.EnterState(playerController);
-                Debug.Log("Transitioning to Falling State");
+                GameManager.instance().Print("Transitioning to Falling State");
             }
             else
             {

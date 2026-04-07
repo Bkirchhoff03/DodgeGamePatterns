@@ -88,7 +88,7 @@ public class FallerManager
         float highestY = GetHighestFallerY();
         if(GetHighestFrozenFallerY() >= trapDoorHeight)
         {
-            Debug.Log("Highest frozen faller is above trapdoor, You Lose");
+            GameManager.instance().Print("Highest frozen faller is above trapdoor, You Lose");
             GameManager.instance().GameOver("Highest frozen faller is above trapdoor");
             return;
         }
@@ -226,10 +226,10 @@ public class FallerManager
         string dateTime = DateTime.Now.ToString("yyyyMMddHHmm");
         if (lastSpawnedFallerNumber == numberOfSpawns)
         {
-            Debug.Log("No new fallers to save since last save.");
+            GameManager.instance().Print("No new fallers to save since last save.");
             return;
         }
-        Debug.Log("Saving faller data to file...");
+        GameManager.instance().Print("Saving faller data to file...");
         lastSpawnedFallerNumber = numberOfSpawns;
         // Serialize faller data to JSON
         FallerDataList fallerDataList = new FallerDataList();
@@ -263,7 +263,7 @@ public class FallerManager
         File.WriteAllText(NewFallerFileSave, json);
         File.WriteAllText(FallerDirectory, json);
 
-        Debug.Log($"Saved {fallerDataList.fallers.Count} fallers to file at {FallerDirectory}");
+        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to file at {FallerDirectory}");
         
         if (File.Exists(Constants.playerDataSavePath))
         {
@@ -285,7 +285,7 @@ public class FallerManager
         FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(json);
         foreach (FallerData data in fallerDataList.fallers) 
         {
-            Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
+            GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
             SpawnFallerAtData(data);
         }
         if(File.Exists(PlayerDirectory))
@@ -318,7 +318,7 @@ public class FallerManager
             FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(FallerJson);
             foreach (FallerData data in fallerDataList.fallers)
             {
-                Debug.Log($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
+                GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
                 SpawnFallerAtData(data);
             }
         }
@@ -392,16 +392,16 @@ public class FallerManager
     }
     public FallerController GetFallerBeingRidden()
     {
-        Debug.Log("Checking for faller being ridden...");
+        GameManager.instance().Print("Checking for faller being ridden...");
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value != null && kvp.Value.BeingRidden)
             {
-                Debug.Log($"Faller being ridden: {kvp.Key}");
+                GameManager.instance().Print($"Faller being ridden: {kvp.Key}");
                 return kvp.Value;
             }
         }
-        Debug.Log("No faller is currently being ridden.");
+        GameManager.instance().Print("No faller is currently being ridden.");
         return null;
     }
 }

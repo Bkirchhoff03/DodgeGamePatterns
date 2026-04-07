@@ -62,10 +62,11 @@ public class PunchingArmController : MonoBehaviour
     {
         if(transform.position.x >= player.transform.position.x + 0.5f)
         {
+            transform.position = new Vector3(player.transform.position.x + 0.5f, transform.position.y, transform.position.z);
             punchingVelocity = -3.0f;
         }
         //punchingVelocity -= Time.deltaTime * 3.0f;
-        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.0f);
+        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.5f);
     }
     public void PunchLeft()
     {
@@ -83,10 +84,11 @@ public class PunchingArmController : MonoBehaviour
     {
         if (transform.position.x <= player.transform.position.x - 0.5f)
         {
+            transform.position = new Vector3(player.transform.position.x - 0.5f, transform.position.y, transform.position.z);
             punchingVelocity = 3.0f;
         }
         //punchingVelocity += Time.deltaTime * 3.0f;
-        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.0f);
+        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.5f);
     }
     public float getPunchingVelocity()
     {

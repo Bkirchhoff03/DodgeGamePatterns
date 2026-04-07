@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             {
                 PlayerAnimator.Play("PlayerRunningAnimation");
             }*/
-            Debug.Log("Moving right flip x off");
+            GameManager.instance().Print("Moving right flip x off");
         }
         else if (direction.x < 0.0f)
         {
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
                 PlayerAnimator.SetBool("Running", true);
             }
             //PlayerAnimationGameObject.GetComponent<Animator>().speed = 1f;
-            Debug.Log("Moving left flip x on");
+            GameManager.instance().Print("Moving left flip x on");
             PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = true;
             /*if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not moving horizontally, Go idle");
+            GameManager.instance().Print("Not moving horizontally, Go idle");
             PlayerAnimator.SetBool("Running", false);
             //PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = false;
             /*if(!PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
 
     public IPlayerState GetStateFromName(string currentStateName)
     {
-        Debug.Log("Setting player state from name: " + currentStateName);
+        GameManager.instance().Print("Setting player state from name: " + currentStateName);
         switch (currentStateName)
         {
             case Constants.crushedStateName:
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
 
     public void BounceOff(GameObject faller, GameManager.PlayerFallerCollisionType collisionType)
     {
-        Debug.Log("Bouncing off faller. Collision type: " + collisionType);
+        GameManager.instance().Print("Bouncing off faller. Collision type: " + collisionType);
         //ensure player does not go through the faller, but stays on the same side of the faller as they were before the collision
         Vector3 newPosition = transform.position;
         switch (collisionType)

@@ -490,6 +490,7 @@ MonoBehaviour:
   RightGrassTile: {fileID: 1809391310, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   CenterGrassTile: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
   fallerType: 0
+  verboseLogging: 1
 --- !u!1 &7953197828975584025
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,6 +799,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2157969525232696877, guid: 395c5bf21ed1d244bbe1be370fce0faf, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157969525232696877, guid: 395c5bf21ed1d244bbe1be370fce0faf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 6b1190f294900674ab15146b31ae1c42, type: 3}
     - target: {fileID: 7678906346412210299, guid: 395c5bf21ed1d244bbe1be370fce0faf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -863,6 +872,10 @@ PrefabInstance:
     - target: {fileID: 575623966405757512, guid: 7057a3f014fa69f45b36d3e3704960da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 982537951276725689, guid: 7057a3f014fa69f45b36d3e3704960da, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 6840923425212699071, guid: 7057a3f014fa69f45b36d3e3704960da, type: 3}
       propertyPath: m_Name

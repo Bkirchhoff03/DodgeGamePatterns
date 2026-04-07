@@ -10,8 +10,12 @@ namespace Assets.Scripts
 {
     public class FallingState : IPlayerState
     {
+        private bool moving = false;
+        private int leftNoneRight = 0;
         private Vector3 currentDirection = Vector3.zero;
         private Vector3 startingPosition;
+        private float timeSinceStopped = 0f;
+        private const float idleDelay = Constants.idleDelay;
         private float timeInState = 0f;
         private const float wedgeDetectionDelay = 0.3f;
         private const float wedgeVelocityThreshold = 1.0f;
@@ -44,17 +48,33 @@ namespace Assets.Scripts
             {
                 startingPosition = playerController.transform.position;
             }
+            if (moveInput.isPunch != 0)
+            {
+                playerController.HandlePunch(moveInput);
+            }
             if (moveInput.Xdirection < 0)
             {
                 currentDirection = Vector3.left;
+                moving = true;
+                leftNoneRight = -1;
+                timeSinceStopped = 0f;
             }
             else if (moveInput.Xdirection > 0)
             {
                 currentDirection = Vector3.right;
+                moving = true;
+                leftNoneRight = 1;
+                timeSinceStopped = 0f;
             }
             else
             {
                 currentDirection = Vector3.zero;
+                timeSinceStopped += Time.deltaTime;
+                if (timeSinceStopped >= idleDelay)
+                {
+                    moving = false;
+                    leftNoneRight = 0;
+                }
             }
 
             // Handle input specific to dodging state
@@ -62,7 +82,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            Debug.Log("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
+            GameManager.instance().Print("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
             IPlayerState nextState = this;
             timeInState += Time.deltaTime;
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -81,6 +101,14 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 nextState = new DodgingState();
                 nextState.EnterState(playerController);
+            }
+            if (moving && !playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", true);
+            }
+            else if (!moving && playerController.PlayerAnimator.GetBool("Running"))
+            {
+                playerController.PlayerAnimator.SetBool("Running", false);
             }
             //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
             playerController.Move(currentDirection);
