@@ -43,7 +43,7 @@ public class PunchingArmController : MonoBehaviour
             GetComponent<SpriteRenderer>().enabled = false;
             transform.position = playerCenter;
         }
-        transform.position = new Vector3(transform.position.x, playerCenter.y, playerCenter.z);
+        transform.position = new Vector3(transform.position.x, playerCenter.y + 0.5f, playerCenter.z);
     }
 
     public void PunchRight()
@@ -66,7 +66,7 @@ public class PunchingArmController : MonoBehaviour
             punchingVelocity = -3.0f;
         }
         //punchingVelocity -= Time.deltaTime * 3.0f;
-        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.5f);
+        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.0f);
     }
     public void PunchLeft()
     {
@@ -88,7 +88,7 @@ public class PunchingArmController : MonoBehaviour
             punchingVelocity = 3.0f;
         }
         //punchingVelocity += Time.deltaTime * 3.0f;
-        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.5f);
+        transform.localPosition += new Vector3(punchingVelocity * Time.deltaTime, 0.0f);
     }
     public float getPunchingVelocity()
     {
@@ -121,6 +121,6 @@ public class PunchingArmController : MonoBehaviour
         isPunchingLeft = false;
         isPunchingRight = false;
         GetComponent<Collider2D>().enabled = false;
-        transform.position = player.transform.position;
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.5f, player.transform.position.z);
     }
 }
