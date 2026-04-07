@@ -2069,6 +2069,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5927855624702853228}
     - target: {fileID: 675453475366127679, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+    - target: {fileID: 675453475366127679, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
@@ -2080,6 +2084,10 @@ PrefabInstance:
       propertyPath: m_margin.z
       value: -151.86366
       objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
     - target: {fileID: 1855026364227606407, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Name
       value: QuitToMenuButton
@@ -2139,6 +2147,22 @@ PrefabInstance:
     - target: {fileID: 3152686828903112394, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Color.r
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268644148379388874, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268644148379388874, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 253
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268644148379388874, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268644148379388874, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 3920276405810049948, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2284,6 +2308,22 @@ PrefabInstance:
       propertyPath: m_text
       value: Quit To Main Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 8330394149268638345, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330394149268638345, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330394149268638345, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330394149268638345, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8424364391536157748, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.15
@@ -2315,6 +2355,14 @@ PrefabInstance:
     - target: {fileID: 8424364391536157748, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774184886606443896, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774184886606443896, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
