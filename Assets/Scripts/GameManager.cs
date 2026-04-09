@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            playerLives--;
+            //playerLives--;
             string text = "Lives: ";
             for (int i = 0; i < playerLives; i++)
             {
@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResetGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Level1");
     }
     public void SaveLevel()
