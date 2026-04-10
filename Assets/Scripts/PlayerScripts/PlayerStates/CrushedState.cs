@@ -30,14 +30,16 @@ namespace Assets.Scripts
         { 
             GameManager.instance().Print("Entering Crushed State");
             animationStateHash = playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("Crush");
+            playerController.animationManager.SetCrushed(true);
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("Crush");
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
         }
         public void ExitState(PlayerController playerController)
         {
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");
+            playerController.animationManager.SetCrushed(false);
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {

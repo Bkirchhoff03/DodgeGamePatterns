@@ -87,17 +87,24 @@ namespace Assets.Scripts
                 return new FallingState();
             }
             IPlayerState newState = this;
-            if (moving && !playerController.PlayerAnimator.GetBool("Running"))
+            if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {
-                playerController.PlayerAnimator.SetBool("Running", true);
+                playerController.animationManager.SetRunning(true);
             }
-            else if (!moving && playerController.PlayerAnimator.GetBool("Running"))
+            else if (!moving && playerController.animationManager.isRunning())
             {
-                playerController.PlayerAnimator.SetBool("Running", false);
+                playerController.animationManager.SetRunning(false);
             }
             if (leftNoneRight != 0)
             {
-                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = leftNoneRight == -1;
+                if (leftNoneRight == -1)
+                {
+                    playerController.animationManager.lookLeft();
+                }
+                else
+                {
+                    playerController.animationManager.lookRight();
+                }
             }
 
             if (playerController.isGrounded())

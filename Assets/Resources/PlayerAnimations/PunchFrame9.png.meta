@@ -103,12 +103,12 @@ TextureImporter:
       name: PunchFrame9_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 6
+        x: 0
+        y: 0
         width: 143
-        height: 386
+        height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5bb083746221979438ae4e118cfac46b
     internalID: 0
     vertices: []
     indices: 

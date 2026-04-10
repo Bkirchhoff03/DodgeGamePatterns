@@ -65,17 +65,26 @@ namespace Assets.Scripts
         public IPlayerState Update(PlayerController playerController)
         {
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.blue;
-            if (moving && !playerController.PlayerAnimator.GetBool("Running"))
+            if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {
-                playerController.PlayerAnimator.SetBool("Running", true);
+                playerController.animationManager.SetRunning(true);
+                playerController.animationManager.SetIdle(false);
             }
-            else if (!moving && playerController.PlayerAnimator.GetBool("Running"))
+            else if (!moving && playerController.animationManager.isRunning())
             {
-                playerController.PlayerAnimator.SetBool("Running", false);
+                playerController.animationManager.SetRunning(false);
+                playerController.animationManager.SetIdle(true);
             }
             if(leftNoneRight != 0)
             {
-                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = leftNoneRight == -1;
+                if (leftNoneRight == -1)
+                {
+                    playerController.animationManager.lookLeft();
+                }
+                else
+                {
+                    playerController.animationManager.lookRight();
+                }
             }
             Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
             rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7401370215647515371}
   - component: {fileID: 1528252012315240983}
   - component: {fileID: 6927477169518134765}
+  - component: {fileID: 447905202358068802}
   m_Layer: 8
   m_Name: Animation
   m_TagString: Untagged
@@ -110,6 +111,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &447905202358068802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532855802329387889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a24ded13ba79546bc78bf8ca146229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  Running: 0
 --- !u!1 &609615885014599675
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +414,7 @@ MonoBehaviour:
   punchingArm: {fileID: 609615885014599675}
   PlayerAnimationGameObject: {fileID: 0}
   PlayerAnimator: {fileID: 0}
+  animationManager: {fileID: 0}
 --- !u!114 &4034949269422199876
 MonoBehaviour:
   m_ObjectHideFlags: 0

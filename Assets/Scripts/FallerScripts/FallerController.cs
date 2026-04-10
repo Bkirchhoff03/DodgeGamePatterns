@@ -125,9 +125,9 @@ public class FallerController : MonoBehaviour
 
     public void FloorPause()
     {
+        rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
         rb.gravityScale = 0f;
-        rb.linearVelocity = Vector2.zero;
         rb.mass = 10000f;
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(fallerObject, FallerSize);
