@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public Sprite RightGrassTile;
     public Sprite CenterGrassTile;
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
+    public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -123,12 +124,12 @@ public class GameManager : MonoBehaviour
     }
     public void HandlePlayerFallerCollision(GameObject player, GameObject faller, PlayerFallerCollisionType collisionType)
     {
-        Debug.Log("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
+        Print("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
         PlayerController playerController = player.GetComponent<PlayerController>();
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
-        if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged())
+        if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            playerLives--;
+            //playerLives--;
             string text = "Lives: ";
             for (int i = 0; i < playerLives; i++)
             {
@@ -138,7 +139,7 @@ public class GameManager : MonoBehaviour
             if (playerLives <= 0)
             {
                 playerLives = 3;
-                Debug.Log("GAME OVER");
+                Print("GAME OVER");
                 GameOver("You ran out of lives!");
                 //SceneManager.LoadScene("MainMenu");
             }
@@ -173,6 +174,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResetGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Level1");
     }
     public void SaveLevel()
@@ -213,8 +215,19 @@ public class GameManager : MonoBehaviour
         clickSpawnCooldown = 0.5f; // Reset cooldown
         clickPosition.z = 20f; // Set z to a positive value to ensure it's in front of the camera
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
-        //Debug.Log("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
+        //GameManager.instance().Print("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
         worldPosition.z = 0f; // Set z to 0 for 2D
         FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
+    }
+    public void Print(string message, int level = 0)
+    {
+        if (message != null && verboseLogging && level == 0)
+        {
+            Debug.Log(message);
+        }
+        else if (message != null && level == 1)
+        {
+            Debug.Log(message);
+        }
     }
 }

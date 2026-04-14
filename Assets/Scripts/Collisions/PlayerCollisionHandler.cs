@@ -4,12 +4,22 @@ public class PlayerCollisionHandler : MonoBehaviour
 {
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        GameManager.instance().Print("Player collided with: " + collision.gameObject.name);
         if (collision.gameObject.GetComponent<FallerController>() == null)
         {
             return;
         }
+        /*if (collision.gameObject.name == "LeftWall")
+        {
+            this.GetComponent<PlayerController>().BounceOff(collision.gameObject, GameManager.PlayerFallerCollisionType.Right);
+            return;
+        }
+        else if (collision.gameObject.name == "RightWall")
+        {
+            this.GetComponent<PlayerController>().BounceOff(collision.gameObject, GameManager.PlayerFallerCollisionType.Left);
+            return;
+        }*/
 
-        Debug.Log("Player Collision with " + collision.gameObject.name);
         HandlePlayerCollision(collision);
     }
 
@@ -18,6 +28,8 @@ public class PlayerCollisionHandler : MonoBehaviour
     // Only acts when the player is already in FallingState and resting on a faller's top surface.
     public void OnCollisionStay2D(Collision2D collision)
     {
+        
+
         if (collision.gameObject.GetComponent<FallerController>() == null)
         {
             return;
@@ -35,7 +47,7 @@ public class PlayerCollisionHandler : MonoBehaviour
     private void HandlePlayerCollision(Collision2D collision)
     {
         Vector2 contactNormal = collision.GetContact(0).normal;
-        Debug.Log("Contact Normal: " + contactNormal + " With: " + collision.gameObject.name);
+        //Debug.Log("Contact Normal: " + contactNormal + " With: " + collision.gameObject.name);
 
         GameManager.PlayerFallerCollisionType collisionType = GameManager.PlayerFallerCollisionType.None;
 
@@ -43,12 +55,12 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             if (contactNormal.y < -0.1f)
             {
-                Debug.Log("Hits bottom of object");
+                //Debug.Log("Hits bottom of object");
                 collisionType = GameManager.PlayerFallerCollisionType.Bottom;
             }
             else if (contactNormal.y > 0.1f)
             {
-                Debug.Log("Hits top of object");
+                //GameManager.instance().Print("Hits top of object");
                 collisionType = GameManager.PlayerFallerCollisionType.Top;
             }
         }
@@ -56,12 +68,12 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             if (contactNormal.x < -0.1f)
             {
-                Debug.Log("Hits left of object");
+                //GameManager.instance().Print("Hits left of object");
                 collisionType = GameManager.PlayerFallerCollisionType.Left;
             }
             else if (contactNormal.x > 0.1f)
             {
-                Debug.Log("Hits right of object");
+                //GameManager.instance().Print("Hits right of object");
                 collisionType = GameManager.PlayerFallerCollisionType.Right;
             }
         }
