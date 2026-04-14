@@ -23,6 +23,7 @@ namespace Assets.Scripts.PlayerScripts
         private bool Crushed;
         private string CrushedParameter = "Crush";
         private string CrushedFromWhere = "";
+        private float punchFrameTimer = 0.0f;
         public enum PlayerAnimationState
         {
             Idle,
