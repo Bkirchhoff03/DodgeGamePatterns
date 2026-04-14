@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            playerLives--;
+            //playerLives--;
             string text = "Lives: ";
             for (int i = 0; i < playerLives; i++)
             {
@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResetGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Level1");
     }
     public void SaveLevel()
@@ -218,9 +219,13 @@ public class GameManager : MonoBehaviour
         worldPosition.z = 0f; // Set z to 0 for 2D
         FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
-    public void Print(string message)
+    public void Print(string message, int level = 0)
     {
-        if (message != null && verboseLogging)
+        if (message != null && verboseLogging && level == 0)
+        {
+            Debug.Log(message);
+        }
+        else if (message != null && level == 1)
         {
             Debug.Log(message);
         }

@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.PlayerScripts;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public GameObject punchingArm;
     public GameObject PlayerAnimationGameObject;
     public Animator PlayerAnimator;
+    public PlayerAnimationManager animationManager;
     private float leftOrRightOrNone = 0f;
     private bool running = false;
     //private bool isPunchingLeft = false;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
         state.EnterState(this);
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
         PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
+        animationManager = PlayerAnimationGameObject.GetComponent<PlayerAnimationManager>();
         GetComponent<Rigidbody2D>().mass = 0.00001f;
 
     }
@@ -80,15 +83,16 @@ public class PlayerController : MonoBehaviour
         transform.position += direction * Time.deltaTime * Constants.moveSpeed;
         if (direction.x < 0 && leftOrRightOrNone >= 0)
         {
-            SetAnimationDirection(direction);
+            //SetAnimationDirection(direction);
             leftOrRightOrNone = -1;
         }
         else if (direction.x > 0 && leftOrRightOrNone <= 0)
         {
-            SetAnimationDirection(direction);
+            //SetAnimationDirection(direction);
             leftOrRightOrNone = 1;
         }
     }
+    
     private void SetAnimationDirection(Vector3 direction)
     {
         if (direction.x > 0.0f)

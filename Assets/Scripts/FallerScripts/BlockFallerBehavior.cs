@@ -39,7 +39,7 @@ public class BlockFallerBehavior : IFallerBehavior
         {
             float punchVelocity = arm.getPunchingVelocity();
             fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
-                new Vector2(punchVelocity * Constants.punchForceMultiplier, 0f), ForceMode2D.Impulse);
+                new Vector2(punchVelocity * Constants.blockPunchForceMultiplier, 0f), ForceMode2D.Impulse);
             arm.CancelPunch();
         }
     }

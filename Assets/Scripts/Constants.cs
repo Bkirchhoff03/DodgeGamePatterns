@@ -26,8 +26,11 @@ namespace Assets.Scripts
         public const float boulderSettleLinearThreshold = 0.15f;
         public const float boulderSettleAngularThreshold = 5.0f;
         public const float boulderSettleTime = 0.5f;
+        public const float PunchingArmOffsetY = 0.45f;
+        public const float PunchingArmOffsetX = 0.475f;
         public const int fallerCollisionFreezeThreshold = 30;
-        public const float punchForceMultiplier = 1.5f;
+        public const float blockPunchForceMultiplier = 1.5f;
+        public const float boulderPunchForceMultiplier = 10f;
         public const float idleDelay = 0.045f; // ~3 frames at 60fps — prevents idle flicker when switching directions
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
@@ -43,5 +46,6 @@ namespace Assets.Scripts
         public static string playerDataSavePath => "Assets/PlayerSaveData/";
         public static string saveFilePath => "Assets/SaveFiles/";
 
+        
     }
 }

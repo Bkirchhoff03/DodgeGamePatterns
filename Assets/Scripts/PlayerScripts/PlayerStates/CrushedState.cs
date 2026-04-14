@@ -11,7 +11,7 @@ namespace Assets.Scripts
     {
         private IPlayerState lastState;
         private Vector3 currentDirection = Vector3.zero;
-        private float crushedTimer = 0.5f;
+        private float crushedTimer = 1.0f;
         private int animationStateHash;
         public CrushedState(IPlayerState lastState)
         {
@@ -29,14 +29,17 @@ namespace Assets.Scripts
         public void EnterState(PlayerController playerController)
         { 
             GameManager.instance().Print("Entering Crushed State");
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
             animationStateHash = playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
+            playerController.animationManager.SetCrushed(true);
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("Crush");
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
         }
         public void ExitState(PlayerController playerController)
         {
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
-            /*playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
-            playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");*/
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
+            playerController.animationManager.SetCrushed(false);
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
+            //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
@@ -57,6 +60,7 @@ namespace Assets.Scripts
             }
             else //if(!playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
             {
+                ExitState(playerController);
                 nextState = lastState;
                 nextState.EnterState(playerController);
             }

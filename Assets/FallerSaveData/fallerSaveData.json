@@ -1,0 +1,796 @@
+{
+    "fallers": [
+        {
+            "name": "Faller_1",
+            "position": {
+                "x": -9.686532974243164,
+                "y": 0.031810227781534198,
+                "z": 0.0
+            },
+            "size": {
+                "x": 3.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_2",
+            "position": {
+                "x": 4.695446968078613,
+                "y": 0.030546633526682855,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_3",
+            "position": {
+                "x": 3.356818437576294,
+                "y": 1.5222703218460084,
+                "z": 0.0
+            },
+            "size": {
+                "x": 3.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_4",
+            "position": {
+                "x": 3.2370123863220217,
+                "y": 2.5277037620544435,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_14",
+            "position": {
+                "x": -7.363906383514404,
+                "y": 0.2706133723258972,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_6",
+            "position": {
+                "x": -2.29886531829834,
+                "y": 0.027566581964492799,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_7",
+            "position": {
+                "x": 3.4504475593566896,
+                "y": 3.260873556137085,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_8",
+            "position": {
+                "x": -1.6059620380401612,
+                "y": 1.2655905485153199,
+                "z": 0.0
+            },
+            "size": {
+                "x": 3.0,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": true,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_9",
+            "position": {
+                "x": -7.329519748687744,
+                "y": -0.4823921024799347,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_10",
+            "position": {
+                "x": 5.477991104125977,
+                "y": 2.2733988761901857,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 3.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_11",
+            "position": {
+                "x": -10.444657325744629,
+                "y": 2.2743313312530519,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 3.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_12",
+            "position": {
+                "x": 2.811258316040039,
+                "y": 4.7671732902526859,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_13",
+            "position": {
+                "x": 6.508201599121094,
+                "y": 5.037372589111328,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 2.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_15",
+            "position": {
+                "x": 0.5102916955947876,
+                "y": 6.060002326965332,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_16",
+            "position": {
+                "x": 3.5363221168518068,
+                "y": 6.784977912902832,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_17",
+            "position": {
+                "x": -7.1861982345581059,
+                "y": 2.281323194503784,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 3.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_18",
+            "position": {
+                "x": -10.541742324829102,
+                "y": 4.515334129333496,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_19",
+            "position": {
+                "x": 4.200690746307373,
+                "y": 8.279068946838379,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_20",
+            "position": {
+                "x": 3.1856913566589357,
+                "y": 9.354277610778809,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_21",
+            "position": {
+                "x": -1.0453276634216309,
+                "y": 7.296879291534424,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_22",
+            "position": {
+                "x": 12.341813087463379,
+                "y": 0.49694541096687319,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 2.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_23",
+            "position": {
+                "x": 1.9787540435791016,
+                "y": 10.616597175598145,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_24",
+            "position": {
+                "x": -2.0438365936279299,
+                "y": 9.28601360321045,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_35",
+            "position": {
+                "x": -0.6877844929695129,
+                "y": 13.764961242675782,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_26",
+            "position": {
+                "x": -1.01700758934021,
+                "y": 11.26676082611084,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_27",
+            "position": {
+                "x": -7.9469895362854,
+                "y": 4.300048351287842,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_28",
+            "position": {
+                "x": -7.940141201019287,
+                "y": 5.560351371765137,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_29",
+            "position": {
+                "x": 4.292980194091797,
+                "y": 12.352723121643067,
+                "z": 0.0
+            },
+            "size": {
+                "x": 3.0,
+                "y": 2.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_30",
+            "position": {
+                "x": -7.027050495147705,
+                "y": 6.820413112640381,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_31",
+            "position": {
+                "x": 2.195444107055664,
+                "y": 14.605107307434082,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_32",
+            "position": {
+                "x": -7.819418907165527,
+                "y": 8.080395698547364,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_33",
+            "position": {
+                "x": -6.054419994354248,
+                "y": 9.071938514709473,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_34",
+            "position": {
+                "x": -2.452784299850464,
+                "y": 12.499371528625489,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_36",
+            "position": {
+                "x": 1.1356090307235718,
+                "y": 16.348779678344728,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_37",
+            "position": {
+                "x": 1.900608777999878,
+                "y": 17.200708389282228,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": 0.0,
+            "isFrozen": true,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_38",
+            "position": {
+                "x": -4.083837509155273,
+                "y": 19.24909019470215,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -6.317812919616699,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_39",
+            "position": {
+                "x": -6.075516223907471,
+                "y": 28.292993545532228,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -5.5722551345825199,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_40",
+            "position": {
+                "x": -4.31051778793335,
+                "y": 36.1069221496582,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -4.836507320404053,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_41",
+            "position": {
+                "x": 2.785493850708008,
+                "y": 42.89924240112305,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -4.090949535369873,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_42",
+            "position": {
+                "x": -2.00687313079834,
+                "y": 48.4912109375,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -3.355201482772827,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_43",
+            "position": {
+                "x": 6.71162223815918,
+                "y": 53.03194808959961,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -2.6096436977386476,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_44",
+            "position": {
+                "x": 4.499324321746826,
+                "y": 56.4394416809082,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.5,
+                "y": 1.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -1.8640859127044678,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_45",
+            "position": {
+                "x": 2.2100090980529787,
+                "y": 58.69111251831055,
+                "z": 0.0
+            },
+            "size": {
+                "x": 2.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -1.128338098526001,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        },
+        {
+            "name": "Faller_46",
+            "position": {
+                "x": 3.975008010864258,
+                "y": 59.847015380859378,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1.0,
+                "y": 2.5,
+                "z": 0.5
+            },
+            "rotation": 0.0,
+            "currentSpeed": -0.382779985666275,
+            "isFrozen": false,
+            "beingRidden": false,
+            "fallerType": 0
+        }
+    ]
+}
