@@ -92,6 +92,8 @@ namespace Assets.Scripts
                 nextState.EnterState(playerController);
             }
             else */
+
+            GameManager.instance().Print("Jumping position rn: " + playerController.transform.position, 0);
             GameManager.instance().Print("Current Jump Speed: " + rb.linearVelocity.y);
             if (rb.linearVelocity.y <= 0f)
             {

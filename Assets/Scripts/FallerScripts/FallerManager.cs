@@ -79,7 +79,7 @@ public class FallerManager
     // Spawns a new faller at a safe height above existing fallers.
     // baseSpawnHeight is the camera-relative default; actual height is raised
     // if any existing faller is within minSpawnGap, capped at the trapdoor.
-    public void SpawnFaller(float baseSpawnHeight)
+    public void SpawnFaller(float baseSpawnHeight, bool rescueFaller = false)
     {
         // Remove stale entries from fallers that self-destroyed off-screen
         CleanupDestroyedFallers();
@@ -96,7 +96,11 @@ public class FallerManager
         // Never spawn above the trapdoor
         spawnHeight = Mathf.Min(spawnHeight, trapDoorHeight);
 
-        float randomX = Random.Range(Constants.minX, Constants.maxX);
+
+
+        float randomX = GetSpawnXPos();
+        
+        
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         if(_fallerType == FallerType.Block)
@@ -113,7 +117,13 @@ public class FallerManager
         FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
         fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
-
+        if (rescueFaller)
+        {
+            SpriteRenderer sr = fallerBehavior.gameObject.GetComponent<SpriteRenderer>();
+            sr.enabled = true;
+            sr.color = new Color(0f, 1f, 0f, 0.098f);
+            sr.sortingOrder = 2;
+        }
         /*string randomXSizeName = randomSizeX.ToString("0.#");
         string randomYSizeName = randomSizeY.ToString("0.#");
         Debug.Log($"Spawning faller with size {randomXSizeName}_by_{randomYSizeName} at position {spawnPosition}");
@@ -130,6 +140,76 @@ public class FallerManager
 
         fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
+    public FallerController ForceSpawnFaller(float spawnHeight, float spawnX, Vector2 spawnSize, bool rescueFaller = true)
+    {
+        // Remove stale entries from fallers that self-destroyed off-screen
+        CleanupDestroyedFallers();
+
+        float randomX = spawnX;
+
+
+        float randomSizeX = spawnSize.x;
+        float randomSizeY = spawnSize.y;
+        if (_fallerType == FallerType.Block)
+        {
+            randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
+            randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
+        }
+        numberOfSpawns++;
+        string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
+        //GameObject fallerObject = new GameObject(nameOfFaller);
+        Vector3 spawnPosition = new Vector3(randomX, spawnHeight, 0);
+        Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
+
+        FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
+        fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
+        fallersInPlay.Add(nameOfFaller, fallerBehavior);
+        if (rescueFaller)
+        {
+            SpriteRenderer sr = fallerBehavior.gameObject.GetComponent<SpriteRenderer>();
+            sr.enabled = true;
+            sr.color = new Color(0f, 1f, 0f, 0.098f);
+            sr.sortingOrder = 2;
+        }
+        return fallerBehavior;
+    }
+
+    public float GetSpawnXPos()
+    {
+        //Regular uniform random spawn between walls.
+        return Random.Range(Constants.minX, Constants.maxX);
+        //Should be a random X position between the min and max, but with a normal distribution centered in the middle to make it more likely to spawn towards the center
+        //return RandomGaussian(Constants.minX, Constants.maxX);
+    }
+
+    public float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
+    {
+        float u, v, S;
+
+        do
+        {
+            u = 2.0f * UnityEngine.Random.value - 1.0f;
+            v = 2.0f * UnityEngine.Random.value - 1.0f;
+            S = u * u + v * v;
+        }
+        while (S >= 1.0f);
+
+        // Standard Normal Distribution
+        float std = u * Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+
+        // Normal Distribution centered between the min and max value
+        // and clamped following the "three-sigma rule"
+        float mean = (minValue + maxValue) / 2.0f;
+        float sigma = (maxValue - mean) / 3.0f;
+        float val = std * sigma + mean;
+        if(val < minValue || val > maxValue)
+        {
+            Debug.LogWarning($"Generated value {val} is out of bounds [{minValue}, {maxValue}]. Clamping to bounds.");
+            val = RandomGaussian(minValue, maxValue); // Regenerate if out of bounds
+        }
+        return val;
+    }
+
 
     public void SpawnFallerAtPosition(Vector3 worldPosition)
     {
@@ -359,7 +439,7 @@ public class FallerManager
         }
         return highest;
     }
-    float GetHighestFrozenFallerY()
+    public float GetHighestFrozenFallerY()
     {
         float highest = float.NegativeInfinity;
         foreach (var kvp in fallersInPlay)
@@ -374,6 +454,85 @@ public class FallerManager
         }
         return highest;
     }
+    public FallerController GetLowestReachableFaller(Vector3 playerPos, Vector3 reachableDistance)
+    {
+        FallerController lowestReachable = null;
+        float lowestY = float.PositiveInfinity;
+        List<FallerController> exposedFallers = GetExposedTopSurfaces();
+        foreach (var faller in exposedFallers)
+        {
+            if (faller == null) continue;
+            float topY = faller.transform.position.y + (faller.transform.localScale.y / 2);
+            float horizontalDistance = faller.transform.position.x - playerPos.x;
+            if (topY > playerPos.y && topY - playerPos.y <= reachableDistance.y)
+            {
+                if (horizontalDistance <= 0f)
+                {
+                    // Faller is to the left of the player
+                    float distanceToLeftEdge = horizontalDistance + (faller.transform.localScale.x / 2);
+                    if (distanceToLeftEdge >= -reachableDistance.x)
+                    {
+                        // Player can reach the left edge of the faller
+                        lowestY = topY;
+                        lowestReachable = faller;
+                    }
+                    else
+                    {
+                        continue; // Can't reach this faller
+                    }
+                }
+                else
+                {
+                    // Faller is to the right of the player
+                    float distanceToRightEdge = horizontalDistance - (faller.transform.localScale.x / 2);
+                    if (distanceToRightEdge <= reachableDistance.x)
+                    {
+                        // Player can reach the right edge of the faller
+                        lowestY = topY;
+                        lowestReachable = faller;
+                    }
+                    else
+                    {
+                        continue; // Can't reach this faller
+                    }
+                }
+            }
+        }
+        
+        return lowestReachable;
+    }
+    
+    private List<FallerController> GetExposedTopSurfaces()
+    {
+        List<FallerController> exposedFallers = new List<FallerController>();
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            float topY = kvp.Value.transform.position.y + (kvp.Value.transform.localScale.y / 2);
+            bool isExposed = true;
+            foreach (var otherKvp in fallersInPlay)
+            {
+                if (otherKvp.Value == null || otherKvp.Key == kvp.Key) continue;
+                float otherBottomY = otherKvp.Value.transform.position.y - (otherKvp.Value.transform.localScale.y / 2);
+                float otherLeftX = otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2);
+                float otherRightX = otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2);
+                if (otherBottomY >= topY - 0.1f && // Allow small tolerance
+                    otherBottomY <= topY + 0.1f &&
+                    kvp.Value.transform.position.x >= otherLeftX &&
+                    kvp.Value.transform.position.x <= otherRightX)
+                {
+                    isExposed = false;
+                    break;
+                }
+            }
+            if (isExposed)
+            {
+                exposedFallers.Add(kvp.Value);
+            }
+        }
+        return exposedFallers;
+    }
+
     // Removes null entries left behind when fallers self-destroy after falling off-screen
     void CleanupDestroyedFallers()
     {
@@ -403,5 +562,37 @@ public class FallerManager
         }
         GameManager.instance().Print("No faller is currently being ridden.");
         return null;
+    }
+
+    public FallerController SpawnRescue(Vector3 playerPosition, float spawnHeight)
+    {
+        float farLeftXBound = Mathf.Max(Constants.minX, playerPosition.x - 3.84f);
+        float farRightXBound = Mathf.Min(Constants.maxX, playerPosition.x + 3.84f);
+        for (float x = farLeftXBound; x <= farRightXBound; x += 0.5f)
+        {
+            if (IsColumnClear(x, 0.5f, playerPosition.y, spawnHeight))
+            { 
+                return ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 2f), true); 
+            }
+        }    
+        return null;
+    }
+    private bool IsColumnClear(float x, float fallerWidth, float fromY, float toY)
+    {
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            float otherLeftX = kvp.Value.transform.position.x - (kvp.Value.transform.localScale.x / 2);
+            float otherRightX = kvp.Value.transform.position.x + (kvp.Value.transform.localScale.x / 2);
+            float otherBottomY = kvp.Value.transform.position.y - (kvp.Value.transform.localScale.y / 2);
+            float otherTopY = kvp.Value.transform.position.y + (kvp.Value.transform.localScale.y / 2);
+            bool overlapsX = x + (fallerWidth / 2) > otherLeftX && x - (fallerWidth / 2) < otherRightX;
+            bool overlapsY = toY > otherBottomY && fromY < otherTopY;
+            if (overlapsX && overlapsY)
+            {
+                return false; // Column is not clear
+            }
+        }
+        return true; // Column is clear
     }
 }
