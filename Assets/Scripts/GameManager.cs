@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events
     private float stuckTimer = 0f;
-    private float stuckThreshold = 10.0f; // Set a default value for the stuck threshold
+    private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
     private Queue<float> maxPlayerHeightRecently = new Queue<float>(); // Track the maximum height the player has reached recently to help determine if they're stuck
     private bool checkstuck = false;
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, Camera.main.transform.position.y + 9f);
         if (rescue == null)
         {
+            GameManager.instance().Print("Rescue spawn failed!", 1);
             // Additional logic if rescue spawn fails, such as trying again after a delay or notifying the player
         }
     }
@@ -146,12 +148,15 @@ public class GameManager : MonoBehaviour
     {
         if (!checkstuck)
         {
+            //FallerManager.instance().RemoveAllTints();
+            FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f));
+            //GameManager.instance().Print(string.Join(", ", maxPlayerHeightRecently), 1);
             playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
             maxPlayerHeightRecently.Enqueue(player.transform.position.y);
             if (maxPlayerHeightRecently.Count > recentHeightRecordCount)
             {
                 float oldest = maxPlayerHeightRecently.Dequeue();
-                if (oldest > System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
+                if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
                     GameManager.instance().Print("Player may be stuck, starting timer...", 1);
@@ -160,16 +165,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            if (FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f)) == null)
+            playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = new Color(stuckTimer/stuckThreshold, 0f, 0f, 1f);
+            FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(Constants.maxXJumpDistance, Constants.maxYJumpHeight, 0f));
+            if (l == null)
             {
-                GameManager.instance().Print("No reachable fallers!!", 1);
+                //GameManager.instance().Print("No reachable fallers!! " + stuckTimer, 1);
                 stuckTimer += Time.deltaTime;
                 if (stuckTimer >= stuckThreshold)
                 {
                     triggerRescueSpawn();
                     stuckTimer = 0f;
                 }
+                FallerManager.instance().RemoveAllTints();
             }
             else
             {
@@ -177,6 +184,7 @@ public class GameManager : MonoBehaviour
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
                 GameManager.instance().Print("Found a reachable faller!!", 1);
+                //l.AddRedTint();
             }
         }
     }

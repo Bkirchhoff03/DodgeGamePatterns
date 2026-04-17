@@ -140,7 +140,7 @@ public class FallerManager
 
         fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
-    public FallerController ForceSpawnFaller(float spawnHeight, float spawnX, Vector2 spawnSize, bool rescueFaller = true)
+    public FallerController ForceSpawnFaller(float spawnHeight, float spawnX, Vector2 spawnSize, float speed = Constants.maxFallerSpeed ,bool rescueFaller = true)
     {
         // Remove stale entries from fallers that self-destroyed off-screen
         CleanupDestroyedFallers();
@@ -162,7 +162,7 @@ public class FallerManager
         Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
 
         FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
-        fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
+        fallerBehavior.Init(spawnPosition, size, speed, fallerBehavior.gameObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
         if (rescueFaller)
         {
@@ -463,42 +463,41 @@ public class FallerManager
         {
             if (faller == null) continue;
             float topY = faller.transform.position.y + (faller.transform.localScale.y / 2);
-            float horizontalDistance = faller.transform.position.x - playerPos.x;
-            if (topY > playerPos.y && topY - playerPos.y <= reachableDistance.y)
+            float dy = topY - playerPos.y;
+            if (dy <= 0f) { faller.RemoveRedTint(); continue; }
+
+            // Horizontal gap between player and the nearest edge of the faller (0 if player is directly above)
+            float fallerLeft  = faller.transform.position.x - faller.transform.localScale.x / 2;
+            float fallerRight = faller.transform.position.x + faller.transform.localScale.x / 2;
+            float dx = Mathf.Max(0f, Mathf.Max(fallerLeft - playerPos.x, playerPos.x - fallerRight));
+
+            // Ellipse check: rectangular bounds overestimate reach at corners; this matches the actual jump arc
+            float ellipse = (dx / reachableDistance.x) * (dx / reachableDistance.x)
+                          + (dy / reachableDistance.y) * (dy / reachableDistance.y);
+            if (ellipse > 1f) { faller.RemoveRedTint(); continue; }
+
+            // Raycast for obstructions only when the faller isn't directly above the player
+            if (dx > 0f)
             {
-                if (horizontalDistance <= 0f)
+                Vector2 rayDir = playerPos.x < faller.transform.position.x ? Vector2.right : Vector2.left;
+                RaycastHit2D hit = Physics2D.Raycast(
+                    new Vector3(playerPos.x, playerPos.y + dy + 0.1f, 0f),
+                    rayDir, dx, LayerMask.GetMask("Fallers"));
+                if (hit.collider != null && hit.collider.gameObject != faller.gameObject)
                 {
-                    // Faller is to the left of the player
-                    float distanceToLeftEdge = horizontalDistance + (faller.transform.localScale.x / 2);
-                    if (distanceToLeftEdge >= -reachableDistance.x)
-                    {
-                        // Player can reach the left edge of the faller
-                        lowestY = topY;
-                        lowestReachable = faller;
-                    }
-                    else
-                    {
-                        continue; // Can't reach this faller
-                    }
-                }
-                else
-                {
-                    // Faller is to the right of the player
-                    float distanceToRightEdge = horizontalDistance - (faller.transform.localScale.x / 2);
-                    if (distanceToRightEdge <= reachableDistance.x)
-                    {
-                        // Player can reach the right edge of the faller
-                        lowestY = topY;
-                        lowestReachable = faller;
-                    }
-                    else
-                    {
-                        continue; // Can't reach this faller
-                    }
+                    faller.RemoveRedTint();
+                    continue;
                 }
             }
+
+            faller.AddRedTint();
+            if (topY < lowestY)
+            {
+                lowestY = topY;
+                lowestReachable = faller;
+            }
         }
-        
+
         return lowestReachable;
     }
     
@@ -514,12 +513,13 @@ public class FallerManager
             {
                 if (otherKvp.Value == null || otherKvp.Key == kvp.Key) continue;
                 float otherBottomY = otherKvp.Value.transform.position.y - (otherKvp.Value.transform.localScale.y / 2);
-                float otherLeftX = otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2);
-                float otherRightX = otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2);
+                
+                //float otherLeftX = otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2);
+                //float otherRightX = otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2);
                 if (otherBottomY >= topY - 0.1f && // Allow small tolerance
                     otherBottomY <= topY + 0.1f &&
-                    kvp.Value.transform.position.x >= otherLeftX &&
-                    kvp.Value.transform.position.x <= otherRightX)
+                    kvp.Value.transform.position.x >= (otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2)) &&
+                    kvp.Value.transform.position.x <= (otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2)))
                 {
                     isExposed = false;
                     break;
@@ -566,20 +566,25 @@ public class FallerManager
 
     public FallerController SpawnRescue(Vector3 playerPosition, float spawnHeight)
     {
-        float farLeftXBound = Mathf.Max(Constants.minX, playerPosition.x - 3.84f);
-        float farRightXBound = Mathf.Min(Constants.maxX, playerPosition.x + 3.84f);
+        float farLeftXBound = Mathf.Max(Constants.minX, playerPosition.x - Constants.maxXJumpDistance);
+        float farRightXBound = Mathf.Min(Constants.maxX, playerPosition.x + Constants.maxXJumpDistance);
         for (float x = farLeftXBound; x <= farRightXBound; x += 0.5f)
         {
-            if (IsColumnClear(x, 0.5f, playerPosition.y, spawnHeight))
+            if (IsColumnClear(x, 0.5f, playerPosition.y, spawnHeight + 2f))
             { 
-                return ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 2f), true); 
+                return ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 2f), 3.0f, true); 
             }
         }    
         return null;
     }
     private bool IsColumnClear(float x, float fallerWidth, float fromY, float toY)
     {
-        foreach (var kvp in fallersInPlay)
+        if (Physics2D.Raycast(new Vector3(x - (fallerWidth/2f), fromY, 0f), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers")) 
+            || Physics2D.Raycast(new Vector3(x + (fallerWidth / 2f), fromY, 0f), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers")))
+        {
+            return false; // There's an obstacle in the way, column is not clear
+        }
+        /*foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
             float otherLeftX = kvp.Value.transform.position.x - (kvp.Value.transform.localScale.x / 2);
@@ -592,7 +597,19 @@ public class FallerManager
             {
                 return false; // Column is not clear
             }
-        }
+        }*/
         return true; // Column is clear
+    }
+    public void RemoveAllTints()
+    {
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            SpriteRenderer sr = kvp.Value.gameObject.GetComponent<SpriteRenderer>();
+            if (sr != null && sr.color.g < 1.0f)
+            {
+                sr.enabled = false;
+            }
+        }
     }
 }

@@ -39,8 +39,10 @@ public class FallerController : MonoBehaviour
         behavior.BuildVisuals(fallerObject, FallerSize);
         rb = fallerObject.AddComponent<Rigidbody2D>();
         rb.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
-        rb.gravityScale = Constants.gameGravity; 
-        rb.linearVelocity = new Vector2(0.0f, -0.01f);
+        rb.gravityScale = Constants.gameGravity;
+        //fallerObj.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        rb.linearVelocity = new Vector2(0.0f, -speed);
+        //rb.linearVelocity = new Vector2(0.0f, -0.01f);
         rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
         if(behavior.FreezeRotation)
         {
@@ -190,6 +192,24 @@ public class FallerController : MonoBehaviour
         if(collisionCount >= Constants.fallerCollisionFreezeThreshold && !isFrozen)
         {
             FloorPause();
+        }
+    }
+    public void AddRedTint()
+    {
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        if(sr != null && sr.color.b > 0.0f)
+        {
+            sr.enabled = true;
+            sr.sortingOrder = 2;
+            sr.color = new UnityEngine.Color(1f, 0f, 0f, 0.098f);
+        }
+    }
+    public void RemoveRedTint()
+    {
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null && sr.color.g < 1.0f)
+        {
+            sr.enabled = false;
         }
     }
 }

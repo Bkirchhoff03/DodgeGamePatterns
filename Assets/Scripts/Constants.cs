@@ -32,6 +32,8 @@ namespace Assets.Scripts
         public const float blockPunchForceMultiplier = 1.5f;
         public const float boulderPunchForceMultiplier = 10f;
         public const float idleDelay = 0.045f; // ~3 frames at 60fps — prevents idle flicker when switching directions
+        public const float maxXJumpDistance = 7.66f;
+        public const float maxYJumpHeight = 4.94f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";
@@ -39,7 +41,7 @@ namespace Assets.Scripts
         public const string crushedStateName = "Crushed";
         public const string ridingFallerStateName = "RidingFaller";
         public const string fallingStateName = "Falling";
-        public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial";
+        public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial"; 
         public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
         public const string fallerNamePrefix = "Faller_";
         public static string fallerDataSavePath => "Assets/FallerSaveData/";

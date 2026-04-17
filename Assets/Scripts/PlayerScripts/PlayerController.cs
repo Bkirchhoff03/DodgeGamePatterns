@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
-        
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
