@@ -9,6 +9,10 @@ public class BlockFallerBehavior : IFallerBehavior
     {
         BoxCollider2D col = fallerObj.AddComponent<BoxCollider2D>();
         col.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        if(col.sharedMaterial == null)
+        {
+            Debug.LogError("Failed to load physics material for faller. Check the path: " + Constants.fallerPhysicsMaterial2DPath);
+        }
     }
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {

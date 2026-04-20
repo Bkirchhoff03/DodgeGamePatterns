@@ -17,7 +17,7 @@ namespace Assets.Scripts
         private const float idleDelay = Constants.idleDelay;
         private Vector3 startingjumpVelocity = new Vector3(0, 22f, 0);
         private Vector3 currentJumpSpeed = new Vector3(0, 5.0f, 0);
-
+        //private List<Vector2> testingJumpPositions = new List<Vector2>();
         public JumpingState()
         {
             // Initialize jumping state if needed
@@ -28,11 +28,13 @@ namespace Assets.Scripts
 
             playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity = startingjumpVelocity;
             playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
+            //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
+
         }
         public void ExitState(PlayerController playerController) {
             /*playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
             playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;*/
-            
+            //GameManager.instance().Print(string.Join(", ", testingJumpPositions), 1);
         }
 
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
@@ -80,6 +82,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
+            //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
             IPlayerState nextState = this;
             //UnityEngine.GameManager.instance().Print("Starting Jump Position: " + startingPosition.ToString());
             Rigidbody2D rb = playerController.gameObject.GetComponent<Rigidbody2D>();
@@ -92,6 +95,8 @@ namespace Assets.Scripts
                 nextState.EnterState(playerController);
             }
             else */
+
+            GameManager.instance().Print("Jumping position rn: " + playerController.transform.position, 0);
             GameManager.instance().Print("Current Jump Speed: " + rb.linearVelocity.y);
             if (rb.linearVelocity.y <= 0f)
             {

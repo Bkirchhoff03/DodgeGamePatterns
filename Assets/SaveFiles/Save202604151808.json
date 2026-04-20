@@ -1,0 +1,5 @@
+{
+    "playerDataFileRef": "Assets/PlayerSaveData/PlayerSave202604151808.json",
+    "fallerDataFileRef": "Assets/FallerSaveData/FallerSave202604151808.json",
+    "levelScene": "Level1"
+}

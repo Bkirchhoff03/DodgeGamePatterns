@@ -38,16 +38,17 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        punchingArm.GetComponent<SpriteRenderer>().enabled = false;
+        PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
+        animationManager = PlayerAnimationGameObject.GetComponent<PlayerAnimationManager>();
+        GetComponent<Rigidbody2D>().mass = 0.00001f;
         if (GameManager.instance() != null && GameManager.instance().spawnFallersFromFile)
         {
             return;
         }
         state = new DodgingState();
         state.EnterState(this);
-        punchingArm.GetComponent<SpriteRenderer>().enabled = false;
-        PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
-        animationManager = PlayerAnimationGameObject.GetComponent<PlayerAnimationManager>();
-        GetComponent<Rigidbody2D>().mass = 0.00001f;
+        
 
     }
 
@@ -55,7 +56,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
-        
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
@@ -202,6 +202,8 @@ public class PlayerController : MonoBehaviour
                 return new JumpingState();
             case Constants.ridingFallerStateName:
                 return new RidingFallerState(FallerManager.instance().GetFallerBeingRidden().fallerObject);
+            case Constants.fallingStateName:
+                return new FallingState();
             default:
                 return new DodgingState();
         }

@@ -122,8 +122,11 @@ namespace Assets.Scripts
                 if (leftNoneRight != 0)
                 { 
                     Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
-                    rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
-                }else
+                    //rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
+                    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+                    playerController.Move(currentDirection);
+                }
+                else
                 {
                     Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
                     rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));

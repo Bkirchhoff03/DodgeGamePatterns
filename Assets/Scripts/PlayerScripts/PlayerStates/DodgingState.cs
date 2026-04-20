@@ -87,8 +87,9 @@ namespace Assets.Scripts
                 }
             }
             Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
-            rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
-            //playerController.Move(currentDirection);
+            //rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state
         }
