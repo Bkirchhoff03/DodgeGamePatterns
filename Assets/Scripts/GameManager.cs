@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            //playerLives--;
+            playerLives--;
             string text = "Lives: ";
             for (int i = 0; i < playerLives; i++)
             {
