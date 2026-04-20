@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 public class FallerManager
 {
+    public int verbosity = 1; // Set to 1 to enable debug prints for rescue spawns and column checks
     public enum FallerType { Block, Boulder }
     static FallerManager instance_;
     [System.Serializable]
@@ -255,7 +256,7 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         FallerController fc = CreateFaller(nameOfFaller, _fallerType, data.size);
-        fc.Init(data.position, data.size, data.currentSpeed, fc.gameObject);
+        fc.Init(data.position, data.size, -data.currentSpeed, fc.gameObject);
         fc.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, data.rotation);
         // If the faller was frozen when saved, freeze it again after spawning
         if (data.isFrozen)
@@ -301,21 +302,32 @@ public class FallerManager
         fc.SetBehaviour(behaviour);
         return fc;
     }
-    public void SaveFallersToFile(PlayerController playerController)
+    private string UniqueFilePath(string directory, string prefix, string baseName, string suffix)
     {
-        string dateTime = DateTime.Now.ToString("yyyyMMddHHmm");
-        if (lastSpawnedFallerNumber == numberOfSpawns)
+        string path = directory + prefix + baseName + suffix;
+        if (!File.Exists(path)) return path;
+        int i = 1;
+        while (File.Exists(directory + prefix + baseName + "_" + i + suffix))
+            i++;
+        return directory + prefix + baseName + "_" + i + suffix;
+    }
+    public void SaveFallersToFile(PlayerController playerController, string saveName = null)
+    {
+        bool isNamedSave = !string.IsNullOrEmpty(saveName);
+        string baseName = isNamedSave ? saveName : DateTime.Now.ToString("yyyyMMddHHmm");
+
+        if (!isNamedSave && lastSpawnedFallerNumber == numberOfSpawns)
         {
             GameManager.instance().Print("No new fallers to save since last save.");
             return;
         }
         GameManager.instance().Print("Saving faller data to file...");
         lastSpawnedFallerNumber = numberOfSpawns;
-        // Serialize faller data to JSON
+
         FallerDataList fallerDataList = new FallerDataList();
         foreach (var kvp in fallersInPlay)
         {
-            if (kvp.Value == null) continue; // Skip destroyed fallers
+            if (kvp.Value == null) continue;
             FallerController faller = kvp.Value;
             FallerData data = new FallerData
             {
@@ -330,29 +342,23 @@ public class FallerManager
             };
             fallerDataList.fallers.Add(data);
         }
-        if(File.Exists(FallerDirectory))
-        {
-            File.Delete(FallerDirectory); // Clear old data before saving new
-        }
-        string NewFallerFileSave = Constants.fallerDataSavePath + "FallerSave" + dateTime + ".json";
-        if (File.Exists(NewFallerFileSave))
-        {
-            File.Delete(NewFallerFileSave); // Clear old data before saving new
-        }
-        string json = JsonUtility.ToJson(fallerDataList, true);
-        File.WriteAllText(NewFallerFileSave, json);
-        File.WriteAllText(FallerDirectory, json);
 
-        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to file at {FallerDirectory}");
-        
-        if (File.Exists(Constants.playerDataSavePath))
-        {
-            File.Delete(Constants.playerDataSavePath); // Clear old data before saving new
-        }
-        string NewPlayerFileSave = Constants.playerDataSavePath + "PlayerSave" + dateTime + ".json";
-        File.WriteAllText(NewPlayerFileSave, JsonUtility.ToJson(playerController.GetMyData(), true));
-        File.WriteAllText(PlayerDirectory, JsonUtility.ToJson(playerController.GetMyData(), true));
-        File.WriteAllText(Constants.saveFilePath + "Save" + dateTime + ".json", JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
+        string NewFallerFileSave = UniqueFilePath(Constants.fallerDataSavePath, "FallerSave_", baseName, ".json");
+        string NewPlayerFileSave = UniqueFilePath(Constants.playerDataSavePath, "PlayerSave_", baseName, ".json");
+        string NewSaveFile = UniqueFilePath(Constants.saveFilePath, "Save_", baseName, ".json");
+
+        string fallerJson = JsonUtility.ToJson(fallerDataList, true);
+        File.WriteAllText(NewFallerFileSave, fallerJson);
+        if (File.Exists(FallerDirectory)) File.Delete(FallerDirectory);
+        File.WriteAllText(FallerDirectory, fallerJson);
+
+        string playerJson = JsonUtility.ToJson(playerController.GetMyData(), true);
+        File.WriteAllText(NewPlayerFileSave, playerJson);
+        if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
+        File.WriteAllText(PlayerDirectory, playerJson);
+
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
+        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}");
     }
     public void LoadFallersFromFile(PlayerController playerController)
     {
@@ -456,6 +462,7 @@ public class FallerManager
     }
     public FallerController GetLowestReachableFaller(Vector3 playerPos, Vector3 reachableDistance)
     {
+        //string reachableFallers = "Reachable fallers: ";
         FallerController lowestReachable = null;
         float lowestY = float.PositiveInfinity;
         List<FallerController> exposedFallers = GetExposedTopSurfaces();
@@ -491,13 +498,15 @@ public class FallerManager
             }
 
             faller.AddRedTint();
+            //reachableFallers += $"{faller.name}, ";
+            //GameManager.instance().Print($"Faller {faller.name} is reachable with dx={dx:F2}, dy={dy:F2}, ellipse={ellipse:F2}", verbosity);
             if (topY < lowestY)
             {
                 lowestY = topY;
                 lowestReachable = faller;
             }
         }
-
+        //GameManager.instance().Print(reachableFallers, verbosity);
         return lowestReachable;
     }
     
@@ -522,6 +531,7 @@ public class FallerManager
                     kvp.Value.transform.position.x <= (otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2)))
                 {
                     isExposed = false;
+                    kvp.Value.RemoveRedTint(); // Not exposed, remove any tint in case it was previously marked as reachable
                     break;
                 }
             }
@@ -530,6 +540,7 @@ public class FallerManager
                 exposedFallers.Add(kvp.Value);
             }
         }
+        //GameManager.instance().Print($"Exposed fallers: {string.Join(", ", exposedFallers.ConvertAll(f => f.name))}", verbosity);
         return exposedFallers;
     }
 
@@ -566,21 +577,44 @@ public class FallerManager
 
     public FallerController SpawnRescue(Vector3 playerPosition, float spawnHeight)
     {
-        float farLeftXBound = Mathf.Max(Constants.minX, playerPosition.x - Constants.maxXJumpDistance);
-        float farRightXBound = Mathf.Min(Constants.maxX, playerPosition.x + Constants.maxXJumpDistance);
+        float farLeftXBound = Mathf.Max(Constants.minXRescueSpawn, playerPosition.x - Constants.maxXJumpDistance);
+        float farRightXBound = Mathf.Min(Constants.maxXRescueSpawn, playerPosition.x + Constants.maxXJumpDistance);
+        GameManager.instance().Print("Triggering rescue spawn! from " + farLeftXBound + " to " + farRightXBound, verbosity);
         for (float x = farLeftXBound; x <= farRightXBound; x += 0.5f)
         {
-            if (IsColumnClear(x, 0.5f, playerPosition.y, spawnHeight + 2f))
-            { 
-                return ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 2f), 3.0f, true); 
+            if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
+            {
+                FallerController f = ForceSpawnFaller(spawnHeight, x, new Vector2(0.5f, 3f), 3.0f, true);
+                if (f != null){
+                    GameManager.instance().Print("Rescue spawn successful!", verbosity);
+                    return f;
+                }
             }
-        }    
+        
+        }
         return null;
-    }
+    }    
     private bool IsColumnClear(float x, float fallerWidth, float fromY, float toY)
     {
-        if (Physics2D.Raycast(new Vector3(x - (fallerWidth/2f), fromY, 0f), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers")) 
-            || Physics2D.Raycast(new Vector3(x + (fallerWidth / 2f), fromY, 0f), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers")))
+        RaycastHit2D left = Physics2D.Raycast(new Vector2(x - (fallerWidth / 2f), fromY), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers"));
+        RaycastHit2D right = Physics2D.Raycast(new Vector2(x + (fallerWidth / 2f), fromY), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers"));
+        if(left.collider != null)
+        {
+            GameManager.instance().Print($"Column check at x={x}: Hit {left.collider.gameObject.name} on the left side", verbosity);
+        }
+        else
+        {
+            GameManager.instance().Print($"Column check at x={x}: No hit on the left side", verbosity);
+        }
+        if (right.collider != null)
+        {
+            GameManager.instance().Print($"Column check at x={x}: Hit {right.collider.gameObject.name} on the right side", verbosity);
+        }
+        else
+        {
+            GameManager.instance().Print($"Column check at x={x}: No hit on the right side", verbosity);
+        }
+        if (left.collider != null || right.collider != null)
         {
             return false; // There's an obstacle in the way, column is not clear
         }

@@ -11,6 +11,8 @@ namespace Assets.Scripts
     {
         public const float minX = -11f;
         public const float maxX = 11f;
+        public const float minXRescueSpawn = -12.4f;
+        public const float maxXRescueSpawn = 12.4f;
         public const float spawnY = 25.0f;
         public const float minFallerSpeed = 1.0f;
         public const float maxFallerSpeed = 2.0f;

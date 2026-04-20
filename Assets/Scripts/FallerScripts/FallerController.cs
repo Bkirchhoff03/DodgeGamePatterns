@@ -197,7 +197,7 @@ public class FallerController : MonoBehaviour
     public void AddRedTint()
     {
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-        if(sr != null && sr.color.b > 0.0f)
+        if(sr != null && sr.color.r > 0.0f)
         {
             sr.enabled = true;
             sr.sortingOrder = 2;

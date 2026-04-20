@@ -77,16 +77,16 @@ public class MainMenuController : MonoBehaviour
             return;
         }
 
-        // Sort newest-first (filenames contain timestamp so lexicographic = chronological)
-        System.Array.Sort(files);
-        System.Array.Reverse(files);
+        // Sort newest-first by actual file write time
+        System.Array.Sort(files, (a, b) =>
+            System.IO.File.GetLastWriteTime(b).CompareTo(System.IO.File.GetLastWriteTime(a)));
 
         float buttonHeight = 60f;
 
         for (int i = 0; i < files.Length; i++)
         {
             string filePath = files[i];
-            string label = FormatSaveFileName(System.IO.Path.GetFileName(filePath));
+            string label = FormatSaveFileName(filePath);
 
             var btnObj = new GameObject("SaveBtn_" + i);
             btnObj.transform.SetParent(saveFileListContainer.transform, false);
@@ -157,25 +157,14 @@ public class MainMenuController : MonoBehaviour
         return content;
     }
 
-    private string FormatSaveFileName(string filename)
+    private string FormatSaveFileName(string filePath)
     {
-        // Input: "Save202603051500.json"  →  Output: "Save: 05/03/2026 15:00"
-        try
-        {
-            // Strip prefix "-Save" and extension ".json"
-            string stamp = filename.Replace("Save", "").Replace(".json", "");
-            // stamp = "202603051500"
-            int year = int.Parse(stamp.Substring(0, 4));
-            int month = int.Parse(stamp.Substring(4, 2));
-            int day = int.Parse(stamp.Substring(6, 2));
-            int hour = int.Parse(stamp.Substring(8, 2));
-            int min = int.Parse(stamp.Substring(10, 2));
-            return $"Save: {day:D2}/{month:D2}/{year}  {hour:D2}:{min:D2}";
-        }
-        catch
-        {
-            return filename; // Fall back to raw name if parsing fails
-        }
+        string name = System.IO.Path.GetFileNameWithoutExtension(filePath);
+        // Strip "Save_" prefix added by the named-save system
+        if (name.StartsWith("Save_"))
+            name = name.Substring(5);
+        string saved = System.IO.File.GetLastWriteTime(filePath).ToString("dd/MM/yyyy  HH:mm");
+        return $"{name}  |  {saved}";
     }
 
     private void LoadFromSaveFile(string filePath)
