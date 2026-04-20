@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public bool isPaused = false;
     private GameObject pausePanel;
+    private GameObject saveNamePanel;
+    private TMPro.TMP_InputField saveNameInput;
     private GameObject gameOverPanel;
     private TextMeshProUGUI HeightTracker;
     private float trapDoorHeight;
@@ -97,6 +99,9 @@ public class GameManager : MonoBehaviour
             }*/
         pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
+        saveNamePanel = GameObject.Find("SaveNamePanel");
+        saveNamePanel.SetActive(false);
+        saveNameInput = saveNamePanel.GetComponentInChildren<TMPro.TMP_InputField>();
         gameOverPanel = GameObject.Find("GameOverPanel");
         gameOverPanel.SetActive(false);
     }
@@ -176,7 +181,7 @@ public class GameManager : MonoBehaviour
                     triggerRescueSpawn();
                     stuckTimer = 0f;
                 }
-                FallerManager.instance().RemoveAllTints();
+                //FallerManager.instance().RemoveAllTints();
             }
             else
             {
@@ -243,9 +248,26 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level1");
     }
+    public void ShowSaveNamePanel()
+    {
+        saveNameInput.text = "";
+        saveNamePanel.SetActive(true);
+    }
+    public void ConfirmSave()
+    {
+        string saveName = saveNameInput.text.Trim();
+        if (string.IsNullOrEmpty(saveName))
+            saveName = "Save";
+        saveNamePanel.SetActive(false);
+        FallerManager.instance().SaveFallersToFile(playerController, saveName);
+    }
+    public void CancelSave()
+    {
+        saveNamePanel.SetActive(false);
+    }
     public void SaveLevel()
     {
-        FallerManager.instance().SaveFallersToFile(playerController);
+        ShowSaveNamePanel();
     }
     public void TogglePause()
     {
