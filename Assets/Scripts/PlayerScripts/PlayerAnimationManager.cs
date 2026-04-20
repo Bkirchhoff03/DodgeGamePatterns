@@ -225,6 +225,8 @@ namespace Assets.Scripts.PlayerScripts
                 Idle = true;
             }
             Crushed = value;
+            // Apply immediately so the Animator sees the change this frame regardless of script execution order
+            animator.SetBool(CrushedParameter, Crushed);
         }
     }
 }
