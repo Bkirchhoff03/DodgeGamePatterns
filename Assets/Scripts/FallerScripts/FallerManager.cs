@@ -471,35 +471,63 @@ public class FallerManager
             if (faller == null) continue;
             float topY = faller.transform.position.y + (faller.transform.localScale.y / 2);
             float dy = topY - playerPos.y;
-            if (dy <= 0f) { faller.RemoveRedTint(); continue; }
+            if (dy <= 0f) 
+            { 
+                //faller.RemoveRedTint(); 
+                continue; 
+            }
 
-            // Horizontal gap between player and the nearest edge of the faller (0 if player is directly above)
             float fallerLeft  = faller.transform.position.x - faller.transform.localScale.x / 2;
             float fallerRight = faller.transform.position.x + faller.transform.localScale.x / 2;
-            float dx = Mathf.Max(0f, Mathf.Max(fallerLeft - playerPos.x, playerPos.x - fallerRight));
+            bool playerUnderFaller = playerPos.x > fallerLeft && playerPos.x < fallerRight;
+
+            float dx;
+            if (playerUnderFaller)
+            {
+                // Player is trapped under this faller; they must walk to an edge before jumping on top.
+                // Use distance to nearest edge so the ellipse check accounts for horizontal travel needed.
+                dx = Mathf.Min(playerPos.x - fallerLeft, fallerRight - playerPos.x);
+            }
+            else
+            {
+                dx = Mathf.Max(0f, Mathf.Max(fallerLeft - playerPos.x, playerPos.x - fallerRight));
+            }
 
             // Ellipse check: rectangular bounds overestimate reach at corners; this matches the actual jump arc
             float ellipse = (dx / reachableDistance.x) * (dx / reachableDistance.x)
                           + (dy / reachableDistance.y) * (dy / reachableDistance.y);
-            if (ellipse > 1f) { faller.RemoveRedTint(); continue; }
+            if (ellipse > 1f) 
+            { 
+                //faller.RemoveRedTint(); 
+                continue; 
+            }
 
-            // Raycast for obstructions only when the faller isn't directly above the player
+            // Raycast for obstructions
             if (dx > 0f)
             {
-                Vector2 rayDir = playerPos.x < faller.transform.position.x ? Vector2.right : Vector2.left;
-                RaycastHit2D hit = Physics2D.Raycast(
-                    new Vector3(playerPos.x, playerPos.y + dy + 0.1f, 0f),
-                    rayDir, dx, LayerMask.GetMask("Fallers"));
+                Vector2 rayDir;
+                Vector3 rayOrigin;
+                if (playerUnderFaller)
+                {
+                    // Check the player can walk horizontally to the nearest edge
+                    bool nearestEdgeIsLeft = (playerPos.x - fallerLeft) <= (fallerRight - playerPos.x);
+                    rayDir = nearestEdgeIsLeft ? Vector2.left : Vector2.right;
+                    rayOrigin = playerPos;
+                }
+                else
+                {
+                    rayDir = playerPos.x < faller.transform.position.x ? Vector2.right : Vector2.left;
+                    rayOrigin = new Vector3(playerPos.x, playerPos.y + dy + 0.1f, 0f);
+                }
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDir, dx, LayerMask.GetMask("Fallers"));
                 if (hit.collider != null && hit.collider.gameObject != faller.gameObject)
                 {
-                    faller.RemoveRedTint();
+                    //faller.RemoveRedTint();
                     continue;
                 }
             }
 
-            faller.AddRedTint();
-            //reachableFallers += $"{faller.name}, ";
-            //GameManager.instance().Print($"Faller {faller.name} is reachable with dx={dx:F2}, dy={dy:F2}, ellipse={ellipse:F2}", verbosity);
+            //faller.AddRedTint();
             if (topY < lowestY)
             {
                 lowestY = topY;
@@ -531,7 +559,7 @@ public class FallerManager
                     kvp.Value.transform.position.x <= (otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2)))
                 {
                     isExposed = false;
-                    kvp.Value.RemoveRedTint(); // Not exposed, remove any tint in case it was previously marked as reachable
+                    //kvp.Value.RemoveRedTint(); // Not exposed, remove any tint in case it was previously marked as reachable
                     break;
                 }
             }
@@ -580,7 +608,7 @@ public class FallerManager
         float farLeftXBound = Mathf.Max(Constants.minXRescueSpawn, playerPosition.x - Constants.maxXJumpDistance);
         float farRightXBound = Mathf.Min(Constants.maxXRescueSpawn, playerPosition.x + Constants.maxXJumpDistance);
         GameManager.instance().Print("Triggering rescue spawn! from " + farLeftXBound + " to " + farRightXBound, verbosity);
-        for (float x = farLeftXBound; x <= farRightXBound; x += 0.5f)
+        for (float x = playerPosition.x; x <= farRightXBound; x += 0.5f)
         {
             if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
             {
@@ -590,7 +618,18 @@ public class FallerManager
                     return f;
                 }
             }
-        
+        }
+        for (float x = playerPosition.x; x >= farLeftXBound; x -= 0.5f)
+        {
+            if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
+            {
+                FallerController f = ForceSpawnFaller(spawnHeight, x, new Vector2(0.5f, 3f), 3.0f, true);
+                if (f != null)
+                {
+                    GameManager.instance().Print("Rescue spawn successful!", verbosity);
+                    return f;
+                }
+            }
         }
         return null;
     }    

@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
         }
+
         CheckIfPlayerStuck();
         /*Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
         spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;*/
@@ -151,12 +152,16 @@ public class GameManager : MonoBehaviour
     }
     private void CheckIfPlayerStuck()
     {
+        if(fallerType == FallerManager.FallerType.Boulder)
+        {
+            return; // Don't check for stuck if we're already spawning boulders, haven't figured that out yet
+        }
         if (!checkstuck)
         {
             //FallerManager.instance().RemoveAllTints();
-            FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f));
+            //FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f));
             //GameManager.instance().Print(string.Join(", ", maxPlayerHeightRecently), 1);
-            playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
             maxPlayerHeightRecently.Enqueue(player.transform.position.y);
             if (maxPlayerHeightRecently.Count > recentHeightRecordCount)
             {
@@ -170,7 +175,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = new Color(stuckTimer/stuckThreshold, 0f, 0f, 1f);
+            //playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = new Color(stuckTimer/stuckThreshold, 0f, 0f, 1f);
             FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(Constants.maxXJumpDistance, Constants.maxYJumpHeight, 0f));
             if (l == null)
             {
