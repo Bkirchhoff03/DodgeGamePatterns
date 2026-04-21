@@ -27,8 +27,15 @@ public class MainMenuController : MonoBehaviour
         saveFileListContainer = GameObject.Find("SaveFileListContainer");
         saveFileListContainer = SetupScrollView(saveFileListContainer);
 
-        var playBtn = GameObject.Find("PlayButton");
-        playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
+        var playBtn = mainPanel.transform.Find("PlayButton");
+        if(runAsTester)
+        {
+            playBtn.GetComponent<Button>().onClick.AddListener(OpenRunAsTesterPanel);
+        }
+        else
+        {
+            playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
+        }
 
         var howBtn = GameObject.Find("HowToPlayButton");
         howBtn.GetComponent<Button>().onClick.AddListener(ShowHowToPlay);
@@ -44,11 +51,7 @@ public class MainMenuController : MonoBehaviour
         {
             backTestBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => runAsTesterPanel.SetActive(false));
         }
-        var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
-        if (loadBtn != null)
-        {
-            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => LoadFromSaveFileForTester(PlayerPrefs.GetString("pendingSaveFile")));
-        }
+        
         var clickToSpawnToggle = runAsTesterPanel.transform.Find("ClickToSpawnToggle");
         if (clickToSpawnToggle != null)
         {
@@ -143,7 +146,7 @@ public class MainMenuController : MonoBehaviour
             string capturedPath = filePath;
             if(runAsTester)
             {
-                btn.onClick.AddListener(() => OpenRunAsTesterPanel());
+                btn.onClick.AddListener(() => OpenRunAsTesterPanelFromFile(capturedPath));
             }
             else 
             {
@@ -202,10 +205,23 @@ public class MainMenuController : MonoBehaviour
         string saved = System.IO.File.GetLastWriteTime(filePath).ToString("dd/MM/yyyy  HH:mm");
         return $"{name}  |  {saved}";
     }
+    private void OpenRunAsTesterPanelFromFile(string filePath)
+    {
+        runAsTesterPanel.SetActive(true);
+        var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
+        if (loadBtn != null)
+        {
+            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => LoadFromSaveFileForTester(filePath));
+        }
+    }
     private void OpenRunAsTesterPanel()
     {
         runAsTesterPanel.SetActive(true);
-        
+        var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
+        if (loadBtn != null)
+        {
+            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => PlayGame());
+        }
     }
     public void SetClickToSpawn(bool value)
     {

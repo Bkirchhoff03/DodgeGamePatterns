@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1733281967}
   toggleTransition: 1
-  graphic: {fileID: 0}
+  graphic: {fileID: 447839505}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
@@ -1680,7 +1680,7 @@ GameObject:
   - component: {fileID: 447839506}
   - component: {fileID: 447839505}
   m_Layer: 0
-  m_Name: Checkmark
+  m_Name: ULTCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1755,7 +1755,7 @@ GameObject:
   - component: {fileID: 450909391}
   - component: {fileID: 450909390}
   m_Layer: 0
-  m_Name: Checkmark
+  m_Name: CTSTCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2302,9 +2302,9 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1733281967}
+  m_TargetGraphic: {fileID: 1460976247}
   toggleTransition: 1
-  graphic: {fileID: 0}
+  graphic: {fileID: 450909390}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
@@ -3342,7 +3342,7 @@ GameObject:
   - component: {fileID: 1460976248}
   - component: {fileID: 1460976247}
   m_Layer: 0
-  m_Name: Background
+  m_Name: CTSTBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3488,19 +3488,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1476478987}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2035589070}
-        m_TargetAssemblyTypeName: MainMenuController, GameAssembly
-        m_MethodName: PlayGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1476478987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4039,7 +4027,7 @@ GameObject:
   - component: {fileID: 1733281968}
   - component: {fileID: 1733281967}
   m_Layer: 0
-  m_Name: Background
+  m_Name: ULTBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

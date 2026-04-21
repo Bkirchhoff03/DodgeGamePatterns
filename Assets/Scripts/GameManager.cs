@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
     }
     private void CheckIfPlayerStuck()
     {
-        if(fallerType == FallerManager.FallerType.Boulder)
+        if(fallerType == FallerManager.FallerType.Boulder || clickToSpawn)
         {
             return; // Don't check for stuck if we're already spawning boulders, haven't figured that out yet
         }
