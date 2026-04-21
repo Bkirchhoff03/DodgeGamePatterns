@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public string currentPlayerSaveFileName = "playerSaveData.json"; // For testing purposes, the name of the file to save/load player data
     private float clickSpawnCooldown = 0.0f; // Minimum time between spawns when using clickToSpawn
     public bool clickToSpawn = false; // For testing purposes, allows spawning a faller on click instead of timer
+    public bool unlimitedLives = false; // For testing purposes, prevents player from losing lives
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public bool isPaused = false;
     private GameObject pausePanel;
@@ -93,10 +94,26 @@ public class GameManager : MonoBehaviour
         {
             fallerManager.LoadFallersFromFile(playerController);
         }
-            /*if(spawnFallersFromFile)
-            {
-                fallerManager.LoadFallersFromFile(playerController);
-            }*/
+        /*if(spawnFallersFromFile)
+        {
+            fallerManager.LoadFallersFromFile(playerController);
+        }*/
+        if (PlayerPrefs.GetInt("clickToSpawnTester") == 1)
+        {
+            clickToSpawn = true;
+        }
+        else
+        {
+            clickToSpawn = false;
+        }
+        if (PlayerPrefs.GetInt("unlimitedLivesTester") == 1)
+        {
+            unlimitedLives = true;
+        }
+        else
+        {
+            unlimitedLives = false;
+        }
         pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
         saveNamePanel = GameObject.Find("SaveNamePanel");
@@ -205,7 +222,10 @@ public class GameManager : MonoBehaviour
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            playerLives--;
+            if (!unlimitedLives)
+            {
+                playerLives--;
+            }
             string text = "Lives: ";
             for (int i = 0; i < playerLives; i++)
             {
@@ -310,7 +330,8 @@ public class GameManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
         //GameManager.instance().Print("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
         worldPosition.z = 0f; // Set z to 0 for 2D
-        FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
+        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, Constants.defaultFallerSize, Constants.maxFallerSpeed, false);
+        //FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
     public void Print(string message, int level = 0)
     {

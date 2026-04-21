@@ -125,21 +125,6 @@ public class FallerManager
             sr.color = new Color(0f, 1f, 0f, 0.098f);
             sr.sortingOrder = 2;
         }
-        /*string randomXSizeName = randomSizeX.ToString("0.#");
-        string randomYSizeName = randomSizeY.ToString("0.#");
-        Debug.Log($"Spawning faller with size {randomXSizeName}_by_{randomYSizeName} at position {spawnPosition}");
-        GameObject fallerObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/" + randomXSizeName + "_by_" + randomYSizeName));
-        fallerObject.layer = LayerMask.NameToLayer("Fallers");
-        fallerObject.name = nameOfFaller;
-        //fallerObject.AddComponent<FallerController>();
-        //fallerObject.AddComponent<FallerCollisionHandler>();
-
-        FallerController fallerBehavior = fallerObject.GetComponent<FallerController>();
-
-        fallerBehavior.Init(spawnPosition, new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize),
-            Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), sprite, fallerObject);
-
-        fallersInPlay.Add(nameOfFaller, fallerBehavior);*/
     }
     public FallerController ForceSpawnFaller(float spawnHeight, float spawnX, Vector2 spawnSize, float speed = Constants.maxFallerSpeed ,bool rescueFaller = true)
     {

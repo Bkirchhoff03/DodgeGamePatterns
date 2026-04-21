@@ -220,7 +220,19 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
-
+    
+    private void UnfreezeFallersAroundMe(){
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+        foreach (Collider2D collider in colliders)
+        {
+            FallerController faller = collider.gameObject.GetComponent<FallerController>();
+            if (faller != null)
+            //if (collider.gameObject.CompareTag("Faller"))
+            {
+                collider.gameObject.GetComponent<FallerController>().Unfreeze();
+            }
+        }
+    }
     public void BounceOff(GameObject faller, GameManager.PlayerFallerCollisionType collisionType)
     {
         GameManager.instance().Print("Bouncing off faller. Collision type: " + collisionType);
