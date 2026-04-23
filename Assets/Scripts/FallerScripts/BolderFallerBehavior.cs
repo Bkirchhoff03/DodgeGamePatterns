@@ -70,7 +70,7 @@ public class BolderFallerBehavior : IFallerBehavior
         meshRenderer.material.color = new Color(0f, 0.58f, 0f);
     }
 
-    public void OnUnfreeze(GameObject fallerObj)
+    public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize)
     {
         meshRenderer.material.color = shapeColor;
     }
@@ -101,4 +101,9 @@ public class BolderFallerBehavior : IFallerBehavior
         mesh.RecalculateNormals();
         return mesh;
     }
+    public void AddImpulse(FallerController fc, Vector2 impulse)
+    {
+        fc.gameObject.GetComponent<Rigidbody2D>().AddForce(impulse, ForceMode2D.Impulse);
+    }
+
 }

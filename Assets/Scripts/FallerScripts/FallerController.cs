@@ -162,7 +162,7 @@ public class FallerController : MonoBehaviour
 
         rb.gravityScale = Constants.gameGravity;
         rb.mass = behavior != null && behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
-        behavior?.OnUnfreeze(gameObject);
+        behavior?.OnUnfreeze(gameObject, FallerSize);
         //rb.bodyType = RigidbodyType2D.Dynamic;
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
         isFrozen = false;
@@ -194,6 +194,11 @@ public class FallerController : MonoBehaviour
             FloorPause();
         }
     }
+    public void AddImpulse(Vector2 direction)
+    {
+        direction.Normalize();
+        behavior?.AddImpulse(this, direction * Constants.EMT_Impulse);
+    }
     public void AddRedTint()
     {
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
@@ -208,6 +213,24 @@ public class FallerController : MonoBehaviour
     {
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         if (sr != null && sr.color.g < 1.0f)
+        {
+            sr.enabled = false;
+        }
+    }
+    public void AddTint(UnityEngine.Color color, float alpha)
+    {
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = true;
+            sr.sortingOrder = 2;
+            sr.color = new UnityEngine.Color(color.r, color.g, color.b, alpha);
+        }
+    }
+    public void RemoveTint()
+    {
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null)
         {
             sr.enabled = false;
         }

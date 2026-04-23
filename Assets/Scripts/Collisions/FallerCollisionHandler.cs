@@ -12,7 +12,7 @@ public class FallerCollisionHandler : MonoBehaviour
 
         // Get this faller's controller; skip if already frozen
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen)
+        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT())
         {
             return;
         }
@@ -34,7 +34,7 @@ public class FallerCollisionHandler : MonoBehaviour
             return; 
         }
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen) 
+        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT()) 
         { 
             return; 
         }

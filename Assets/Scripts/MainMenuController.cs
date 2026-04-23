@@ -66,6 +66,8 @@ public class MainMenuController : MonoBehaviour
                 SetUnlimitedLives(isOn);
             });
         }
+        PlayerPrefs.SetInt("clickToSpawnTester", 0);
+        PlayerPrefs.SetInt("unlimitedLivesTester", 0);
         howToPlayPanel.SetActive(false);
         runAsTesterPanel.SetActive(false);
     }
