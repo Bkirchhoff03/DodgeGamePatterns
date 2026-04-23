@@ -366,19 +366,29 @@ public class GameManager : MonoBehaviour
             Debug.Log(message);
         }
     }
-    public void UnfreezeImpulse()
+    public void StartEMT()
     {
-        if(playerLives <= 1)
+        if (playerLives <= 1)
         {
             Print("Not applying unfreeze impulse to fallers because player is on their last life", 1);
             return; // Don't apply impulse if player is on their last life to avoid potential softlock
         }
-        GameManager.instance().Print("Attempting to apply unfreeze impulse to fallers", 1);
         if (EMT_timer > 0)
         {
+            Print("Not applying unfreeze impulse to fallers because player is already in EMT", 1);
             return; // Don't apply impulse if already in EMT
         }
+        MinusLife();
+        Time.timeScale = 0f;
+        EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
+    }
+    public void SetEMT()
+    {
+        
+        Time.timeScale = 1f;
+        GameManager.instance().Print("Attempting to apply unfreeze impulse to fallers", 1);
+        
         Vector3 playerPosition = player.transform.position;
         FallerManager.instance().UnfreezeImpulse(playerPosition);
     }

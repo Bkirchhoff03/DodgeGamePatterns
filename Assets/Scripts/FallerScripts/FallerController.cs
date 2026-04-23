@@ -158,6 +158,8 @@ public class FallerController : MonoBehaviour
     }
     public void Unfreeze()
     {
+        collisionCount = 0;
+        settleTimer = 0f;
         rb.bodyType = RigidbodyType2D.Dynamic;
 
         rb.gravityScale = Constants.gameGravity;

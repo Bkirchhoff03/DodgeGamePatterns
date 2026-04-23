@@ -57,7 +57,7 @@ public class InputSystemController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.M))
         {
-            GameManager.instance().UnfreezeImpulse();
+            GameManager.instance().StartEMT();
         }
         playerController.HandleInput(moveDirection);
     }
