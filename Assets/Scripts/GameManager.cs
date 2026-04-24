@@ -304,7 +304,7 @@ public class GameManager : MonoBehaviour
     {
         string saveName = saveNameInput.text.Trim();
         if (string.IsNullOrEmpty(saveName))
-            saveName = "Save";
+            saveName = DateTime.Now.ToString("yyyyMMddHHmm");
         saveNamePanel.SetActive(false);
         FallerManager.instance().SaveFallersToFile(playerController, saveName);
     }

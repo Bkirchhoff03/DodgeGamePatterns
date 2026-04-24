@@ -150,13 +150,13 @@ public class FallerManager
         FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
         fallerBehavior.Init(spawnPosition, size, speed, fallerBehavior.gameObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
-        if (rescueFaller)
+        /*if (rescueFaller)
         {
             SpriteRenderer sr = fallerBehavior.gameObject.GetComponent<SpriteRenderer>();
             sr.enabled = true;
             sr.color = new Color(0f, 1f, 0f, 0.098f);
             sr.sortingOrder = 2;
-        }
+        }*/
         return fallerBehavior;
     }
 
@@ -593,7 +593,7 @@ public class FallerManager
         float farLeftXBound = Mathf.Max(Constants.minXRescueSpawn, playerPosition.x - Constants.maxXJumpDistance);
         float farRightXBound = Mathf.Min(Constants.maxXRescueSpawn, playerPosition.x + Constants.maxXJumpDistance);
         GameManager.instance().Print("Triggering rescue spawn! from " + farLeftXBound + " to " + farRightXBound, verbosity);
-        for (float x = playerPosition.x; x <= farRightXBound; x += 0.5f)
+        for (float x = playerPosition.x+0.5f; x <= farRightXBound; x += 0.25f)
         {
             if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
             {
@@ -604,7 +604,7 @@ public class FallerManager
                 }
             }
         }
-        for (float x = playerPosition.x; x >= farLeftXBound; x -= 0.5f)
+        for (float x = playerPosition.x-0.5f; x >= farLeftXBound; x -= 0.25f)
         {
             if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
             {
@@ -614,6 +614,15 @@ public class FallerManager
                     GameManager.instance().Print("Rescue spawn successful!", verbosity);
                     return f;
                 }
+            }
+        }
+        if(IsColumnClear(playerPosition.x, 0.55f, playerPosition.y, spawnHeight + 2f))
+        {
+            FallerController f = ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 3f), 3.0f, true);
+            if (f != null)
+            {
+                GameManager.instance().Print("Rescue spawn successful at player's current position!", verbosity);
+                return f;
             }
         }
         return null;

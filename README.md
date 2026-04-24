@@ -4,9 +4,10 @@
 
 
  ## How to Play
- - **Arrow keys / WASD** — move left/right
+ - **A / D** — move left/right
  - **Space** — jump
  - **Mouse left/right** — punch left/right
+ - **M** - plant EMT to rescue yourself if you get stuck, at the cost of one life
  - Climb the blocks upward to reach higher ground
  - Reach the trap door at the top to complete the level
  - You have 3 lives — getting crushed costs one
