@@ -65,7 +65,8 @@ public class FallerController : MonoBehaviour
               && rb != null && rb.bodyType == RigidbodyType2D.Dynamic)
         {
             if (rb.linearVelocity.magnitude < Constants.boulderSettleLinearThreshold
-                && Mathf.Abs(rb.angularVelocity) < Constants.boulderSettleAngularThreshold)
+                && Mathf.Abs(rb.angularVelocity) < Constants.boulderSettleAngularThreshold 
+                && !GameManager.instance().IsPlayerInEMT())
             {
                 settleTimer += Time.deltaTime;
                 if (settleTimer >= Constants.boulderSettleTime)
@@ -163,7 +164,7 @@ public class FallerController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
 
         rb.gravityScale = Constants.gameGravity;
-        rb.mass = behavior != null && behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
+        rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
         behavior?.OnUnfreeze(gameObject, FallerSize);
         //rb.bodyType = RigidbodyType2D.Dynamic;
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);
@@ -199,7 +200,7 @@ public class FallerController : MonoBehaviour
     public void AddImpulse(Vector2 direction)
     {
         direction.Normalize();
-        behavior?.AddImpulse(this, direction * Constants.EMT_Impulse);
+        behavior?.AddImpulse(this, direction);
     }
     public void AddRedTint()
     {
@@ -221,20 +222,10 @@ public class FallerController : MonoBehaviour
     }
     public void AddTint(UnityEngine.Color color, float alpha)
     {
-        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.enabled = true;
-            sr.sortingOrder = 2;
-            sr.color = new UnityEngine.Color(color.r, color.g, color.b, alpha);
-        }
+        behavior?.AddTint(this, new UnityEngine.Color(color.r, color.g, color.b, alpha));
     }
     public void RemoveTint()
     {
-        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.enabled = false;
-        }
+        behavior?.RemoveTint(this);
     }
 }

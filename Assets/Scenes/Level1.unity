@@ -2031,10 +2031,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 138458222905912640, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.9725
+      objectReference: {fileID: 0}
+    - target: {fileID: 138458222905912640, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.8875
+      objectReference: {fileID: 0}
     - target: {fileID: 177623991147621922, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5927855624702853228}
+    - target: {fileID: 675453475366127679, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_text
+      value: 50.0ft from the top!
+      objectReference: {fileID: 0}
     - target: {fileID: 675453475366127679, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_margin.w
       value: 0
@@ -2157,7 +2169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3920276405810049948, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.16
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 3920276405810049948, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_SizeDelta.x

@@ -43,7 +43,7 @@ public class BolderFallerBehavior : IFallerBehavior
 
     private MeshRenderer meshRenderer;
     private Color shapeColor;
-
+    private bool isPaused = false;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
 
@@ -68,11 +68,13 @@ public class BolderFallerBehavior : IFallerBehavior
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
         meshRenderer.material.color = new Color(0f, 0.58f, 0f);
+        isPaused = true;
     }
 
     public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize)
     {
         meshRenderer.material.color = shapeColor;
+        isPaused = false;
     }
 
     public void HandleArmCollision(FallerController fc, PunchingArmController arm)
@@ -101,9 +103,21 @@ public class BolderFallerBehavior : IFallerBehavior
         mesh.RecalculateNormals();
         return mesh;
     }
-    public void AddImpulse(FallerController fc, Vector2 impulse)
+    public void AddImpulse(FallerController fc, Vector2 direction)
     {
-        fc.gameObject.GetComponent<Rigidbody2D>().AddForce(impulse, ForceMode2D.Impulse);
+        fc.gameObject.GetComponent<Rigidbody2D>().AddForce(direction* Constants.EMT_Impulse_bolder, ForceMode2D.Impulse);
     }
-
+    public void AddTint(FallerController fc, Color tint)
+    {
+        fc.gameObject.GetComponent<MeshRenderer>().material.color = new Color(tint.r, tint.g, tint.b, 1.0f);
+    }
+    public void RemoveTint(FallerController fc)
+    {
+        if(isPaused)
+        {
+            fc.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0f, 0.58f, 0f);
+            return;
+        }
+        fc.gameObject.GetComponent<MeshRenderer>().material.color = shapeColor;
+    }
 }

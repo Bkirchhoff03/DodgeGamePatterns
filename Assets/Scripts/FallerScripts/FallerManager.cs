@@ -709,14 +709,14 @@ public class FallerManager
         foreach (FallerController faller in fallersOutRadius)
         {
             faller.Unfreeze();
-            faller.AddTint(new Color(1f, 0f, 0f), 0.098f);
+            //faller.AddTint(new Color(1f, 0f, 0f), 0.098f);
         }
         foreach (FallerController faller in fallersInRadius) 
         {
             faller.Unfreeze();
             Vector3 direction = (faller.transform.position - playerPosition);
             faller.AddImpulse(new Vector2(direction.x, direction.y));
-            faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
+            //faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
         }
     }
 }

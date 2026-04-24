@@ -8,5 +8,7 @@ public interface IFallerBehavior
     void OnFloorPause(GameObject fallerObj, Vector2 fallerSize);
     void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize);
     void HandleArmCollision(FallerController fc, PunchingArmController arm);
-    void AddImpulse(FallerController fc, Vector2 impulse);
+    void AddImpulse(FallerController fc, Vector2 direction);
+    void AddTint(FallerController fc, Color tint);
+    void RemoveTint(FallerController fc);
 }

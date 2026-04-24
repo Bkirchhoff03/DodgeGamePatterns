@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
             if (EMT_timer <= 0f)
             {
                 EMT_timer = 0f;
-                FallerManager.instance().RemoveAllTints();
+                //FallerManager.instance().RemoveAllTints();
                 // Logic to end EMT effect
             }
         }
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
-        HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 
+        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText; 
     }
     public bool IsPlayerInEMT() => EMT_timer > 0f;
     private void triggerRescueSpawn()
@@ -371,6 +371,7 @@ public class GameManager : MonoBehaviour
         if (playerLives <= 1)
         {
             Print("Not applying unfreeze impulse to fallers because player is on their last life", 1);
+            EMT.instance().EMTOnOneLife();
             return; // Don't apply impulse if player is on their last life to avoid potential softlock
         }
         if (EMT_timer > 0)

@@ -1,4 +1,5 @@
 using Codice.CM.Common;
+using TMPro;
 using UnityEngine;
 
 public class EMT : MonoBehaviour
@@ -8,6 +9,10 @@ public class EMT : MonoBehaviour
     private Vector3 EMTTarget;
     private float speed = 5f; // Speed at which the EMT moves towards the target
     private static EMT instance_;
+    GameObject lifeCounter;
+    bool flashingLife = false;
+    int flashCount = 0;
+    float flashDuration = 0.5f; // Duration of each flash
     public EMT()
     {
         instance_ = this;
@@ -20,7 +25,8 @@ public class EMT : MonoBehaviour
         {
             instance_ = this;
         }
-        LocationReference = GameObject.Find("EMTLocation");
+        lifeCounter = GameObject.Find("LifeCounter");
+        /*LocationReference = GameObject.Find("EMTLocation");
         // 1. Get the screen position of your UI element
         Vector3 screenPos = LocationReference.transform.position;
         // 2. Set the Z distance (how far into the world from the camera)
@@ -32,7 +38,8 @@ public class EMT : MonoBehaviour
         
         //GameManager.instance().Print("EMT screenPos: " + screenPos + ", worldPos: " + worldPos + ", lossyScale: " + LocationReference.transform.lossyScale, 1);
 
-        transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);
+        transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);*/
+        GetComponent<SpriteRenderer>().enabled = false; // Hide the EMT sprite at the start
     }
 
     // Update is called once per frame
@@ -42,15 +49,50 @@ public class EMT : MonoBehaviour
         {
             float step = speed * Time.unscaledDeltaTime; // Move distance per frame
             transform.position = Vector3.MoveTowards(transform.position, EMTTarget, step);
+            flashDuration -= Time.unscaledDeltaTime;
+            if(flashDuration <= 0f)
+            {
+                flashDuration = 0.5f; // Reset flash duration
+                SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                GetComponent<SpriteRenderer>().color = sr.color == Color.red ? Color.white : Color.red;
+            }
             if (Vector3.Distance(transform.position, EMTTarget) < 0.001f)
             {
                 isEMTed = false; // Reached the target
                 GameManager.instance().SetEMT(); // Trigger the EMT event in the GameManager
                 this.GetComponent<SpriteRenderer>().enabled = false; // Hide the EMT sprite
+                GetComponent<SpriteRenderer>().color = Color.red; // Reset color to red
+                flashDuration = 0f;
+            }
+        }else if (flashingLife)
+        {
+            flashDuration -= Time.unscaledDeltaTime;
+            if (flashDuration <= 0f)
+            {
+                TMP_Text tmp = lifeCounter.GetComponent<TMP_Text>();
+                lifeCounter.GetComponent<TMP_Text>().color = tmp.color == Color.red ? Color.white : Color.red;
+
+                flashDuration = 0.5f; // Reset flash duration
+                if (tmp.color == Color.red)
+                {
+                    flashCount++;
+                    if (flashCount >= 6) // Flash 3 times (6 toggles)
+                    {
+                        flashingLife = false;
+                        lifeCounter.GetComponent<TMP_Text>().color = Color.white; // Ensure it's white at the end
+                    }
+                }
             }
         }
     }
     public void EMTMe(Vector3 EMTPosition)
+    {
+        EMTToLife();
+        this.GetComponent<SpriteRenderer>().enabled = true; // Ensure the EMT sprite is visible
+        isEMTed = true;
+        EMTTarget = new Vector3(EMTPosition.x, EMTPosition.y, -0.02f);
+    }
+    private void EMTToLife()
     {
         LocationReference = GameObject.Find("EMTLocation");
         // 1. Get the screen position of your UI element
@@ -63,8 +105,11 @@ public class EMT : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
 
         transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);
-        this.GetComponent<SpriteRenderer>().enabled = true; // Ensure the EMT sprite is visible
-        isEMTed = true;
-        EMTTarget = new Vector3(EMTPosition.x, EMTPosition.y, -0.02f);
+    }
+    public void EMTOnOneLife()
+    {
+        flashDuration = 0.5f; // Reset flash duration
+        flashCount = 0; // Reset flash count
+        flashingLife = true; // Start flashing
     }
 }
