@@ -7,13 +7,16 @@ public class MainMenuController : MonoBehaviour
     private GameObject mainPanel;
     private GameObject howToPlayPanel;
     private GameObject loadSavePanel;
+    private GameObject runAsTesterPanel;
     private GameObject saveFileListContainer;
+    public bool runAsTester = false; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mainPanel = GameObject.Find("MainPanel");
         howToPlayPanel = GameObject.Find("HowToPlayPanel");
         loadSavePanel = GameObject.Find("LoadSavePanel");
+        runAsTesterPanel = GameObject.Find("RunAsTesterPanel");
         
         var loadSaveBtn = GameObject.Find("LoadSaveButton");
         loadSaveBtn.GetComponent<Button>().onClick.AddListener(ShowLoadSave);
@@ -24,8 +27,15 @@ public class MainMenuController : MonoBehaviour
         saveFileListContainer = GameObject.Find("SaveFileListContainer");
         saveFileListContainer = SetupScrollView(saveFileListContainer);
 
-        var playBtn = GameObject.Find("PlayButton");
-        playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
+        var playBtn = mainPanel.transform.Find("PlayButton");
+        if(runAsTester)
+        {
+            playBtn.GetComponent<Button>().onClick.AddListener(OpenRunAsTesterPanel);
+        }
+        else
+        {
+            playBtn.GetComponent<Button>().onClick.AddListener(PlayGame);
+        }
 
         var howBtn = GameObject.Find("HowToPlayButton");
         howBtn.GetComponent<Button>().onClick.AddListener(ShowHowToPlay);
@@ -36,7 +46,30 @@ public class MainMenuController : MonoBehaviour
         var backBtn = GameObject.Find("BackFromHowToPlayButton");
         backBtn.GetComponent<Button>().onClick.AddListener(HideHowToPlay);
 
+        var backTestBtn = runAsTesterPanel.transform.Find("CancelButton");
+        if (backTestBtn != null)
+        {
+            backTestBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => runAsTesterPanel.SetActive(false));
+        }
+        
+        var clickToSpawnToggle = runAsTesterPanel.transform.Find("ClickToSpawnToggle");
+        if (clickToSpawnToggle != null)
+        {
+            clickToSpawnToggle.GetComponent<Toggle>().onValueChanged.AddListener((isOn) => {
+                SetClickToSpawn(isOn);
+            });
+        }
+        var unlimitedLivesToggle = runAsTesterPanel.transform.Find("UnlimitedLivesToggle");
+        if (unlimitedLivesToggle != null)
+        {
+            unlimitedLivesToggle.GetComponent<Toggle>().onValueChanged.AddListener((isOn) => {
+                SetUnlimitedLives(isOn);
+            });
+        }
+        PlayerPrefs.SetInt("clickToSpawnTester", 0);
+        PlayerPrefs.SetInt("unlimitedLivesTester", 0);
         howToPlayPanel.SetActive(false);
+        runAsTesterPanel.SetActive(false);
     }
     public void PlayGame() => SceneManager.LoadScene("Level1");
     public void PlayLevel2() => SceneManager.LoadScene("Level2");
@@ -113,7 +146,15 @@ public class MainMenuController : MonoBehaviour
 
             // Capture path for closure
             string capturedPath = filePath;
-            btn.onClick.AddListener(() => LoadFromSaveFile(capturedPath));
+            if(runAsTester)
+            {
+                btn.onClick.AddListener(() => OpenRunAsTesterPanelFromFile(capturedPath));
+            }
+            else 
+            {
+                btn.onClick.AddListener(() => LoadFromSaveFile(capturedPath));
+            }
+                
         }
     }
 
@@ -166,7 +207,36 @@ public class MainMenuController : MonoBehaviour
         string saved = System.IO.File.GetLastWriteTime(filePath).ToString("dd/MM/yyyy  HH:mm");
         return $"{name}  |  {saved}";
     }
-
+    private void OpenRunAsTesterPanelFromFile(string filePath)
+    {
+        runAsTesterPanel.SetActive(true);
+        var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
+        if (loadBtn != null)
+        {
+            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => LoadFromSaveFileForTester(filePath));
+        }
+    }
+    private void OpenRunAsTesterPanel()
+    {
+        runAsTesterPanel.SetActive(true);
+        var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
+        if (loadBtn != null)
+        {
+            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => PlayGame());
+        }
+    }
+    public void SetClickToSpawn(bool value)
+    {
+        PlayerPrefs.SetInt("clickToSpawnTester", value ? 1 : 0);
+    }
+    public void SetUnlimitedLives(bool value)
+    {
+        PlayerPrefs.SetInt("unlimitedLivesTester", value ? 1 : 0);
+    }
+    private void LoadFromSaveFileForTester(string filePath)
+    {
+        LoadFromSaveFile(filePath);
+    }
     private void LoadFromSaveFile(string filePath)
     {
         string scene = "Level1"; // Default scene to load; could be encoded in the save file name or contents if needed

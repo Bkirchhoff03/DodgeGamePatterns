@@ -1,13 +1,13 @@
 {
     "name": "Player",
     "position": {
-        "x": 0.35218626260757449,
-        "y": 0.013554111123085022,
+        "x": 4.072396278381348,
+        "y": 2.754999876022339,
         "z": 0.0
     },
     "currentSpeed": {
         "x": 0.0,
         "y": 0.0
     },
-    "currentStateName": "Dodging"
+    "currentStateName": "RidingFaller"
 }

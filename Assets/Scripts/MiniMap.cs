@@ -7,7 +7,7 @@ public class MiniMap : MonoBehaviour
     private Transform _playerTransform;
     private Transform _playerIcon;
     private Transform _doorIcon;
-    private float _playerIconOffset = 1.5f;
+    //private float _playerIconOffset = 1.5f;
 
     private void Start()
     {

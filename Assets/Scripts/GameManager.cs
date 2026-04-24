@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public string currentPlayerSaveFileName = "playerSaveData.json"; // For testing purposes, the name of the file to save/load player data
     private float clickSpawnCooldown = 0.0f; // Minimum time between spawns when using clickToSpawn
     public bool clickToSpawn = false; // For testing purposes, allows spawning a faller on click instead of timer
+    public bool unlimitedLives = false; // For testing purposes, prevents player from losing lives
     public bool spawnFallersFromFile = false; // For testing purposes, allows spawning fallers from a saved file on start
     public bool isPaused = false;
     private GameObject pausePanel;
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
     public Sprite LeftGrassTile;
     public Sprite RightGrassTile;
     public Sprite CenterGrassTile;
+
+    public Sprite LeftDirtTile;
+    public Sprite RightDirtTile;
+    public Sprite CenterDirtTile;
+
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events
     private float stuckTimer = 0f;
@@ -46,6 +52,8 @@ public class GameManager : MonoBehaviour
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
     private Queue<float> maxPlayerHeightRecently = new Queue<float>(); // Track the maximum height the player has reached recently to help determine if they're stuck
     private bool checkstuck = false;
+    private float EMT_timer = 0f;
+    private float EMT_duration = 5f; // Duration of the EMT effect in seconds
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -93,10 +101,26 @@ public class GameManager : MonoBehaviour
         {
             fallerManager.LoadFallersFromFile(playerController);
         }
-            /*if(spawnFallersFromFile)
-            {
-                fallerManager.LoadFallersFromFile(playerController);
-            }*/
+        /*if(spawnFallersFromFile)
+        {
+            fallerManager.LoadFallersFromFile(playerController);
+        }*/
+        if (PlayerPrefs.GetInt("clickToSpawnTester") == 1)
+        {
+            clickToSpawn = true;
+        }
+        else
+        {
+            clickToSpawn = false;
+        }
+        if (PlayerPrefs.GetInt("unlimitedLivesTester") == 1)
+        {
+            unlimitedLives = true;
+        }
+        else
+        {
+            unlimitedLives = false;
+        }
         pausePanel = GameObject.Find("PausePanel");
         pausePanel.SetActive(false);
         saveNamePanel = GameObject.Find("SaveNamePanel");
@@ -113,7 +137,16 @@ public class GameManager : MonoBehaviour
         {
             clickSpawnCooldown -= Time.deltaTime;
         }
-        
+        if (EMT_timer > 0f)
+        {
+            EMT_timer -= Time.deltaTime;
+            if (EMT_timer <= 0f)
+            {
+                EMT_timer = 0f;
+                //FallerManager.instance().RemoveAllTints();
+                // Logic to end EMT effect
+            }
+        }
         if (TimeBetweenSpawns > 0)
         {
             TimeBetweenSpawns -= Time.deltaTime;
@@ -138,12 +171,15 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
-        HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText; 
+        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText; 
     }
-
+    public bool IsPlayerInEMT() => EMT_timer > 0f;
     private void triggerRescueSpawn()
     {
-        FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, Camera.main.transform.position.y + 9f);
+        float distance = Mathf.Abs(Camera.main.transform.position.z); // Distance from the camera
+        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distance));
+        //FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, Camera.main.transform.position.y + 9f);
+        FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, topRight.y + 1.5f);
         if (rescue == null)
         {
             GameManager.instance().Print("Rescue spawn failed!", 1);
@@ -152,7 +188,7 @@ public class GameManager : MonoBehaviour
     }
     private void CheckIfPlayerStuck()
     {
-        if(fallerType == FallerManager.FallerType.Boulder)
+        if(fallerType == FallerManager.FallerType.Boulder || clickToSpawn)
         {
             return; // Don't check for stuck if we're already spawning boulders, haven't figured that out yet
         }
@@ -205,20 +241,7 @@ public class GameManager : MonoBehaviour
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
         if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
         {
-            playerLives--;
-            string text = "Lives: ";
-            for (int i = 0; i < playerLives; i++)
-            {
-                text += "I";
-            }
-            lifeCounter.text = text;
-            if (playerLives <= 0)
-            {
-                playerLives = 3;
-                Print("GAME OVER");
-                GameOver("You ran out of lives!");
-                //SceneManager.LoadScene("MainMenu");
-            }
+            MinusLife();
             playerController.crush();
             DeleteFaller(faller.name);
         }else if(collisionType == PlayerFallerCollisionType.Top)
@@ -232,6 +255,25 @@ public class GameManager : MonoBehaviour
         {
             playerController.BounceOff(faller, collisionType);
         }*/
+    }
+    private void MinusLife()
+    {
+        if (!unlimitedLives)
+        {
+            playerLives--;
+        }
+        string text = "";
+        for (int i = 0; i < playerLives; i++)
+        {
+            text += "I";
+        }
+        lifeCounter.text = text;
+        if (playerLives <= 0)
+        {
+            playerLives = 3;
+            Print("GAME OVER");
+            GameOver("You ran out of lives!");
+        }
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()
@@ -310,7 +352,8 @@ public class GameManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
         //GameManager.instance().Print("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
         worldPosition.z = 0f; // Set z to 0 for 2D
-        FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
+        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, Constants.defaultFallerSize, Constants.maxFallerSpeed, false);
+        //FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
     public void Print(string message, int level = 0)
     {
@@ -322,5 +365,32 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(message);
         }
+    }
+    public void StartEMT()
+    {
+        if (playerLives <= 1)
+        {
+            Print("Not applying unfreeze impulse to fallers because player is on their last life", 1);
+            EMT.instance().EMTOnOneLife();
+            return; // Don't apply impulse if player is on their last life to avoid potential softlock
+        }
+        if (EMT_timer > 0)
+        {
+            Print("Not applying unfreeze impulse to fallers because player is already in EMT", 1);
+            return; // Don't apply impulse if already in EMT
+        }
+        MinusLife();
+        Time.timeScale = 0f;
+        EMT.instance().EMTMe(player.transform.position);
+        EMT_timer = EMT_duration;
+    }
+    public void SetEMT()
+    {
+        
+        Time.timeScale = 1f;
+        GameManager.instance().Print("Attempting to apply unfreeze impulse to fallers", 1);
+        
+        Vector3 playerPosition = player.transform.position;
+        FallerManager.instance().UnfreezeImpulse(playerPosition);
     }
 }
