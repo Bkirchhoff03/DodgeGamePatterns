@@ -663,11 +663,60 @@ public class FallerManager
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
-            SpriteRenderer sr = kvp.Value.gameObject.GetComponent<SpriteRenderer>();
-            if (sr != null && sr.color.g < 1.0f)
+            kvp.Value.RemoveTint();
+        }
+    }
+    public List<FallerController> GetFallersInRadius(Vector3 position, float radius)
+    {
+        List<FallerController> fallersInRadius = new List<FallerController>();
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(position, radius, LayerMask.GetMask("Fallers"));
+        foreach (var collision in collisions)
+        {
+            if (collision == null) continue;
+            FallerController faller = collision.GetComponent<FallerController>();
+            if (faller != null)
             {
-                sr.enabled = false;
+                fallersInRadius.Add(faller);
             }
+        }
+        return fallersInRadius;
+    }
+    public List<FallerController> GetFallersOutRadius(Vector3 position, float radius)
+    {
+        List<FallerController> fallersOutRadius = new List<FallerController>();
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(position, radius, LayerMask.GetMask("Fallers"));
+        List<string> collisionNames = new List<string>(collisions.Length);
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            collisionNames.Add(collisions[i] != null ? collisions[i].gameObject.name : "null");
+        }
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            FallerController faller = kvp.Value.GetComponent<FallerController>();
+            if (faller != null && !collisionNames.Contains(kvp.Key))
+            {
+                fallersOutRadius.Add(faller);
+            }
+        }
+        return fallersOutRadius;
+    }
+    public void UnfreezeImpulse(Vector3 playerPosition)
+    {
+        List<FallerController> fallersInRadius = GetFallersInRadius(playerPosition, Constants.EMT_Radius);
+        List<FallerController> fallersOutRadius = GetFallersOutRadius(playerPosition, Constants.EMT_Radius);
+        
+        foreach (FallerController faller in fallersOutRadius)
+        {
+            faller.Unfreeze();
+            //faller.AddTint(new Color(1f, 0f, 0f), 0.098f);
+        }
+        foreach (FallerController faller in fallersInRadius) 
+        {
+            faller.Unfreeze();
+            Vector3 direction = (faller.transform.position - playerPosition);
+            faller.AddImpulse(new Vector2(direction.x, direction.y));
+            //faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
         }
     }
 }

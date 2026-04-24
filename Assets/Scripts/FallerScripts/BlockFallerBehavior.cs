@@ -32,7 +32,24 @@ public class BlockFallerBehavior : IFallerBehavior
                     GameManager.instance().CenterGrassTile;
         }
     }
-    public void OnUnfreeze(GameObject fallerObj) { }
+    public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize) 
+    {
+        if (fallerSize.x == 0.5f)
+        {
+            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
+                GameManager.instance().CenterDirtTile;
+        }
+        else
+        {
+            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
+                GameManager.instance().LeftDirtTile;
+            fallerObj.transform.Find("T" + ((int)(fallerSize.x * 2)).ToString())
+                .GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightDirtTile;
+            for (int i = 2; i < (int)(fallerSize.x * 2); i++)
+                fallerObj.transform.Find("T" + i).GetComponent<SpriteRenderer>().sprite =
+                    GameManager.instance().CenterDirtTile;
+        }
+    }
     public void HandleArmCollision(FallerController fc, PunchingArmController arm)
     {
         if (fc.IsFrozen)
@@ -47,4 +64,27 @@ public class BlockFallerBehavior : IFallerBehavior
             arm.CancelPunch();
         }
     }
+    public void AddImpulse(FallerController fc, Vector2 direction)
+    {
+        fc.gameObject.GetComponent<Rigidbody2D>().AddForce(direction * Constants.EMT_Impulse_block, ForceMode2D.Impulse);
+    }
+    public void AddTint(FallerController fc, Color tint)
+    {
+        SpriteRenderer sr = fc.gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = true;
+            sr.sortingOrder = 2;
+            sr.color = new UnityEngine.Color(tint.r, tint.g, tint.b, tint.a);
+        }
+    }
+    public void RemoveTint(FallerController fc)
+    {
+        SpriteRenderer sr = fc.gameObject.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = false;
+        }
+    }
+
 }

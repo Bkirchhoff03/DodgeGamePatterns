@@ -12,7 +12,7 @@ public class FallerCollisionHandler : MonoBehaviour
 
         // Get this faller's controller; skip if already frozen
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen)
+        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT())
         {
             return;
         }
@@ -34,11 +34,11 @@ public class FallerCollisionHandler : MonoBehaviour
             return; 
         }
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen) 
+        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT()) 
         { 
             return; 
         }
-        GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}");
+        GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 1);
         if (thisFaller.UseSettleTimer) 
         {
             if (collision.gameObject.TryGetComponent<FallerController>(out var other)
@@ -68,6 +68,7 @@ public class FallerCollisionHandler : MonoBehaviour
             Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (otherRb != null || Mathf.Abs(otherRb.linearVelocity.x) <= 0.1f)
             {
+                GameManager.instance().Print($"Freezing {gameObject.name} on collision with frozen {collision.gameObject.name}", 1);
                 thisFaller.FloorPause();
             }
         }

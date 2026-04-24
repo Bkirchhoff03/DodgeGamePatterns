@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public Animator PlayerAnimator;
     public PlayerAnimationManager animationManager;
     private float leftOrRightOrNone = 0f;
-    private bool running = false;
+    //private bool running = false;
     //private bool isPunchingLeft = false;
     //private float punchingVelocity;
     //private bool isPunchingRight = false;

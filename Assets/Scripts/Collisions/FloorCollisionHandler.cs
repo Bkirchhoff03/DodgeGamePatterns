@@ -8,7 +8,7 @@ public class FloorCollisionHandler : MonoBehaviour
         FallerController faller = collision.gameObject.GetComponent<FallerController>();
         if (faller != null)
         {
-            if (!faller.UseSettleTimer)
+            if (!faller.UseSettleTimer || !GameManager.instance().IsPlayerInEMT())
             {
                 faller.FloorPause();
             }
@@ -18,5 +18,16 @@ public class FloorCollisionHandler : MonoBehaviour
             player.setState(new DodgingState());
         }
         
+    }
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        FallerController faller = collision.gameObject.GetComponent<FallerController>();
+        if (faller != null)
+        {
+            if (!faller.UseSettleTimer || !GameManager.instance().IsPlayerInEMT())
+            {
+                faller.FloorPause();
+            }
+        }
     }
 }

@@ -36,6 +36,9 @@ namespace Assets.Scripts
         public const float idleDelay = 0.045f; // ~3 frames at 60fps — prevents idle flicker when switching directions
         public const float maxXJumpDistance = 7.66f;
         public const float maxYJumpHeight = 4.94f;
+        public const float EMT_Radius = 5.0f;
+        public const float EMT_Impulse_block = 2.5f;
+        public const float EMT_Impulse_bolder = 10f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";
