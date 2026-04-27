@@ -95,8 +95,10 @@ public class MainMenuController : MonoBehaviour
         foreach (Transform child in saveFileListContainer.transform)
             Destroy(child.gameObject);
 
-        string[] files = System.IO.Directory.GetFiles(
-            Assets.Scripts.Constants.saveFilePath, "*.json");
+        string savePath = Assets.Scripts.Constants.saveFilePath;
+        if (!System.IO.Directory.Exists(savePath))
+            System.IO.Directory.CreateDirectory(savePath);
+        string[] files = System.IO.Directory.GetFiles(savePath, "*.json");
 
         if (files.Length == 0)
         {

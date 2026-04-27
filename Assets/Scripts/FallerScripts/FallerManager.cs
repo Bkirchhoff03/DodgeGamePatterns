@@ -328,6 +328,10 @@ public class FallerManager
             fallerDataList.fallers.Add(data);
         }
 
+        Directory.CreateDirectory(Constants.fallerDataSavePath);
+        Directory.CreateDirectory(Constants.playerDataSavePath);
+        Directory.CreateDirectory(Constants.saveFilePath);
+
         string NewFallerFileSave = UniqueFilePath(Constants.fallerDataSavePath, "FallerSave_", baseName, ".json");
         string NewPlayerFileSave = UniqueFilePath(Constants.playerDataSavePath, "PlayerSave_", baseName, ".json");
         string NewSaveFile = UniqueFilePath(Constants.saveFilePath, "Save_", baseName, ".json");

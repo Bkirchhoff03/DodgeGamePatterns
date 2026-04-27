@@ -49,9 +49,9 @@ namespace Assets.Scripts
         public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial"; 
         public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
         public const string fallerNamePrefix = "Faller_";
-        public static string fallerDataSavePath => "Assets/FallerSaveData/";
-        public static string playerDataSavePath => "Assets/PlayerSaveData/";
-        public static string saveFilePath => "Assets/SaveFiles/";
+        public static string fallerDataSavePath => Application.persistentDataPath + "/FallerSaveData/";
+        public static string playerDataSavePath => Application.persistentDataPath + "/PlayerSaveData/";
+        public static string saveFilePath => Application.persistentDataPath + "/SaveFiles/";
 
         
     }
