@@ -39,9 +39,14 @@ namespace Assets.Scripts
         }
         public IPlayerState HandleInput(PlayerController playerController, PlayerController.MoveDirection moveInput)
         {
+            IPlayerState newState = this;
             if (moveInput.isPunch != 0)
             {
                 playerController.HandlePunch(moveInput);
+            }
+            if(moveInput.Ydirection > 0)
+            {
+                newState = new JumpingState();
             }
             if (moveInput.Xdirection < 0)
             {
@@ -72,7 +77,7 @@ namespace Assets.Scripts
                 currentDirection += Vector3.up;
             }*/
             // Handle input specific to dodging state
-            return this;
+            return newState;
         }
         public string getName()
         {
@@ -115,6 +120,7 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 newState = new DodgingState();
                 newState.EnterState(playerController);
+                GameManager.instance().Print("Transitioning to DodgingState because player is grounded", 1);
             }
             else if (!isFallingOffFaller)
             {

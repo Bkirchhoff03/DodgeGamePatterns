@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, topRight.y + 1.5f);
         if (rescue == null)
         {
-            GameManager.instance().Print("Rescue spawn failed!", 1);
+            GameManager.instance().Print("Rescue spawn failed!", 0);
             // Additional logic if rescue spawn fails, such as trying again after a delay or notifying the player
         }
     }
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
                 if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
-                    GameManager.instance().Print("Player may be stuck, starting timer...", 1);
+                    GameManager.instance().Print("Player may be stuck, starting timer...", 0);
                 }
             }
         }
@@ -229,21 +229,29 @@ public class GameManager : MonoBehaviour
                 stuckTimer = 0f;
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
-                GameManager.instance().Print("Found a reachable faller!!", 1);
+                GameManager.instance().Print("Found a reachable faller!!", 0);
                 //l.AddRedTint();
             }
         }
     }
     public void HandlePlayerFallerCollision(GameObject player, GameObject faller, PlayerFallerCollisionType collisionType)
     {
-        Print("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
+        Print("FROM GAME MANAGER: Player collided " + collisionType + " with Faller " + faller.name,1);
         PlayerController playerController = player.GetComponent<PlayerController>();
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
-        if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
+        if (collisionType == PlayerFallerCollisionType.Bottom && !fallerBehavior.IsFrozen)
         {
-            MinusLife();
-            playerController.crush();
-            DeleteFaller(faller.name);
+            if (playerController.canBeDamaged())
+            {
+                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position+" collided to lose a life with Faller " + faller.name,1);
+                MinusLife();
+                playerController.crush();
+                DeleteFaller(faller.name);
+            }
+            else if(playerController.state.getName() == Constants.jumpingStateName)
+            {
+                playerController.setState(playerController.GetStateFromName(Constants.fallingStateName));
+            }
         }else if(collisionType == PlayerFallerCollisionType.Top)
         {
             if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)

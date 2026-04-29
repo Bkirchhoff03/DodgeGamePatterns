@@ -41,7 +41,6 @@ public class InputSystemController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             moveDirection.Ydirection = 1;
-            playerController.setState(new JumpingState());
         }
         if(Input.GetMouseButton(0))// || Input.GetKey(KeyCode.Q))
         {

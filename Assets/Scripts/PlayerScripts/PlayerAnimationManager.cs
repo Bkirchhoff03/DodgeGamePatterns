@@ -223,6 +223,7 @@ namespace Assets.Scripts.PlayerScripts
             {
                 // Goes from crushed to not crushed, reset to idle
                 Idle = true;
+                animator.SetBool(IdleParameter, Idle); // Set idle parameter immediately so that it goes to idle animation right after crushed animation finishes
             }
             Crushed = value;
             // Apply immediately so the Animator sees the change this frame regardless of script execution order

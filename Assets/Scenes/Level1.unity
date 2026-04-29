@@ -2228,6 +2228,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1809391310, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: unlimitedLives
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verboseLogging
       value: 0
       objectReference: {fileID: 0}

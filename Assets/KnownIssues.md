@@ -1,7 +1,4 @@
 # KNOWN ISSUES
-
-- Player hovers slightly above the floor, at a height of 0.01 units, which can cause some issues with collision detection, and state changes.
-
 - Player can fall between blocks that are close together occasionally.
 
 - Player can fall between stacks of blocks and won't be able to climb out. More of a gameplay issue than bug. 
@@ -14,3 +11,8 @@
     - They line up pretty well for the most part, but it doesn't always look perfect, so I am gonna keep it here for now.  
 
 - Faller can freeze ontop of the trapdoor.
+
+- Player stays in crushed state animation, but can still move and jump, and is out of the crushed state.
+    - This literally only happens when running the build, and only happens every once in a while and I can't seem to recreate it.
+
+- Player can avoid getting crushed by jumping at the last second, and clips through the block.

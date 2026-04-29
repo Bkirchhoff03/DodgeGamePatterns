@@ -13,10 +13,11 @@ public class FloorCollisionHandler : MonoBehaviour
                 faller.FloorPause();
             }
         }
-        else if (collision.gameObject.TryGetComponent<PlayerController>(out var player))
-        { 
+        /*else if (collision.gameObject.TryGetComponent<PlayerController>(out var player))
+        {
+            GameManager.instance().Print( collision.gameObject.name + " collided with the floor, switching to dodging state from " +player.state.getName() +" at: " + player.gameObject.transform.position, 1);
             player.setState(new DodgingState());
-        }
+        }*/
         
     }
     public void OnCollisionStay2D(Collision2D collision)

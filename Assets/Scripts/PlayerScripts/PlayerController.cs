@@ -49,29 +49,84 @@ public class PlayerController : MonoBehaviour
         state = new DodgingState();
         state.EnterState(this);
         
-
     }
 
     // Update is called once per frame
     void Update()
     {
         state = state.Update(this);
+        //GameManager.instance().Print("Player state: " + state.getName() + " at " + gameObject.transform.position.y, 0);
+        //ChangeColorBasedOnState();
+    }
+    private void ChangeColorBasedOnState()
+    {
+        if (state.getName() == Constants.crushedStateName)
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else if (state.getName() == Constants.dodgingStateName)
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        else if (state.getName() == Constants.jumpingStateName)
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else if (state.getName() == Constants.ridingFallerStateName)
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+        }
+        else if (state.getName() == Constants.fallingStateName)
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
+        }
+        else
+        {
+            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
-        state = state.HandleInput(this, moveInput);
+        IPlayerState newState = state.HandleInput(this, moveInput);
+        if (state.getName() != newState.getName())
+        {
+            setState(newState);
+        }
     }
     public void setState(IPlayerState newState)
     {
         if(newState.getName() != state.getName())
         {
-            if(state.getName() == Constants.fallingStateName && newState.getName() == Constants.jumpingStateName)
+            /*if(state.getName() == Constants.fallingStateName && newState.getName() == Constants.jumpingStateName)
             {
                 return;
             }
             if(newState.getName() == Constants.jumpingStateName && state.getName() == Constants.ridingFallerStateName)
             {
-                gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                //gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            }*/
+            if(newState.getName() == Constants.jumpingStateName)
+            {
+                GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 0);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f);
+                if(hit.collider != null && hit.collider.gameObject != gameObject)
+                {
+                    GameManager.instance().Print("Hit something above me ("+ (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + "), can't jump " + hit.collider.name, 0);
+                    return;
+                }
+                // Block jump if a non-frozen faller is close enough above to hit the player during the jump
+                float incomingFallerCheckDistance = GetComponent<BoxCollider2D>().bounds.extents.y + 2.5f;
+                RaycastHit2D[] incomingHits = Physics2D.RaycastAll(transform.position, Vector2.up, incomingFallerCheckDistance);
+                foreach (RaycastHit2D incomingHit in incomingHits)
+                {
+                    if (incomingHit.collider.gameObject == gameObject) continue;
+                    FallerController fc = incomingHit.collider.gameObject.GetComponent<FallerController>();
+                    if (fc != null && !fc.IsFrozen)
+                    {
+                        GameManager.instance().Print("Incoming faller above, can't jump", 1);
+                        return;
+                    }
+                }
             }
             state.ExitState(this);
             state = newState;
@@ -191,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
     public IPlayerState GetStateFromName(string currentStateName)
     {
-        GameManager.instance().Print("Setting player state from name: " + currentStateName);
+        GameManager.instance().Print("Setting player state from name: " + currentStateName, 1);
         switch (currentStateName)
         {
             case Constants.crushedStateName:
@@ -205,6 +260,7 @@ public class PlayerController : MonoBehaviour
             case Constants.fallingStateName:
                 return new FallingState();
             default:
+                GameManager.instance().Print("State name not recognized, defaulting to dodging state", 1);
                 return new DodgingState();
         }
     }
@@ -213,7 +269,8 @@ public class PlayerController : MonoBehaviour
     {
         if (gameObject.transform.position.y <= 0.1f) //Physics2D.Raycast(transform.position, Vector2.down, 0.1f))
         {
-            MoveTo(new Vector3(gameObject.transform.position.x, 0.0f, gameObject.transform.position.z));
+            MoveTo(new Vector3(gameObject.transform.position.x, 0.0135542f, gameObject.transform.position.z));
+            
             return true;
         }else
         {

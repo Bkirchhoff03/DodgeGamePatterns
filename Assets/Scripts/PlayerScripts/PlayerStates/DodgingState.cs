@@ -15,6 +15,8 @@ namespace Assets.Scripts
         private float timeSinceStopped = 0f;
         private const float idleDelay = Constants.idleDelay;
         public void EnterState(PlayerController playerController) {
+            GameManager.instance().Print("Entered Dodging State at " + playerController.gameObject.transform.position ,1);
+
             playerController.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             playerController.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
             playerController.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -28,6 +30,10 @@ namespace Assets.Scripts
             if (moveInput.isPunch != 0)
             {
                 playerController.HandlePunch(moveInput);
+            }
+            if(moveInput.Ydirection > 0 && playerController.isGrounded())
+            {
+                nextState = new JumpingState();
             }
             if (moveInput.Xdirection < 0)
             {
