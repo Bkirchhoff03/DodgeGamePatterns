@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -128,6 +129,16 @@ public class GameManager : MonoBehaviour
         saveNameInput = saveNamePanel.GetComponentInChildren<TMPro.TMP_InputField>();
         gameOverPanel = GameObject.Find("GameOverPanel");
         gameOverPanel.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            StartSaveSession();
+        }
+        else
+        {
+            UpdateSaveSession();
+        }
+        
+
     }
 
     // Update is called once per frame
@@ -324,6 +335,43 @@ public class GameManager : MonoBehaviour
     {
         ShowSaveNamePanel();
     }
+    public void QuickSaveLevel()
+    {
+        string saveName = DateTime.Now.ToString("yyyyMMddHHmm");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+    }
+    public void StartSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+        
+    }
+    public void UpdateSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+    }
+    public void ClearSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        string savePath = Constants.saveFilePath+ "Save_" + saveName + ".json";
+        string playerSavePath = Constants.playerDataSavePath + "PlayerSave_" + saveName + ".json";
+        string fallerSavePath = Constants.fallerDataSavePath + "FallerSave_" + saveName + ".json";
+        if(File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+        if (File.Exists(playerSavePath))
+        {
+            File.Delete(playerSavePath);
+        }
+        if (File.Exists(fallerSavePath))
+        {
+            File.Delete(fallerSavePath);
+        }
+
+
+    }
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -338,10 +386,12 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         TextMeshProUGUI gameOverText = gameOverPanel.transform.Find("GameOverReasonText").GetComponent<TextMeshProUGUI>();
         gameOverText.text = reason;
+
     }
     public void QuitGame()
     {
         Time.timeScale = 1f;
+        UpdateSaveSession();
         SceneManager.LoadScene("MainMenu");
     }
     public void givePlayerTime()
@@ -387,10 +437,11 @@ public class GameManager : MonoBehaviour
             Print("Not applying unfreeze impulse to fallers because player is already in EMT", 1);
             return; // Don't apply impulse if already in EMT
         }
+        GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 1);
         MinusLife();
-        Time.timeScale = 0f;
         EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
+        Time.timeScale = 0f;
     }
     public void SetEMT()
     {
@@ -400,5 +451,19 @@ public class GameManager : MonoBehaviour
         
         Vector3 playerPosition = player.transform.position;
         FallerManager.instance().UnfreezeImpulse(playerPosition);
+    }
+    public int GetPlayerLives()
+    {
+        return playerLives;
+    }
+    public void SetPlayerLives(int lives)
+    {
+        playerLives = lives;
+        string text = "";
+        for (int i = 0; i < playerLives; i++)
+        {
+            text += "I";
+        }
+        lifeCounter.text = text;
     }
 }

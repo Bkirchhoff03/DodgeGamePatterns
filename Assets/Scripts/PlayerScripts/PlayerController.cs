@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
         public Vector3 position;
         public Vector2 currentSpeed;
         public string currentStateName;
+        public int lives;
     }
     public IPlayerState state;
     delegate void MoveAction();
@@ -233,6 +234,7 @@ public class PlayerController : MonoBehaviour
         data.position = gameObject.transform.position;
         data.currentSpeed = GetComponent<Rigidbody2D>().linearVelocity;
         data.currentStateName = state.getName();
+        data.lives = GameManager.instance().GetPlayerLives();
         return data;
     }
     public void SetFromData(PlayerData data)
@@ -240,6 +242,7 @@ public class PlayerController : MonoBehaviour
         gameObject.name = data.name;
         gameObject.transform.position = data.position;
         GetComponent<Rigidbody2D>().linearVelocity = data.currentSpeed;
+        GameManager.instance().SetPlayerLives(data.lives);
         state = GetStateFromName(data.currentStateName);
         state.EnterState(this);
     }

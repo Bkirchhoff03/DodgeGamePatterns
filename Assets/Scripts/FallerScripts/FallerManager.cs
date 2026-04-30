@@ -53,7 +53,7 @@ public class FallerManager
     FallerType _fallerType;
     Sprite sprite;
     float trapDoorHeight;
-    int lastSpawnedFallerNumber = 0;
+    int lastSpawnedFallerNumber = -1;
     // Tracks all active fallers by name; cleaned up each spawn cycle
     public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     private readonly string FallerDirectory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
@@ -296,7 +296,7 @@ public class FallerManager
             i++;
         return directory + prefix + baseName + "_" + i + suffix;
     }
-    public void SaveFallersToFile(PlayerController playerController, string saveName = null)
+    public void SaveFallersToFileOverwrite(PlayerController playerController, string saveName = null)
     {
         bool isNamedSave = !string.IsNullOrEmpty(saveName);
         string baseName = isNamedSave ? saveName : DateTime.Now.ToString("yyyyMMddHHmm");
@@ -305,6 +305,63 @@ public class FallerManager
         {
             GameManager.instance().Print("No new fallers to save since last save.");
             return;
+        }
+        GameManager.instance().Print("Saving faller data to file...");
+        lastSpawnedFallerNumber = numberOfSpawns;
+
+        FallerDataList fallerDataList = new FallerDataList();
+        foreach (var kvp in fallersInPlay)
+        {
+            if (kvp.Value == null) continue;
+            FallerController faller = kvp.Value;
+            FallerData data = new FallerData
+            {
+                name = kvp.Key,
+                position = faller.transform.position,
+                size = faller.transform.localScale,
+                rotation = faller.transform.rotation.eulerAngles.z,
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
+                isFrozen = faller.amIFrozen(),
+                beingRidden = faller.BeingRidden,
+                fallerType = _fallerType
+            };
+            fallerDataList.fallers.Add(data);
+        }
+
+        Directory.CreateDirectory(Constants.fallerDataSavePath);
+        Directory.CreateDirectory(Constants.playerDataSavePath);
+        Directory.CreateDirectory(Constants.saveFilePath);
+
+        
+        string NewFallerFileSave = Constants.fallerDataSavePath + "FallerSave_" + baseName + ".json";
+        if(File.Exists(NewFallerFileSave)) File.Delete(NewFallerFileSave);
+        string NewPlayerFileSave = Constants.playerDataSavePath+"PlayerSave_"+baseName+ ".json";
+        if(File.Exists(NewPlayerFileSave)) File.Delete(NewPlayerFileSave);
+        string NewSaveFile = Constants.saveFilePath + "Save_" + baseName + ".json";
+        if(File.Exists(NewSaveFile)) File.Delete(NewSaveFile);
+        
+        string fallerJson = JsonUtility.ToJson(fallerDataList, true);
+        File.WriteAllText(NewFallerFileSave, fallerJson);
+        if (File.Exists(FallerDirectory)) File.Delete(FallerDirectory);
+        File.WriteAllText(FallerDirectory, fallerJson);
+
+        string playerJson = JsonUtility.ToJson(playerController.GetMyData(), true);
+        File.WriteAllText(NewPlayerFileSave, playerJson);
+        if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
+        File.WriteAllText(PlayerDirectory, playerJson);
+
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
+        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}");
+    }
+    public string SaveFallersToFile(PlayerController playerController, string saveName = null)
+    {
+        bool isNamedSave = !string.IsNullOrEmpty(saveName);
+        string baseName = isNamedSave ? saveName : DateTime.Now.ToString("yyyyMMddHHmm");
+
+        if (!isNamedSave && lastSpawnedFallerNumber == numberOfSpawns)
+        {
+            GameManager.instance().Print("No new fallers to save since last save.");
+            return null;
         }
         GameManager.instance().Print("Saving faller data to file...");
         lastSpawnedFallerNumber = numberOfSpawns;
@@ -348,6 +405,7 @@ public class FallerManager
 
         File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
         GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}");
+        return NewSaveFile;
     }
     public void LoadFallersFromFile(PlayerController playerController)
     {

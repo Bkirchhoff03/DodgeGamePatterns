@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -71,7 +72,12 @@ public class MainMenuController : MonoBehaviour
         howToPlayPanel.SetActive(false);
         runAsTesterPanel.SetActive(false);
     }
-    public void PlayGame() => SceneManager.LoadScene("Level1");
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("Level1");
+        PlayerPrefs.SetString("SessionSaveFile", "Session_" + DateTime.Now.ToString("yyyyMMddHHmm")); 
+        
+    }
     public void PlayLevel2() => SceneManager.LoadScene("Level2");
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() { mainPanel.SetActive(false); howToPlayPanel.SetActive(true); }

@@ -15,13 +15,15 @@ namespace Assets.Scripts.PlayerScripts
         private bool directionFacingLeft = false;
         public PlayerAnimationState currentState;
         private bool Running;
-        private string RunningParameter = "Running";
+        private readonly string RunningParameter = "Running";
         private bool Idle;
-        private string IdleParameter = "Idle";
+        private readonly string IdleParameter = "Idle";
         private bool Punching;
-        private string PunchingParameter = "Punching";
+        private readonly string PunchingParameter = "Punching";
         private bool Crushed;
-        private string CrushedParameter = "Crush";
+        private readonly string CrushedParameter = "Crush";
+        private float checkAnimationStateTimer = 0.0f;
+        private readonly float checkAnimationInterval = 5.0f;
         //private string CrushedFromWhere = "";
         //private float punchFrameTimer = 0.0f;
         public enum PlayerAnimationState
@@ -48,6 +50,15 @@ namespace Assets.Scripts.PlayerScripts
             animator.SetBool(PunchingParameter, Punching);
             animator.SetBool(RunningParameter, Running);
             animator.SetBool(IdleParameter, Idle);
+            if(checkAnimationStateTimer >= checkAnimationInterval)
+            {
+                checkAnimationStates();
+                checkAnimationStateTimer = 0.0f;
+            }
+            else
+            {
+                checkAnimationStateTimer += Time.deltaTime;
+            }
             /*if (Crushed)
             {
                 animator.SetBool(CrushedParameter, true);
@@ -84,6 +95,47 @@ namespace Assets.Scripts.PlayerScripts
                 }
             }*/
         }
+
+        private void checkAnimationStates()
+        {
+            if(!Crushed && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
+            {
+                GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 1);
+                SetCrushed(false); // This will also reset to idle after crushed animation finishes
+                animator.SetBool(CrushedParameter, Crushed);
+                animator.SetBool(PunchingParameter, Punching);
+                animator.SetBool(RunningParameter, Running);
+                animator.SetBool(IdleParameter, Idle);
+            }
+            if (!Punching && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation"))
+            {
+                GameManager.instance().Print("Player is not punching but is playing punching animation, resetting to idle", 1);
+                SetPunching(false); // This will also reset to idle after punching animation finishes
+                animator.SetBool(CrushedParameter, Crushed);
+                animator.SetBool(PunchingParameter, Punching);
+                animator.SetBool(RunningParameter, Running);
+                animator.SetBool(IdleParameter, Idle);
+            }
+            if(!Running && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerRunningAnimation"))
+            {
+                GameManager.instance().Print("Player is not running but is playing running animation, resetting to idle", 1);
+                SetRunning(false); // This will also reset to idle after running animation finishes
+                animator.SetBool(CrushedParameter, Crushed);
+                animator.SetBool(PunchingParameter, Punching);
+                animator.SetBool(RunningParameter, Running);
+                animator.SetBool(IdleParameter, Idle);
+            }
+            if(!Idle && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerIdleAnimation"))
+            {
+                GameManager.instance().Print("Player is not idle but is playing idle animation, resetting to idle", 1);
+                SetIdle(false); // This will also reset to idle after idle animation finishes
+                animator.SetBool(CrushedParameter, Crushed);
+                animator.SetBool(PunchingParameter, Punching);
+                animator.SetBool(RunningParameter, Running);
+                animator.SetBool(IdleParameter, Idle);
+            }
+        }
+
         public bool isRunning()
         {
             return Running;

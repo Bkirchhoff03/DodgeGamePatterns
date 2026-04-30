@@ -35,6 +35,7 @@ public class TrapDoor : MonoBehaviour
             if(SceneManager.GetActiveScene().name == "Level1")
             {
                 SceneManager.LoadScene("Level2");
+                GameManager.instance().UpdateSaveSession();
             }
             else
             {
