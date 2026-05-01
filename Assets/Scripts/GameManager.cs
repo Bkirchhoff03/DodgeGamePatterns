@@ -135,6 +135,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            int livesFromLevel1 = PlayerPrefs.GetInt("PlayerLivesFromLevel1");
+            if (livesFromLevel1 != 0)
+            {
+                playerLives = livesFromLevel1;
+
+            }
             UpdateSaveSession();
         }
         
@@ -369,9 +375,8 @@ public class GameManager : MonoBehaviour
         {
             File.Delete(fallerSavePath);
         }
-
-
     }
+    
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -386,7 +391,7 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         TextMeshProUGUI gameOverText = gameOverPanel.transform.Find("GameOverReasonText").GetComponent<TextMeshProUGUI>();
         gameOverText.text = reason;
-
+        ClearSaveSession();
     }
     public void QuitGame()
     {

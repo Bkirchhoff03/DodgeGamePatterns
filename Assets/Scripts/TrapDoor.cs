@@ -34,11 +34,13 @@ public class TrapDoor : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().name == "Level1")
             {
+                PlayerPrefs.SetInt("PlayerLivesFromLevel1", GameManager.instance().GetPlayerLives());
                 SceneManager.LoadScene("Level2");
                 GameManager.instance().UpdateSaveSession();
             }
             else
             {
+                PlayerPrefs.SetInt("PlayerLivesFromLevel1", 3);
                 SceneManager.LoadScene("MainMenu");
             }
         }
