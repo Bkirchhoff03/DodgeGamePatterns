@@ -193,10 +193,18 @@ public class MainMenuController : MonoBehaviour
         { KeyCode.Alpha7, "7" },
         { KeyCode.Alpha8, "8" },
         { KeyCode.Alpha9, "9" },
-        // Add others as needed
+        { KeyCode.UpArrow, "UP" },
+        { KeyCode.DownArrow, "DOWN" },
+        { KeyCode.LeftArrow, "LEFT" },
+        { KeyCode.RightArrow, "RIGHT" },
         { KeyCode.Escape, "ESC" },
         { KeyCode.Backspace, "BCK" },
-        { KeyCode.Return, "RETURN" }
+        { KeyCode.Return, "RETURN" },
+        { KeyCode.Space, "SPACE" },
+        { KeyCode.LeftControl, "LCTRL" },
+        { KeyCode.RightControl, "RCTRL" },
+        { KeyCode.LeftShift, "LSHIFT" },
+        { KeyCode.RightShift, "RSHIFT" }
     };
 
     public string GetShortKeyName(KeyCode key)
@@ -384,7 +392,7 @@ public class MainMenuController : MonoBehaviour
         var scrollRect = container.AddComponent<ScrollRect>();
         scrollRect.horizontal = false;
         scrollRect.vertical = true;
-        scrollRect.scrollSensitivity = 20f;
+        scrollRect.scrollSensitivity = 5f;
 
         // Viewport — clips the content so overflow is hidden
         var viewport = new GameObject("Viewport", typeof(RectTransform));
