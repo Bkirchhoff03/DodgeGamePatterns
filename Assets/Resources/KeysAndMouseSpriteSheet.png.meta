@@ -232,7 +232,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpaceKey
+      name: BlankSpaceKey
       rect:
         serializedVersion: 2
         x: 531
@@ -306,7 +306,7 @@ TextureImporter:
         width: 129
         height: 129
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -335,13 +335,13 @@ TextureImporter:
     nameFileIdTable:
       AKey: 1573950257
       BlankKey: -659446017
+      BlankSpaceKey: 1871011392
       DKey: 36515956
       EscapeKey: 7161606023216986898
       LeftMouseClick: 751669831
       MKey: 1374058973
       RightMouseClick: 1240035407
       SKey: 1481945437
-      SpaceKey: 1871011392
       WKey: 1526025229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

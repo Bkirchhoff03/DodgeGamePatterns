@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +13,11 @@ public class MainMenuController : MonoBehaviour
     private GameObject loadSavePanel;
     private GameObject runAsTesterPanel;
     private GameObject saveFileListContainer;
-    public bool runAsTester = false; 
+    public bool runAsTester = false;
+    private GameObject clickToEditKeybind = null;
+    private float flashDuration = 0.5f;
+    private Sprite[] keyboardSpriteSheet;
+    private Vector4 anchors;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,6 +78,133 @@ public class MainMenuController : MonoBehaviour
         PlayerPrefs.SetInt("unlimitedLivesTester", 0);
         howToPlayPanel.SetActive(false);
         runAsTesterPanel.SetActive(false);
+        keyboardSpriteSheet = Resources.LoadAll<Sprite>("KeysAndMouseSpriteSheet");
+
+        setKeyBinds();
+
+    }
+    public void Update()
+    {
+        if(clickToEditKeybind != null)
+        {
+            flashDuration -= Time.unscaledDeltaTime;
+            if (flashDuration <= 0f)
+            {
+                flashDuration = 0.25f; // Reset flash duration
+                
+                clickToEditKeybind.GetComponent<UnityEngine.UI.Image>().color = clickToEditKeybind.GetComponent<UnityEngine.UI.Image>().color == Color.red ? Color.white : Color.red;
+            }
+            if (Input.anyKeyDown)
+            {
+                foreach(KeyCode kc in Enum.GetValues(typeof(KeyCode)))
+                {
+                    if(Input.GetKeyDown(kc))
+                    {
+                        string keyBind = GetShortKeyName(kc);
+                        clickToEditKeybind.transform.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = keyBind;
+                        PlayerPrefs.SetString(clickToEditKeybind.gameObject.name + "_Key", kc.ToString());
+                        Debug.Log("Set " + clickToEditKeybind.gameObject.name + "_Key to " + keyBind + " length: " + keyBind.Length);
+
+                        justifySize(clickToEditKeybind.transform, keyBind);
+                        clickToEditKeybind.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+                        clickToEditKeybind = null;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    private void setKeyBinds()
+    {
+        Transform moveLeft = howToPlayPanel.transform.Find("MoveLeft");
+        string mlkeyBind = GetShortKeyName((KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveLeft_Key", KeyCode.A.ToString())));
+        moveLeft.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = mlkeyBind;
+        justifySize(moveLeft, mlkeyBind);
+
+        Transform moveRight = howToPlayPanel.transform.Find("MoveRight");
+        string mrkeyBind = GetShortKeyName((KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveRight_Key", KeyCode.D.ToString())));
+        moveRight.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = mrkeyBind;
+        justifySize(moveRight, mrkeyBind);
+
+        Transform jump = howToPlayPanel.transform.Find("Jump");
+        string jumpKeyBind = GetShortKeyName((KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jump_Key", KeyCode.Space.ToString())));
+        jump.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = jumpKeyBind;
+        justifySize(jump, jumpKeyBind);
+
+        Transform pause = howToPlayPanel.transform.Find("Pause");
+        string pauseKeyBind = GetShortKeyName((KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Pause_Key", KeyCode.Escape.ToString())));
+        pause.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = pauseKeyBind;
+        justifySize(pause, pauseKeyBind);
+
+        Transform emt = howToPlayPanel.transform.Find("EMT");
+        string emtKeyBind = GetShortKeyName((KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("EMT_Key", KeyCode.M.ToString())));
+        emt.Find("KeyBindLabel").GetComponent<TMPro.TextMeshProUGUI>().text = emtKeyBind;
+        justifySize(emt, emtKeyBind);
+
+    }
+    private void justifySize(Transform keyTransform, string keyBind)
+    {
+        anchors = new Vector4(keyTransform.GetComponent<RectTransform>().anchorMin.x, keyTransform.GetComponent<RectTransform>().anchorMin.y, keyTransform.GetComponent<RectTransform>().anchorMax.x, keyTransform.GetComponent<RectTransform>().anchorMax.y);
+
+        if (keyBind.Length > 3)
+        {
+
+            keyTransform.GetComponent<UnityEngine.UI.Image>().sprite = System.Array.Find(keyboardSpriteSheet, s => s.name == "BlankSpaceKey");
+            if (anchors.z - anchors.x < 0.11f)
+            {
+                float middleX = (anchors.x + anchors.z) / 2f;
+                float halfWidth = 0.11374f / 2f;
+                keyTransform.GetComponent<RectTransform>().anchorMin = new Vector2(middleX - halfWidth, anchors.y);
+                keyTransform.GetComponent<RectTransform>().anchorMax = new Vector2(middleX + halfWidth, anchors.w);
+                //.11374
+                Transform text = keyTransform.Find(keyTransform.name + "Text");
+                Vector2 offMax = text.GetComponent<RectTransform>().offsetMax;
+                Vector2 offMin = text.GetComponent<RectTransform>().offsetMin;
+                text.GetComponent<RectTransform>().offsetMax = new Vector2(offMax.x - 50f, offMax.y);
+                text.GetComponent<RectTransform>().offsetMin = new Vector2(offMin.x + 50f, offMin.y);
+            }
+        }
+        else
+        {
+            keyTransform.GetComponent<UnityEngine.UI.Image>().sprite = System.Array.Find(keyboardSpriteSheet, s => s.name == "BlankKey");
+            if (anchors.z - anchors.x > 0.055f)
+            {
+                float middleX = (anchors.x + anchors.z) / 2f;
+                float halfWidth = 0.05f / 2f;
+                keyTransform.GetComponent<RectTransform>().anchorMin = new Vector2(middleX - halfWidth, anchors.y);
+                keyTransform.GetComponent<RectTransform>().anchorMax = new Vector2(middleX + halfWidth, anchors.w);
+                Transform text = keyTransform.Find(keyTransform.name + "Text");
+                Vector2 offMax = text.GetComponent<RectTransform>().offsetMax;
+                Vector2 offMin = text.GetComponent<RectTransform>().offsetMin;
+                text.GetComponent<RectTransform>().offsetMax = new Vector2(offMax.x + 50f, offMax.y);
+                text.GetComponent<RectTransform>().offsetMin = new Vector2(offMin.x - 50f, offMin.y);
+            }
+        }
+    }
+    private static readonly Dictionary<KeyCode, string> KeyShortNames = new Dictionary<KeyCode, string>
+    {
+        { KeyCode.Alpha0, "0" },
+        { KeyCode.Alpha1, "1" },
+        { KeyCode.Alpha2, "2" },
+        { KeyCode.Alpha3, "3" },
+        { KeyCode.Alpha4, "4" },
+        { KeyCode.Alpha5, "5" },
+        { KeyCode.Alpha6, "6" },
+        { KeyCode.Alpha7, "7" },
+        { KeyCode.Alpha8, "8" },
+        { KeyCode.Alpha9, "9" },
+        // Add others as needed
+        { KeyCode.Escape, "ESC" },
+        { KeyCode.Backspace, "BCK" },
+        { KeyCode.Return, "RETURN" }
+    };
+
+    public string GetShortKeyName(KeyCode key)
+    {
+        if (KeyShortNames.TryGetValue(key, out string shortName))
+            return shortName;
+
+        return key.ToString(); // Fallback to default
     }
     public void PlayGame()
     {
@@ -82,7 +214,13 @@ public class MainMenuController : MonoBehaviour
     }
     public void PlayLevel2() => SceneManager.LoadScene("Level2");
     public void QuitGame() => Application.Quit();
-    public void ShowHowToPlay() { mainPanel.SetActive(false); howToPlayPanel.SetActive(true); }
+    public void ShowHowToPlay() 
+    { 
+        mainPanel.SetActive(false); 
+        howToPlayPanel.SetActive(true);
+        
+    }
+
     public void HideHowToPlay() { howToPlayPanel.SetActive(false); mainPanel.SetActive(true); }
     public void ShowLoadSave()
     {
@@ -90,7 +228,12 @@ public class MainMenuController : MonoBehaviour
         loadSavePanel.SetActive(true);
         PopulateSaveFileList();
     }
-
+    public void ChangeKeybind(GameObject btn)
+    {
+        RectTransform rt = btn.GetComponent<RectTransform>();
+        anchors = new Vector4(rt.anchorMin.x, rt.anchorMin.y, rt.anchorMax.x, rt.anchorMax.y);
+        clickToEditKeybind = btn;
+    }
     public void HideLoadSave()
     {
         loadSavePanel.SetActive(false);
