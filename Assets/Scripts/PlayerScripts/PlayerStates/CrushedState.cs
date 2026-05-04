@@ -18,6 +18,7 @@ namespace Assets.Scripts
             if(lastState == null)
             {
                 this.lastState = new DodgingState();
+                GameManager.instance().Print("CrushedState initialized with null lastState, defaulting to DodgingState", 1);
             }
             else 
             { 

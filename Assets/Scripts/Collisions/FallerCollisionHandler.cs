@@ -68,7 +68,7 @@ public class FallerCollisionHandler : MonoBehaviour
             Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (otherRb != null || Mathf.Abs(otherRb.linearVelocity.x) <= 0.1f)
             {
-                GameManager.instance().Print($"Freezing {gameObject.name} on collision with frozen {collision.gameObject.name}", 1);
+                GameManager.instance().Print($"Freezing {gameObject.name} on collision with frozen {collision.gameObject.name}", 0);
                 thisFaller.FloorPause();
             }
         }

@@ -23,6 +23,7 @@ namespace Assets.Scripts
             // Initialize jumping state if needed
         }
         public void EnterState(PlayerController playerController) {
+            
             playerController.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             playerController.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 public class EMT : MonoBehaviour
 {
     GameObject LocationReference;
-    private bool isEMTed = false;
+    private bool isEMTed;
     private Vector3 EMTTarget;
     private float speed = 5f; // Speed at which the EMT moves towards the target
     private static EMT instance_;
@@ -12,20 +12,17 @@ public class EMT : MonoBehaviour
     bool flashingLife = false;
     int flashCount = 0;
     float flashDuration = 0.5f; // Duration of each flash
-    public EMT()
+    public static EMT instance() => instance_;
+    void Awake()
     {
         instance_ = this;
     }
-    public static EMT instance() => instance_;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (instance_ == null)
-        {
-            instance_ = this;
-        }
         lifeCounter = GameObject.Find("LifeCounter");
-        /*LocationReference = GameObject.Find("EMTLocation");
+        isEMTed = false;
+        LocationReference = GameObject.Find("EMTLocation");
         // 1. Get the screen position of your UI element
         Vector3 screenPos = LocationReference.transform.position;
         // 2. Set the Z distance (how far into the world from the camera)
@@ -34,17 +31,17 @@ public class EMT : MonoBehaviour
 
         // 3. Convert to World Space
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        
+
         //GameManager.instance().Print("EMT screenPos: " + screenPos + ", worldPos: " + worldPos + ", lossyScale: " + LocationReference.transform.lossyScale, 1);
 
-        transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);*/
+        transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);
         GetComponent<SpriteRenderer>().enabled = false; // Hide the EMT sprite at the start
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isEMTed)
+        if (isEMTed)
         {
             float step = speed * Time.unscaledDeltaTime; // Move distance per frame
             transform.position = Vector3.MoveTowards(transform.position, EMTTarget, step);
@@ -86,10 +83,13 @@ public class EMT : MonoBehaviour
     }
     public void EMTMe(Vector3 EMTPosition)
     {
+        //GameManager.instance().Print("EMTMe called with position: " + EMTPosition, 1);
         EMTToLife();
+        //GameManager.instance().Print("EMT moved to life location (" + transform.position + "), now moving to EMT position: " + EMTPosition, 1);
         this.GetComponent<SpriteRenderer>().enabled = true; // Ensure the EMT sprite is visible
         isEMTed = true;
         EMTTarget = new Vector3(EMTPosition.x, EMTPosition.y, -0.02f);
+        //GameManager.instance().Print("isEMTed: " + isEMTed + ", EMT target set to: " + EMTTarget, 1);
     }
     private void EMTToLife()
     {
@@ -102,6 +102,7 @@ public class EMT : MonoBehaviour
 
         // 3. Convert to World Space
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        GameManager.instance().Print("sending EMT to " + worldPos, 1);
 
         transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);
     }

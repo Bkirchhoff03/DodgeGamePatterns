@@ -30,8 +30,6 @@ namespace Assets.Scripts
         }
         public void ExitState(PlayerController playerController)
         {
-            playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
-            playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             playerController.transform.GetComponent<SpriteRenderer>().color = Color.white;
         }
         public string getName()
@@ -88,6 +86,7 @@ namespace Assets.Scripts
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
             if (playerController.isGrounded())
             {
+                GameManager.instance().Print("Player is grounded, switching to dodging state from falling state at " + playerController.gameObject.transform.position , 1);
                 //playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
                 ExitState(playerController);
                 nextState = new DodgingState();
@@ -101,6 +100,7 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 nextState = new DodgingState();
                 nextState.EnterState(playerController);
+                GameManager.instance().Print("Player is likely wedged between fallers, switching to dodging state", 1);
             }
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {

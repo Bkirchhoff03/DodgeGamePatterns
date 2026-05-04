@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -128,6 +129,22 @@ public class GameManager : MonoBehaviour
         saveNameInput = saveNamePanel.GetComponentInChildren<TMPro.TMP_InputField>();
         gameOverPanel = GameObject.Find("GameOverPanel");
         gameOverPanel.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            StartSaveSession();
+        }
+        else
+        {
+            int livesFromLevel1 = PlayerPrefs.GetInt("PlayerLivesFromLevel1");
+            if (livesFromLevel1 != 0)
+            {
+                playerLives = livesFromLevel1;
+
+            }
+            UpdateSaveSession();
+        }
+        
+
     }
 
     // Update is called once per frame
@@ -182,7 +199,7 @@ public class GameManager : MonoBehaviour
         FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, topRight.y + 1.5f);
         if (rescue == null)
         {
-            GameManager.instance().Print("Rescue spawn failed!", 1);
+            GameManager.instance().Print("Rescue spawn failed!", 0);
             // Additional logic if rescue spawn fails, such as trying again after a delay or notifying the player
         }
     }
@@ -205,7 +222,7 @@ public class GameManager : MonoBehaviour
                 if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
-                    GameManager.instance().Print("Player may be stuck, starting timer...", 1);
+                    GameManager.instance().Print("Player may be stuck, starting timer...", 0);
                 }
             }
         }
@@ -229,21 +246,29 @@ public class GameManager : MonoBehaviour
                 stuckTimer = 0f;
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
-                GameManager.instance().Print("Found a reachable faller!!", 1);
+                GameManager.instance().Print("Found a reachable faller!!", 0);
                 //l.AddRedTint();
             }
         }
     }
     public void HandlePlayerFallerCollision(GameObject player, GameObject faller, PlayerFallerCollisionType collisionType)
     {
-        Print("FROM GAME MANAGER: Player " + player.name + " collided with Faller " + faller.name);
+        Print("FROM GAME MANAGER: Player collided " + collisionType + " with Faller " + faller.name,1);
         PlayerController playerController = player.GetComponent<PlayerController>();
         FallerController fallerBehavior = faller.GetComponent<FallerController>();
-        if (collisionType == PlayerFallerCollisionType.Bottom && playerController.canBeDamaged() && !fallerBehavior.IsFrozen)
+        if (collisionType == PlayerFallerCollisionType.Bottom && !fallerBehavior.IsFrozen)
         {
-            MinusLife();
-            playerController.crush();
-            DeleteFaller(faller.name);
+            if (playerController.canBeDamaged())
+            {
+                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position+" collided to lose a life with Faller " + faller.name,1);
+                MinusLife();
+                playerController.crush();
+                DeleteFaller(faller.name);
+            }
+            else if(playerController.state.getName() == Constants.jumpingStateName)
+            {
+                playerController.setState(playerController.GetStateFromName(Constants.fallingStateName));
+            }
         }else if(collisionType == PlayerFallerCollisionType.Top)
         {
             if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
@@ -316,6 +341,42 @@ public class GameManager : MonoBehaviour
     {
         ShowSaveNamePanel();
     }
+    public void QuickSaveLevel()
+    {
+        string saveName = DateTime.Now.ToString("yyyyMMddHHmm");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+    }
+    public void StartSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+        
+    }
+    public void UpdateSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        FallerManager.instance().SaveFallersToFileOverwrite(playerController, saveName);
+    }
+    public void ClearSaveSession()
+    {
+        string saveName = PlayerPrefs.GetString("SessionSaveFile");
+        string savePath = Constants.saveFilePath+ "Save_" + saveName + ".json";
+        string playerSavePath = Constants.playerDataSavePath + "PlayerSave_" + saveName + ".json";
+        string fallerSavePath = Constants.fallerDataSavePath + "FallerSave_" + saveName + ".json";
+        if(File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+        if (File.Exists(playerSavePath))
+        {
+            File.Delete(playerSavePath);
+        }
+        if (File.Exists(fallerSavePath))
+        {
+            File.Delete(fallerSavePath);
+        }
+    }
+    
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -330,10 +391,12 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         TextMeshProUGUI gameOverText = gameOverPanel.transform.Find("GameOverReasonText").GetComponent<TextMeshProUGUI>();
         gameOverText.text = reason;
+        ClearSaveSession();
     }
     public void QuitGame()
     {
         Time.timeScale = 1f;
+        UpdateSaveSession();
         SceneManager.LoadScene("MainMenu");
     }
     public void givePlayerTime()
@@ -379,10 +442,11 @@ public class GameManager : MonoBehaviour
             Print("Not applying unfreeze impulse to fallers because player is already in EMT", 1);
             return; // Don't apply impulse if already in EMT
         }
+        GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 1);
         MinusLife();
-        Time.timeScale = 0f;
         EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
+        Time.timeScale = 0f;
     }
     public void SetEMT()
     {
@@ -392,5 +456,19 @@ public class GameManager : MonoBehaviour
         
         Vector3 playerPosition = player.transform.position;
         FallerManager.instance().UnfreezeImpulse(playerPosition);
+    }
+    public int GetPlayerLives()
+    {
+        return playerLives;
+    }
+    public void SetPlayerLives(int lives)
+    {
+        playerLives = lives;
+        string text = "";
+        for (int i = 0; i < playerLives; i++)
+        {
+            text += "I";
+        }
+        lifeCounter.text = text;
     }
 }
