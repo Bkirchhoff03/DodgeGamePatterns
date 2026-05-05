@@ -1,14 +1,15 @@
 using Assets.Scripts;
 using UnityEngine;
 
-public class BlockFallerBehavior : IFallerBehavior
+public class BombBlockFallerBehavior : IFallerBehavior
 {
     public bool UseSettleTimer => false;
     public bool FreezeRotation => true;
     public void Update(FallerController fc) { }
-    public GameObject CreateGameObject(string name, Vector2 size) {
+    public GameObject CreateGameObject(string name, Vector2 size) 
+    {
         string xName = Mathf.Round(size.x * 2f) / 2f == size.x
-                    ? size.x.ToString("0.#") : size.x.ToString("0.#");
+                        ? size.x.ToString("0.#") : size.x.ToString("0.#");
         string yName = size.y.ToString("0.#");
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));

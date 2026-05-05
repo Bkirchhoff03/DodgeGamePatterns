@@ -46,6 +46,15 @@ public class BolderFallerBehavior : IFallerBehavior
     private bool isPaused = false;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
+    public void Update(FallerController fc) { }
+    public GameObject CreateGameObject(string name, Vector2 size) 
+    {
+        GameObject fallerObject = new GameObject(name);
+        fallerObject.layer = LayerMask.NameToLayer("Fallers");
+        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
+        return fallerObject;
+    }
 
     public void BuildVisuals(GameObject fallerObj, Vector2 size)
     {

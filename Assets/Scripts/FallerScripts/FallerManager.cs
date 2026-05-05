@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class FallerManager
 {
     public int verbosity = 1; // Set to 1 to enable debug prints for rescue spawns and column checks
-    public enum FallerType { Block, Boulder }
+    public enum FallerType { Block, Boulder, BombBlock }
     static FallerManager instance_;
     [System.Serializable]
     public class FallerData
@@ -51,6 +51,12 @@ public class FallerManager
 
     int numberOfSpawns = 0;
     FallerType _fallerType;
+    Dictionary<FallerType, Func<IFallerBehavior>> fallerBehaviorFactory = new Dictionary<FallerType, Func<IFallerBehavior>>()
+    {
+        { FallerType.Block, () => new BlockFallerBehavior() },
+        { FallerType.Boulder, () => new BolderFallerBehavior() },
+        { FallerType.BombBlock, () => new BombBlockFallerBehavior() }
+    };
     Sprite sprite;
     float trapDoorHeight;
     int lastSpawnedFallerNumber = -1;
@@ -261,7 +267,7 @@ public class FallerManager
         GameObject fallerObject;
         FallerController fc;
 
-        if (type == FallerType.Block)
+        /*if (type == FallerType.Block)
         {
             string xName = Mathf.Round(size.x * 2f) / 2f == size.x
                 ? size.x.ToString("0.#") : size.x.ToString("0.#");
@@ -284,6 +290,10 @@ public class FallerManager
         IFallerBehavior behaviour = type == FallerType.Block
             ? (IFallerBehavior)new BlockFallerBehavior()
             : new BolderFallerBehavior();
+        */
+        IFallerBehavior behaviour = fallerBehaviorFactory[type]();
+        fallerObject = behaviour.CreateGameObject(name, size);
+        fc = fallerObject.GetComponent<FallerController>();
         fc.SetBehaviour(behaviour);
         return fc;
     }
