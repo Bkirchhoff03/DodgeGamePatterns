@@ -77,6 +77,7 @@ public class FallerController : MonoBehaviour
                 settleTimer = 0f;
             }
         }
+        behavior?.Update(this);
     }
     public void StartRiding()
     {
@@ -128,10 +129,7 @@ public class FallerController : MonoBehaviour
 
     public void FloorPause()
     {
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Static;
-        rb.gravityScale = 0f;
-        rb.mass = 10000f;
+        
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(fallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);

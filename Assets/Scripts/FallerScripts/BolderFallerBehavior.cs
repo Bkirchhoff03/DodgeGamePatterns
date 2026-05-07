@@ -76,6 +76,11 @@ public class BolderFallerBehavior : IFallerBehavior
 
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
+        Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.gravityScale = 0f;
+        rb.mass = 10000f;
         meshRenderer.material.color = new Color(0f, 0.58f, 0f);
         isPaused = true;
     }

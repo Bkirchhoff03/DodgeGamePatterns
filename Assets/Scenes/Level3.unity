@@ -343,7 +343,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 926f770d9271c6544a3aa0429b74c42a, type: 2}
+  - {fileID: -876546973899608171, guid: 1f017d11e40abfe4caf3bac6a9eeae6d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2250,6 +2250,14 @@ PrefabInstance:
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: spawnFallersFromFile
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: FallerTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'FallerTypes.Array.data[1]'
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4910538271402616942, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Name

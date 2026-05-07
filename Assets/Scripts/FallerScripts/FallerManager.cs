@@ -2,15 +2,18 @@ using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
+using static FallerManager;
 using Random = UnityEngine.Random;
 
 public class FallerManager
 {
     public int verbosity = 1; // Set to 1 to enable debug prints for rescue spawns and column checks
     public enum FallerType { Block, Boulder, BombBlock }
+
     static FallerManager instance_;
     [System.Serializable]
     public class FallerData
@@ -28,7 +31,7 @@ public class FallerManager
     public class FallerDataList
     {
         public List<FallerData> fallers;
-        public FallerDataList() { 
+        public FallerDataList() {
             fallers = new List<FallerData>();
         }
     }
@@ -51,6 +54,7 @@ public class FallerManager
 
     int numberOfSpawns = 0;
     FallerType _fallerType;
+    FallerType[] FallersForLevel;
     Dictionary<FallerType, Func<IFallerBehavior>> fallerBehaviorFactory = new Dictionary<FallerType, Func<IFallerBehavior>>()
     {
         { FallerType.Block, () => new BlockFallerBehavior() },
@@ -68,32 +72,40 @@ public class FallerManager
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
-
+    int bombSpawnFrequency = 10; // Every 10th faller will be a bomb block, if bomb blocks are enabled for the level
     public static FallerManager instance() => instance_;
-    public void init(FallerType fallerType, float trapDoorHeight)
+    public void init(FallerType[] fallerTypes, float trapDoorHeight)
     {
         instance_ = this;
-        _fallerType = fallerType;
+        _fallerType = fallerTypes[0];
+        FallersForLevel = fallerTypes;
         this.trapDoorHeight = trapDoorHeight;
     }
-    /*public void init(Sprite sprite, float trapDoorHeight)
-    {
-        instance_ = this;
-        this.sprite = sprite;
-        this.trapDoorHeight = trapDoorHeight;
-    }*/
+
 
     // Spawns a new faller at a safe height above existing fallers.
     // baseSpawnHeight is the camera-relative default; actual height is raised
     // if any existing faller is within minSpawnGap, capped at the trapdoor.
     public void SpawnFaller(float baseSpawnHeight, bool rescueFaller = false)
     {
+        if (FallersForLevel.Length > 1)
+        {
+            if (FallersForLevel.Contains(FallerType.BombBlock) && numberOfSpawns % bombSpawnFrequency == 0 && numberOfSpawns > bombSpawnFrequency)
+            {
+                _fallerType = FallerType.BombBlock;
+            }
+            else
+            {
+                _fallerType = FallerType.Block;
+                //_fallerType = FallersForLevel[Random.Range(0, FallersForLevel.Length)];
+            }
+        }
         // Remove stale entries from fallers that self-destroyed off-screen
         CleanupDestroyedFallers();
 
         // Ensure new faller spawns at least minSpawnGap above the highest existing one
         float highestY = GetHighestFallerY();
-        if(GetHighestFrozenFallerY() >= trapDoorHeight)
+        if (GetHighestFrozenFallerY() >= trapDoorHeight)
         {
             GameManager.instance().Print("Highest frozen faller is above trapdoor, You Lose");
             GameManager.instance().GameOver("Highest frozen faller is above trapdoor");
@@ -106,11 +118,11 @@ public class FallerManager
 
 
         float randomX = GetSpawnXPos();
-        
-        
+
+
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
-        if(_fallerType == FallerType.Block)
+        if (_fallerType == FallerType.Block || _fallerType == FallerType.BombBlock)
         {
             randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
             randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
@@ -782,10 +794,10 @@ public class FallerManager
         }
         return fallersOutRadius;
     }
-    public void UnfreezeImpulse(Vector3 playerPosition)
+    public void UnfreezeImpulse(Vector3 bombPosition)
     {
-        List<FallerController> fallersInRadius = GetFallersInRadius(playerPosition, Constants.EMT_Radius);
-        List<FallerController> fallersOutRadius = GetFallersOutRadius(playerPosition, Constants.EMT_Radius);
+        List<FallerController> fallersInRadius = GetFallersInRadius(bombPosition, Constants.EMT_Radius);
+        List<FallerController> fallersOutRadius = GetFallersOutRadius(bombPosition, Constants.EMT_Radius);
         
         foreach (FallerController faller in fallersOutRadius)
         {
@@ -795,7 +807,7 @@ public class FallerManager
         foreach (FallerController faller in fallersInRadius) 
         {
             faller.Unfreeze();
-            Vector3 direction = (faller.transform.position - playerPosition);
+            Vector3 direction = (faller.transform.position - bombPosition);
             faller.AddImpulse(new Vector2(direction.x, direction.y));
             //faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
         }

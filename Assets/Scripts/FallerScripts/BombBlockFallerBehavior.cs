@@ -3,18 +3,49 @@ using UnityEngine;
 
 public class BombBlockFallerBehavior : IFallerBehavior
 {
+    private float bombRadius = 1.5f; // radius of the explosion effect
+    private float flashTimer = 0f; // timer for flashing effect before explosion
+    private int flashCount = 0; // count of flashes before explosion
+    private float flashInterval = 0.2f; // interval between flashes
+    private int frozenFlashCount = 0; // count of flashes while frozen
     public bool UseSettleTimer => false;
     public bool FreezeRotation => true;
-    public void Update(FallerController fc) { }
+    public void Update(FallerController fc) 
+    { 
+        flashTimer += Time.deltaTime;
+        if(flashTimer >= flashInterval)
+        {
+            flashTimer = 0f;
+            flashCount++;
+            if (flashCount % 2 == 0)
+                AddTint(fc, new Color(1f, 0f, 0f, 0.5f)); // Flash red
+            else
+                RemoveTint(fc); // Remove tint
+            if (fc.IsFrozen)
+            {
+                flashInterval = 0.1f; // Speed up flashing when frozen
+                frozenFlashCount++;
+            }
+        }
+        if(frozenFlashCount >= 10) // If frozen for too long, explode anyway
+        {
+            FallerManager.instance().UnfreezeImpulse(fc.transform.position);
+            GameManager.instance().StartFallerEMT();
+            fc.DeleteMe();
+        }
+
+    }
     public GameObject CreateGameObject(string name, Vector2 size) 
     {
         string xName = Mathf.Round(size.x * 2f) / 2f == size.x
                         ? size.x.ToString("0.#") : size.x.ToString("0.#");
         string yName = size.y.ToString("0.#");
+        GameManager.instance().Print("Creating BombBlockFaller with size: " + xName + "x" + yName, 1);
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
         fallerObject.layer = LayerMask.NameToLayer("Fallers");
         fallerObject.name = name;
+        AddTint(fallerObject.GetComponent<FallerController>(), new Color(1f, 0f, 0f, 0.5f)); // Add red tint to indicate it's a bomb block
         return fallerObject;
     }
     public void BuildVisuals(GameObject fallerObj, Vector2 size) 
@@ -28,6 +59,11 @@ public class BombBlockFallerBehavior : IFallerBehavior
     }
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
+        Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        //rb.bodyType = RigidbodyType2D.Static;
+        //rb.gravityScale = 0f;
+        //rb.mass = 10000f;
         if (fallerSize.x == 0.5f)
         {
             fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =

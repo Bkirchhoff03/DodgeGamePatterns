@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public Sprite CenterDirtTile;
 
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
+    public FallerManager.FallerType[] FallerTypes;
     public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
@@ -79,7 +80,11 @@ public class GameManager : MonoBehaviour
 
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(fallerType, trapDoorHeight+10.0f);
+        if(FallerTypes == null || FallerTypes.Length == 0)
+        {
+            FallerTypes = new FallerManager.FallerType[] { fallerType };
+        }
+        fallerManager.init(FallerTypes, trapDoorHeight+10.0f);
 
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
@@ -456,6 +461,17 @@ public class GameManager : MonoBehaviour
         
         Vector3 playerPosition = player.transform.position;
         FallerManager.instance().UnfreezeImpulse(playerPosition);
+    }
+    public void StartFallerEMT()
+    {
+        if(EMT_timer > 0)
+        {
+            return; // Don't apply impulse if already in EMT
+        }
+        else
+        {
+            EMT_timer = EMT_duration;
+        }
     }
     public int GetPlayerLives()
     {

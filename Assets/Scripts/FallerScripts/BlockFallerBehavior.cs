@@ -27,6 +27,11 @@ public class BlockFallerBehavior : IFallerBehavior
     }
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
+        Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.gravityScale = 0f;
+        rb.mass = 10000f;
         if (fallerSize.x == 0.5f)
         {
             fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =

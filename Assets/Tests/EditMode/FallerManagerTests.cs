@@ -17,7 +17,7 @@ public class FallerManagerTests
         gameManager = new GameManager();
         fallerManager = new FallerManager();
         // FallerManager now owns the faller dictionary, sprite, and spawn height logic
-        fallerManager.init(FallerManager.FallerType.Block, 60.0f);
+        fallerManager.init(new FallerManager.FallerType[] { FallerManager.FallerType.Block }, 60.0f);
 
     }
 
