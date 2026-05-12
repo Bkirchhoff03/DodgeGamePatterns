@@ -4,7 +4,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 {
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        GameManager.instance().Print("Player collided with: " + collision.gameObject.name);
+        GameManager.instance().Print("Player collided with: " + collision.gameObject.name, 1);
         if (collision.gameObject.GetComponent<FallerController>() == null)
         {
             return;

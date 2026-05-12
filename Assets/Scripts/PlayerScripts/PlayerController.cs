@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -108,11 +109,11 @@ public class PlayerController : MonoBehaviour
             }*/
             if(newState.getName() == Constants.jumpingStateName)
             {
-                GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 0);
+                GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 3);
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f);
                 if(hit.collider != null && hit.collider.gameObject != gameObject)
                 {
-                    GameManager.instance().Print("Hit something above me ("+ (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + "), can't jump " + hit.collider.name, 0);
+                    GameManager.instance().Print("Hit something above me ("+ (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + "), can't jump " + hit.collider.name, 3);
                     return;
                 }
                 // Block jump if a non-frozen faller is close enough above to hit the player during the jump
@@ -124,7 +125,7 @@ public class PlayerController : MonoBehaviour
                     FallerController fc = incomingHit.collider.gameObject.GetComponent<FallerController>();
                     if (fc != null && !fc.IsFrozen)
                     {
-                        GameManager.instance().Print("Incoming faller above, can't jump", 1);
+                        GameManager.instance().Print("Incoming faller above, can't jump", 3);
                         return;
                     }
                 }
@@ -149,49 +150,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    private void SetAnimationDirection(Vector3 direction)
-    {
-        if (direction.x > 0.0f)
-        {
-            if (!PlayerAnimator.GetBool("Running"))
-            {
-                PlayerAnimator.SetBool("Running", true);
-            }
-            //PlayerAnimationGameObject.GetComponent<Animator>().speed = 1f;
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = false;
-            /*if(PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                PlayerAnimator.Play("PlayerRunningAnimation");
-            }*/
-            GameManager.instance().Print("Moving right flip x off");
-        }
-        else if (direction.x < 0.0f)
-        {
-            if (!PlayerAnimator.GetBool("Running"))
-            {
-                PlayerAnimator.SetBool("Running", true);
-            }
-            //PlayerAnimationGameObject.GetComponent<Animator>().speed = 1f;
-            GameManager.instance().Print("Moving left flip x on");
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = true;
-            /*if (PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                PlayerAnimator.Play("PlayerRunningAnimation");
-            }*/
-        }
-        else
-        {
-            GameManager.instance().Print("Not moving horizontally, Go idle");
-            PlayerAnimator.SetBool("Running", false);
-            //PlayerAnimationGameObject.GetComponent<SpriteRenderer>().flipX = false;
-            /*if(!PlayerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                PlayerAnimator.Play("Idle");
-            }*/
-            //PlayerAnimationGameObject.GetComponent<Animator>().Play("Idle");
-            //PlayerAnimationGameObject.GetComponent<Animator>().speed = 0f;
-        }
-    }
+    
     public void MoveTo(Vector3 position)
     {
         transform.position = position;
@@ -249,7 +208,7 @@ public class PlayerController : MonoBehaviour
 
     public IPlayerState GetStateFromName(string currentStateName)
     {
-        GameManager.instance().Print("Setting player state from name: " + currentStateName, 1);
+        GameManager.instance().Print("Setting player state from name: " + currentStateName, 3);
         switch (currentStateName)
         {
             case Constants.crushedStateName:
@@ -263,7 +222,7 @@ public class PlayerController : MonoBehaviour
             case Constants.fallingStateName:
                 return new FallingState();
             default:
-                GameManager.instance().Print("State name not recognized, defaulting to dodging state", 1);
+                GameManager.instance().Print("State name not recognized, defaulting to dodging state", 3);
                 return new DodgingState();
         }
     }
@@ -293,9 +252,14 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    public void GetBombed(Vector3 position)
+    {
+        
+        GetComponent<Rigidbody2D>().AddForce(Constants.EMT_Impulse_player * GetComponent<Rigidbody2D>().mass * (transform.position - position).normalized, ForceMode2D.Impulse);
+    }
     public void BounceOff(GameObject faller, GameManager.PlayerFallerCollisionType collisionType)
     {
-        GameManager.instance().Print("Bouncing off faller. Collision type: " + collisionType);
+        GameManager.instance().Print("Bouncing off faller. Collision type: " + collisionType, 1);
         //ensure player does not go through the faller, but stays on the same side of the faller as they were before the collision
         Vector3 newPosition = transform.position;
         switch (collisionType)

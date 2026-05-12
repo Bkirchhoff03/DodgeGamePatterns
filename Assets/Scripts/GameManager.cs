@@ -49,6 +49,14 @@ public class GameManager : MonoBehaviour
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public FallerManager.FallerType[] FallerTypes;
     public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events
+    public bool verboseFallerCollision = false;
+    public bool verbosePlayerCollision = false;
+    public bool verboseFallerStateChanges = false;
+    public bool verbosePlayerStateChanges = false;
+    public bool verboseGameState = false;
+    public bool verboseSavingLoading = false;
+    public bool verboseRescuing = false;
+    private bool[] verboseSettings; // Array to control verbose logging for different levels or categories of logs
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
@@ -73,6 +81,14 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        verboseSettings = new bool[] { 
+            verboseFallerCollision,
+            verbosePlayerCollision,
+            verboseFallerStateChanges,
+            verbosePlayerStateChanges,
+            verboseGameState,
+            verboseSavingLoading,
+            verboseRescuing};
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
@@ -204,7 +220,7 @@ public class GameManager : MonoBehaviour
         FallerController rescue = FallerManager.instance().SpawnRescue(player.transform.position, topRight.y + 1.5f);
         if (rescue == null)
         {
-            GameManager.instance().Print("Rescue spawn failed!", 0);
+            GameManager.instance().Print("Rescue spawn failed!", 6);
             // Additional logic if rescue spawn fails, such as trying again after a delay or notifying the player
         }
     }
@@ -227,7 +243,7 @@ public class GameManager : MonoBehaviour
                 if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
-                    GameManager.instance().Print("Player may be stuck, starting timer...", 0);
+                    GameManager.instance().Print("Player may be stuck, starting timer...", 6);
                 }
             }
         }
@@ -251,7 +267,7 @@ public class GameManager : MonoBehaviour
                 stuckTimer = 0f;
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
-                GameManager.instance().Print("Found a reachable faller!!", 0);
+                GameManager.instance().Print("Found a reachable faller!!", 6);
                 //l.AddRedTint();
             }
         }
@@ -265,7 +281,7 @@ public class GameManager : MonoBehaviour
         {
             if (playerController.canBeDamaged())
             {
-                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position+" collided to lose a life with Faller " + faller.name,1);
+                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position+" collided to lose a life with Faller " + faller.name,3);
                 MinusLife();
                 playerController.crush();
                 DeleteFaller(faller.name);
@@ -301,7 +317,7 @@ public class GameManager : MonoBehaviour
         if (playerLives <= 0)
         {
             playerLives = 3;
-            Print("GAME OVER");
+            Print("GAME OVER", 4);
             GameOver("You ran out of lives!");
         }
     }
@@ -425,11 +441,7 @@ public class GameManager : MonoBehaviour
     }
     public void Print(string message, int level = 0)
     {
-        if (message != null && verboseLogging && level == 0)
-        {
-            Debug.Log(message);
-        }
-        else if (message != null && level == 1)
+        if (message != null && verboseSettings[level])
         {
             Debug.Log(message);
         }
@@ -438,16 +450,16 @@ public class GameManager : MonoBehaviour
     {
         if (playerLives <= 1)
         {
-            Print("Not applying unfreeze impulse to fallers because player is on their last life", 1);
+            Print("Not applying unfreeze impulse to fallers because player is on their last life", 4);
             EMT.instance().EMTOnOneLife();
             return; // Don't apply impulse if player is on their last life to avoid potential softlock
         }
         if (EMT_timer > 0)
         {
-            Print("Not applying unfreeze impulse to fallers because player is already in EMT", 1);
+            Print("Not applying unfreeze impulse to fallers because player is already in EMT", 4);
             return; // Don't apply impulse if already in EMT
         }
-        GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 1);
+        GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 4);
         MinusLife();
         EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
@@ -457,7 +469,7 @@ public class GameManager : MonoBehaviour
     {
         
         Time.timeScale = 1f;
-        GameManager.instance().Print("Attempting to apply unfreeze impulse to fallers", 1);
+        GameManager.instance().Print("Attempting to apply unfreeze impulse to fallers", 4);
         
         Vector3 playerPosition = player.transform.position;
         FallerManager.instance().UnfreezeImpulse(playerPosition);
@@ -471,6 +483,31 @@ public class GameManager : MonoBehaviour
         else
         {
             EMT_timer = EMT_duration;
+        }
+    }
+    public void StartFallerEMT(float EMTDuration)
+    {
+        if (EMT_timer > 0)
+        {
+            return; // Don't apply impulse if already in EMT
+        }
+        else
+        {
+            EMT_timer = EMTDuration;
+        }
+    }
+    public void ImpulsePlayer(FallerController faller)
+    {
+        if(Mathf.Abs((player.transform.position - faller.transform.position).magnitude) <= Constants.EMT_Radius)
+        {
+            if(playerController.state.getName() == Constants.ridingFallerStateName)
+            {
+                if(faller.isRidingMe(player.transform.position))
+                {
+                    playerController.setState(playerController.GetStateFromName(Constants.fallingStateName));
+                }
+            }
+            playerController.GetBombed(faller.transform.position);
         }
     }
     public int GetPlayerLives()

@@ -80,13 +80,13 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            GameManager.instance().Print("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity);
+            GameManager.instance().Print("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity, 3);
             IPlayerState nextState = this;
             timeInState += Time.deltaTime;
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
             if (playerController.isGrounded())
             {
-                GameManager.instance().Print("Player is grounded, switching to dodging state from falling state at " + playerController.gameObject.transform.position , 1);
+                GameManager.instance().Print("Player is grounded, switching to dodging state from falling state at " + playerController.gameObject.transform.position , 3);
                 //playerController.MoveTo(new Vector3(playerController.transform.position.x, startingPosition.y, playerController.transform.position.z));
                 ExitState(playerController);
                 nextState = new DodgingState();
@@ -100,7 +100,7 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 nextState = new DodgingState();
                 nextState.EnterState(playerController);
-                GameManager.instance().Print("Player is likely wedged between fallers, switching to dodging state", 1);
+                GameManager.instance().Print("Player is likely wedged between fallers, switching to dodging state", 3);
             }
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {

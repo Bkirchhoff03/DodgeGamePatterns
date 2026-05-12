@@ -120,7 +120,7 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 newState = new DodgingState();
                 newState.EnterState(playerController);
-                GameManager.instance().Print("Transitioning to DodgingState because player is grounded", 1);
+                GameManager.instance().Print("Transitioning to DodgingState because player is grounded", 3);
             }
             else if (!isFallingOffFaller)
             {

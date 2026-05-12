@@ -29,7 +29,6 @@ public class PunchingArmController : MonoBehaviour
         if (isPunchingRight)
         {
 
-            GameManager.instance().Print("Punching arm world position: " + transform.position + " Punching arm local position: " + transform.localPosition, 0);
             ExecuteRightPunch();
             if (transform.position.x <= playerCenter.x)
             {
@@ -43,7 +42,6 @@ public class PunchingArmController : MonoBehaviour
         else if (isPunchingLeft)
         {
 
-            GameManager.instance().Print("Punching arm world position: " + transform.position + " Punching arm local position: " + transform.localPosition, 0);
             ExecutePunchLeft();
             if (transform.position.x >= playerCenter.x)
             {

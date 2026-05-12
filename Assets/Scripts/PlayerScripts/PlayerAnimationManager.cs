@@ -100,7 +100,7 @@ namespace Assets.Scripts.PlayerScripts
         {
             if(!Crushed && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
             {
-                GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 1);
+                GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 3);
                 SetCrushed(false); // This will also reset to idle after crushed animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -109,7 +109,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if (!Punching && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation"))
             {
-                GameManager.instance().Print("Player is not punching but is playing punching animation, resetting to idle", 1);
+                GameManager.instance().Print("Player is not punching but is playing punching animation, resetting to idle", 3);
                 SetPunching(false); // This will also reset to idle after punching animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -118,7 +118,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if(!Running && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerRunningAnimation"))
             {
-                GameManager.instance().Print("Player is not running but is playing running animation, resetting to idle", 1);
+                GameManager.instance().Print("Player is not running but is playing running animation, resetting to idle", 3);
                 SetRunning(false); // This will also reset to idle after running animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -127,7 +127,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if(!Idle && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerIdleAnimation"))
             {
-                GameManager.instance().Print("Player is not idle but is playing idle animation, resetting to idle", 1);
+                GameManager.instance().Print("Player is not idle but is playing idle animation, resetting to idle", 3);
                 SetIdle(false); // This will also reset to idle after idle animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);

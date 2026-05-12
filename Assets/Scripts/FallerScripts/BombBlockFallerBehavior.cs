@@ -29,8 +29,12 @@ public class BombBlockFallerBehavior : IFallerBehavior
         }
         if(frozenFlashCount >= 10) // If frozen for too long, explode anyway
         {
-            FallerManager.instance().UnfreezeImpulse(fc.transform.position);
-            GameManager.instance().StartFallerEMT();
+
+            float force = Mathf.Round(fc.transform.position.y / 10f);
+            if(force < 1f) force = 1f;
+            FallerManager.instance().UnfreezeImpulse(fc.transform.position, force);
+            GameManager.instance().ImpulsePlayer(fc);
+            GameManager.instance().StartFallerEMT(2.5f);
             fc.DeleteMe();
         }
 
@@ -40,7 +44,7 @@ public class BombBlockFallerBehavior : IFallerBehavior
         string xName = Mathf.Round(size.x * 2f) / 2f == size.x
                         ? size.x.ToString("0.#") : size.x.ToString("0.#");
         string yName = size.y.ToString("0.#");
-        GameManager.instance().Print("Creating BombBlockFaller with size: " + xName + "x" + yName, 1);
+        GameManager.instance().Print("Creating BombBlockFaller with size: " + xName + "x" + yName, 2);
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
         fallerObject.layer = LayerMask.NameToLayer("Fallers");

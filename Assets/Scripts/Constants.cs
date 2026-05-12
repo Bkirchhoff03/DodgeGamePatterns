@@ -23,7 +23,8 @@ namespace Assets.Scripts
         public const float gameGravity = 0.05f;//0.1f;
         public const float fallerGravityPostCollision = 0.25f;
         public const float playerGravity = 4.8f;
-        public const float halfPlayerWidth = 0.25f;
+        public const float halfPlayerWidth = 0.375f;
+        public const float halfPlayerHeight = 0.75f;
         public const float boulderDynamicMass = 5.0f;
         public const float boulderSettleLinearThreshold = 0.15f;
         public const float boulderSettleAngularThreshold = 5.0f;
@@ -39,6 +40,7 @@ namespace Assets.Scripts
         public const float EMT_Radius = 5.0f;
         public const float EMT_Impulse_block = 2.5f;
         public const float EMT_Impulse_bolder = 10f;
+        public const float EMT_Impulse_player = 10f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string jumpingStateName = "Jumping";

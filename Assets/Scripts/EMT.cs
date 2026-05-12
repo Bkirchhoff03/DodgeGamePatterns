@@ -102,7 +102,7 @@ public class EMT : MonoBehaviour
 
         // 3. Convert to World Space
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        GameManager.instance().Print("sending EMT to " + worldPos, 1);
+        GameManager.instance().Print("sending EMT to " + worldPos, 4);
 
         transform.position = new Vector3(worldPos.x, worldPos.y, -0.02f);
     }
