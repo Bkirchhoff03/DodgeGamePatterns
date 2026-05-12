@@ -23,7 +23,7 @@ namespace Assets.Scripts
         public const float gameGravity = 0.05f;//0.1f;
         public const float fallerGravityPostCollision = 0.25f;
         public const float playerGravity = 4.8f;
-        public const float halfPlayerWidth = 0.25f;
+        public const float halfPlayerWidth = 0.375f;
         public const float boulderDynamicMass = 5.0f;
         public const float boulderSettleLinearThreshold = 0.15f;
         public const float boulderSettleAngularThreshold = 5.0f;
