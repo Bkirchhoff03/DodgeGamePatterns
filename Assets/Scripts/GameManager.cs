@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
+[DefaultExecutionOrder(-10)]
 public class GameManager : MonoBehaviour
 {
     public FallerManager fallerManager { get; private set; }

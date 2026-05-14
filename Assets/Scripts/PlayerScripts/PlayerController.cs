@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
         public string currentStateName;
         public int lives;
     }
-    public IPlayerState state;
+    public IPlayerState state = new DodgingState();
     delegate void MoveAction();
     private GameObject fallerThatsBeingRidden;
     public GameObject punchingArm;
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         state = state.Update(this);
         //GameManager.instance().Print("Player state: " + state.getName() + " at " + gameObject.transform.position.y, 0);
-        //ChangeColorBasedOnState();
+        ChangeColorBasedOnState();
     }
     private void ChangeColorBasedOnState()
     {
