@@ -281,5 +281,12 @@ namespace Assets.Scripts.PlayerScripts
             // Apply immediately so the Animator sees the change this frame regardless of script execution order
             animator.SetBool(CrushedParameter, Crushed);
         }
+        // In PlayerAnimationManager
+        public bool IsPunchAnimationComplete()
+        {
+            return Punching
+                && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation")
+                && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f;
+        }
     }
 }
