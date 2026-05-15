@@ -496,6 +496,9 @@ public class MainMenuController : MonoBehaviour
             if(!string.IsNullOrEmpty(saveData.levelScene)){
                 scene = saveData.levelScene;
             }
+            if(!string.IsNullOrEmpty(saveData.timer)){
+                TimeManager.Instance.UpdateTime(saveData.timer);
+            }
         }
         catch
         {

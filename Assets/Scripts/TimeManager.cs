@@ -31,6 +31,25 @@ public class TimeManager : MonoBehaviour
     {
         timeInGame = 0f;
     }
+    public void UpdateTime(float time)
+    {
+        timeInGame = time;
+    }
+    public void UpdateTime(string timeString)
+    {
+        timeInGame = GetTimeFromString(timeString);
+    }
+    public float GetTimeFromString(string timeString)
+    {
+        string[] timeParts = timeString.Split(':');
+        if (timeParts.Length == 2)
+        {
+            int minutes = int.Parse(timeParts[0]);
+            int seconds = int.Parse(timeParts[1]);
+            return minutes * 60 + seconds;
+        }
+        return 0f; // Default to 0 if the format is incorrect
+    }
     // Update is called once per frame
     void Update()
     {

@@ -43,6 +43,7 @@ namespace Assets.Scripts
         public const float EMT_Impulse_player = 10f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
+        public const string timeTrackerText = " seconds in this run";
         public const string jumpingStateName = "Jumping";
         public const string dodgingStateName = "Dodging";
         public const string crushedStateName = "Crushed";

@@ -41,6 +41,7 @@ public class FallerManager
         public string playerDataFileRef;
         public string fallerDataFileRef;
         public string levelScene;
+        public string timer;
     }
     private enum FallerSize
     {
@@ -372,7 +373,7 @@ public class FallerManager
         if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
         File.WriteAllText(PlayerDirectory, playerJson);
 
-        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name, timer = TimeManager.Instance.GetTimeInGame() }, true));
         GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}", 5);
     }
     public string SaveFallersToFile(PlayerController playerController, string saveName = null)
@@ -425,7 +426,7 @@ public class FallerManager
         if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
         File.WriteAllText(PlayerDirectory, playerJson);
 
-        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name, timer = TimeManager.Instance.GetTimeInGame() }, true));
         GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}", 5);
         return NewSaveFile;
     }

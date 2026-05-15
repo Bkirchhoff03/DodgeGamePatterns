@@ -671,6 +671,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 3752080274096995394, guid: 24f821eeca21bc74f9bd425a4bf66e79, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dc9469422b86ed844a57f6d3349a33f8, type: 2}
     - target: {fileID: 6703711942864673507, guid: 24f821eeca21bc74f9bd425a4bf66e79, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.5
@@ -683,6 +687,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 7655451946180861516, guid: 24f821eeca21bc74f9bd425a4bf66e79, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dc9469422b86ed844a57f6d3349a33f8, type: 2}
     - target: {fileID: 8339372900776872156, guid: 24f821eeca21bc74f9bd425a4bf66e79, type: 3}
       propertyPath: m_Name
       value: Walls

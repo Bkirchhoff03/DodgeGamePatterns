@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private TMPro.TMP_InputField saveNameInput;
     private GameObject gameOverPanel;
     private TextMeshProUGUI HeightTracker;
+    private TextMeshProUGUI TimeTracker;
     private float trapDoorHeight;
     private float cameraInitialY;
     public Sprite LeftGrassTile;
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
     public bool verboseSavingLoading = false;
     public bool verboseRescuing = false;
     private bool[] verboseSettings; // Array to control verbose logging for different levels or categories of logs
+     
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
@@ -105,6 +107,9 @@ public class GameManager : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText;
+
+        TimeTracker = GameObject.Find("TimeTracker").GetComponent<TextMeshProUGUI>();
+        TimeTracker.text = TimeManager.Instance.GetTimeInGame().ToString() + Constants.timeTrackerText;
         //if (GetComponent<Camera>() == null)
         //{
         //    camera = new GameObject("Main Camera");
@@ -171,7 +176,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(clickSpawnCooldown > 0)
+        TimeTracker.text = TimeManager.Instance.GetTimeInGame().ToString() + Constants.timeTrackerText;
+        if (clickSpawnCooldown > 0)
         {
             clickSpawnCooldown -= Time.deltaTime;
         }
@@ -340,6 +346,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level1");
+        TimeManager.Instance.ResetTime();
     }
     public void ShowSaveNamePanel()
     {
@@ -419,6 +426,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UpdateSaveSession();
         SceneManager.LoadScene("MainMenu");
+        TimeManager.Instance.ResetTime();
     }
     public void givePlayerTime()
     {
