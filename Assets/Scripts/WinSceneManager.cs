@@ -22,11 +22,13 @@ public class WinSceneManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
+        TimeManager.Instance.ResetTime();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
     public void ResetGame()
     {
         Time.timeScale = 1f;
+        TimeManager.Instance.ResetTime();
         PlayerPrefs.SetInt("PlayerLivesFromLevel1", 3);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
     }

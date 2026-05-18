@@ -217,6 +217,7 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Level1");
+        TimeManager.Instance.ResetTime();
         PlayerPrefs.SetString("SessionSaveFile", "Session_" + DateTime.Now.ToString("yyyyMMddHHmm")); 
         
     }
@@ -488,6 +489,7 @@ public class MainMenuController : MonoBehaviour
     }
     private void LoadFromSaveFile(string filePath)
     {
+        TimeManager.Instance.ResetTime();
         string scene = "Level1"; // Default scene to load; could be encoded in the save file name or contents if needed
         try
         {
@@ -510,6 +512,7 @@ public class MainMenuController : MonoBehaviour
             sessionSaveName = sessionSaveName.Substring(5);
         PlayerPrefs.SetString("SessionSaveFile", sessionSaveName);
         PlayerPrefs.Save();
+        
         SceneManager.LoadScene(scene);
     }
 }

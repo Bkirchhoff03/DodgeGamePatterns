@@ -57,7 +57,14 @@ public class GameManager : MonoBehaviour
     public bool verboseGameState = false;
     public bool verboseSavingLoading = false;
     public bool verboseRescuing = false;
-    private bool[] verboseSettings; // Array to control verbose logging for different levels or categories of logs
+    private bool[] verboseSettings = new bool[] {
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false}; // Array to control verbose logging for different levels or categories of logs
      
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
