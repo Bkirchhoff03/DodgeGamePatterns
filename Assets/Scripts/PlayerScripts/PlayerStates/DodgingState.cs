@@ -31,7 +31,7 @@ namespace Assets.Scripts
             {
                 playerController.HandlePunch(moveInput);
             }
-            if(moveInput.Ydirection > 0 && playerController.isGrounded())
+            if(moveInput.Ydirection > 0)// && playerController.isGrounded())
             {
                 nextState = new JumpingState();
             }

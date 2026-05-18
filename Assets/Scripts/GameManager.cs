@@ -109,6 +109,14 @@ public class GameManager : MonoBehaviour
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText;
 
         TimeTracker = GameObject.Find("TimeTracker").GetComponent<TextMeshProUGUI>();
+        if(TimeManager.Instance == null)
+        {
+            if(GameObject.Find("TimeManager") == null)
+            {
+                GameObject timeManagerObject = new GameObject("TimeManager");
+                timeManagerObject.AddComponent<TimeManager>();
+            }
+        }
         TimeTracker.text = TimeManager.Instance.GetTimeInGame().ToString() + Constants.timeTrackerText;
         //if (GetComponent<Camera>() == null)
         //{
@@ -510,7 +518,7 @@ public class GameManager : MonoBehaviour
         {
             if(playerController.state.getName() == Constants.ridingFallerStateName)
             {
-                if(faller.isRidingMe(player.transform.position))
+                if(faller.IsRidingMe(player.transform.position))
                 {
                     playerController.setState(playerController.GetStateFromName(Constants.fallingStateName));
                 }

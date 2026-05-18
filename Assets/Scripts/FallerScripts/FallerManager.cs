@@ -22,7 +22,7 @@ public class FallerManager
         public Vector3 position;
         public Vector3 size;
         public float rotation;
-        public float currentSpeed;
+        public Vector2 currentSpeed;
         public bool isFrozen;
         public bool beingRidden;
         public FallerType fallerType;
@@ -343,8 +343,8 @@ public class FallerManager
                 position = faller.transform.position,
                 size = faller.transform.localScale,
                 rotation = faller.transform.rotation.eulerAngles.z,
-                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
-                isFrozen = faller.amIFrozen(),
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocity,
+                isFrozen = faller.AmIFrozen(),
                 beingRidden = faller.BeingRidden,
                 fallerType = _fallerType
             };
@@ -400,8 +400,8 @@ public class FallerManager
                 position = faller.transform.position,
                 size = faller.transform.localScale,
                 rotation = faller.transform.rotation.eulerAngles.z,
-                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
-                isFrozen = faller.amIFrozen(),
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocity,
+                isFrozen = faller.AmIFrozen(),
                 beingRidden = faller.BeingRidden,
                 fallerType = _fallerType
             };
@@ -521,7 +521,7 @@ public class FallerManager
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
-            if (!kvp.Value.amIFrozen()) continue;
+            if (!kvp.Value.AmIFrozen()) continue;
             float y = kvp.Value.transform.position.y;
             if (y > highest)
             {

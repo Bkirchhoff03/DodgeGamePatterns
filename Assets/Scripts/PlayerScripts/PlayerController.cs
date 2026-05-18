@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
             case Constants.jumpingStateName:
                 return new JumpingState();
             case Constants.ridingFallerStateName:
-                return new RidingFallerState(FallerManager.instance().GetFallerBeingRidden().fallerObject);
+                return new RidingFallerState(FallerManager.instance().GetFallerBeingRidden().FallerObject);
             case Constants.fallingStateName:
                 return new FallingState();
             default:

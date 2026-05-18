@@ -21,7 +21,7 @@ namespace Assets.Scripts
         public void EnterState(PlayerController playerController) {
             if (ridingFaller == null)
             {
-                ridingFaller = FallerManager.instance().GetFallerBeingRidden().fallerObject;
+                ridingFaller = FallerManager.instance().GetFallerBeingRidden().FallerObject;
             }
             ridingFaller.GetComponent<FallerController>().StartRiding();
         }
@@ -137,7 +137,7 @@ namespace Assets.Scripts
                     Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
                     rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));
                 }
-                if (!ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
+                if (!ridingFaller.GetComponent<FallerController>().IsRidingMe(playerController.transform.position))
                 {
                     newState = new FallingState();
                     newState.EnterState(playerController);

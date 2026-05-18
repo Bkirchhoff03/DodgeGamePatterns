@@ -15,17 +15,16 @@
 - **Faller stacking** — fallers land and freeze on floor/each other; player can jump between them to climb
 - **Three faller types implemented:**
   - **Block** — freezes solid (Static), tile sprites swap grass/dirt on freeze/unfreeze
-  - **Boulder** — procedural polygon mesh, settles on its own, punch *unfreezes* it (unique behavior)
-  - **BombBlock** (Level 3) — flashes red while falling, speeds up after landing, explodes after 10 frozen flashes; explosion force scales with height (`force = max(1, round(y/10))`)
-- **Punch mechanic** — push unfrozen blocks horizontally; frozen blocks absorb the punch; boulders unfreeze on punch
-- **Ride mechanic** — land on top of a moving faller; ride it upward
+  - **Boulder** — procedural polygon mesh, settles on its own  - **BombBlock** (Level 3) — flashes red while falling, speeds up after landing, explodes after 10 frozen flashes; explosion force scales with height (`force = max(1, round(y/10))`)
+- **Punch mechanic** — push unfrozen blocks horizontally, frozen blocks absorb the punch
+- **_Ride mechanic_** — land on top of a moving faller; ride it upward
 - **Collision system** — top/bottom/left/right contact handling; bottom hit from moving faller = lose life + crush
 - **Lives system** — 3 lives shown as tally marks ("III"); lives persist across levels via PlayerPrefs
 - **EMT system (rescue)** — player-triggered: costs a life, blasts all fallers outward from player position
-- **Auto-rescue** — detects when player is stuck (50-frame height history + reachable-faller ellipse check); spawns thin rescue faller after 5s
+- **Auto-rescue** — detects when player is stuck (50-frame height history + reachable-faller ellipse check), spawns thin rescue faller after 5s
 - **Height tracker** — UI countdown showing distance remaining to trapdoor
-- **Level progression** — Level1 → Level2 → Level3; trapdoor contact loads next scene
-- **Save/load system** — JSON split into 3 files (index + faller data + player data); session autosave + named saves + quick save
+- **Level progression** — Level1 → Level2 → Level3, trapdoor contact loads next scene
+- **Save/load system** — JSON split into 3 files (index + faller data + player data), session autosave + named saves + quick save
 - **Pause / game over screens** — pause panel (Time.timeScale=0), game over panel with reason text
 - **Main menu** — MainMenuController scene
 - **Camera follow** — follows player above starting y, locks below it
