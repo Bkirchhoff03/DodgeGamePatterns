@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour
         {
             if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
             {
-                faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+                //faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
         }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
