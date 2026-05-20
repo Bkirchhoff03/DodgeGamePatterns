@@ -27,6 +27,7 @@ namespace Assets.Scripts
                 
             // Initialize jumping state if needed
         }
+        
         public void EnterState(PlayerController playerController)
         { 
             GameManager.instance().Print("Entering Crushed State", 3);
@@ -37,6 +38,7 @@ namespace Assets.Scripts
         }
         public void ExitState(PlayerController playerController)
         {
+            GameManager.instance().Print("Exiting Crushed State", 3);
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
             playerController.animationManager.SetCrushed(false);
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
@@ -52,7 +54,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            GameManager.instance().Print(playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash.ToString(), 3);
+            GameManager.instance().Print("Is player in crushed animation: " + playerController.animationManager.isCrushed().ToString(), 3);
             //playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
             IPlayerState nextState = this; 
             if (crushedTimer > 0)
@@ -70,6 +72,13 @@ namespace Assets.Scripts
         public bool canBeDamaged()
         {
             return false;
+        }
+        public void UpdateLastState(IPlayerState newLastState)
+        {
+            if(newLastState != null)
+            {
+                lastState = newLastState;
+            }
         }
     }
 }

@@ -139,6 +139,7 @@ namespace Assets.Scripts
                 }
                 if (!ridingFaller.GetComponent<FallerController>().IsRidingMe(playerController.transform.position))
                 {
+                    ExitState(playerController);
                     newState = new FallingState();
                     newState.EnterState(playerController);
                     isFallingOffFaller = true;

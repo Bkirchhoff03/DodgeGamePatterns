@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         state = state.Update(this);
         //GameManager.instance().Print("Player state: " + state.getName() + " at " + gameObject.transform.position.y, 0);
-        //ChangeColorBasedOnState();
+        ChangeColorBasedOnState();
     }
     private void ChangeColorBasedOnState()
     {
@@ -167,14 +167,25 @@ public class PlayerController : MonoBehaviour
     }
     public void rideFaller(GameObject faller)
     {
+        if (state.getName() == Constants.crushedStateName)
+        {
+            CrushedState c = state as CrushedState;
+            c.UpdateLastState(new RidingFallerState(faller));
+            return;
+        }
         fallerThatsBeingRidden = faller;
         gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         gameObject.GetComponent<Rigidbody2D>().linearVelocity = faller.GetComponent<Rigidbody2D>().linearVelocity;
         gameObject.GetComponent<Rigidbody2D>().mass = 0.00001f;
         gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
-        state = new RidingFallerState(faller);
-        state.EnterState(this);
+        if(state.getName() != Constants.ridingFallerStateName)
+        {
+            state.ExitState(this);
+            state = new RidingFallerState(faller);
+            state.EnterState(this);
+        }
+        
     }
     public void HandlePunch(MoveDirection moveInput)
     {

@@ -57,7 +57,9 @@ public class GameManager : MonoBehaviour
     public bool verboseGameState = false;
     public bool verboseSavingLoading = false;
     public bool verboseRescuing = false;
+    public bool verboseAnimations = false;
     private bool[] verboseSettings = new bool[] {
+            false,
             false,
             false,
             false,
@@ -97,7 +99,9 @@ public class GameManager : MonoBehaviour
             verbosePlayerStateChanges,
             verboseGameState,
             verboseSavingLoading,
-            verboseRescuing};
+            verboseRescuing,
+            verboseAnimations
+        };
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
@@ -315,7 +319,7 @@ public class GameManager : MonoBehaviour
         {
             if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
             {
-                //faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+                faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
         }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
@@ -547,4 +551,8 @@ public class GameManager : MonoBehaviour
         }
         lifeCounter.text = text;
     }
+    /*public BoxCollider2D GetPlayerCollider()
+    {
+        return player.GetComponent<BoxCollider2D>();
+    }*/
 }

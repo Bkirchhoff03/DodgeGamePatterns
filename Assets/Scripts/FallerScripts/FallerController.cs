@@ -20,6 +20,7 @@ public class FallerController : MonoBehaviour
     private Rigidbody2D rb;
     private float settleTimer = 0f;
     private int collisionCount = 0;
+    private Vector2[] vertices;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -132,22 +133,8 @@ public class FallerController : MonoBehaviour
     }
     public bool IsRidingMe(Vector3 playerPoint)
     {
-        float leftBound = gameObject.transform.position.x - (gameObject.transform.localScale.x / 2.0f);
-        float rightBound = gameObject.transform.position.x + (gameObject.transform.localScale.x / 2.0f);
+        return behavior?.IsRidingMe(this, playerPoint) ?? false;
         
-        if ((playerPoint.y - (FallerObject.transform.position.y + (FallerObject.transform.localScale.y / 2f))) > 0 && 
-            (playerPoint.y - (FallerObject.transform.position.y + (FallerObject.transform.localScale.y / 2f))) < Constants.halfPlayerHeight+0.1f && 
-            (playerPoint.x + Constants.halfPlayerWidth) > leftBound && 
-            (playerPoint.x - Constants.halfPlayerWidth) < rightBound)
-        { 
-            BeingRidden = true;
-            return true;
-        }
-        else
-        {
-            BeingRidden = false;
-            return false;
-        }
     }
     public bool AmIFrozen()
     {
@@ -160,26 +147,7 @@ public class FallerController : MonoBehaviour
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(FallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
-        /*if(FallerSize.x == 0.5f)
-        {
-            Transform t1 = transform.Find("T1");
-            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
-            //Debug.Log("Faller size is 0.5, setting tile to center grass tile");
-        }
-        else
-        {
-            Transform t1 = transform.Find("T1");
-            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().LeftGrassTile;
-            Transform leftTop = transform.Find("T" + ((int)(FallerSize.x*2)).ToString());
-            leftTop.GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightGrassTile;
-            
-            for (int i = 2; i < (int)(FallerSize.x*2); i += 1)
-            {
-                Transform t = transform.Find("T" + i.ToString());
-                t.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
-            }
-            //Debug.Log("Faller size is " + FallerSize.x + ", setting tile 1 to left grass tile, tile (" + ((int)(FallerSize.x * 2)).ToString() +  ")right grass tile, and center grass tiles");
-        }*/
+        
         isFrozen = true;
     }
     public void Unfreeze()
@@ -200,18 +168,7 @@ public class FallerController : MonoBehaviour
     public void HandleArmCollision(PunchingArmController arm)
     {
         behavior?.HandleArmCollision(this, arm);
-        /*if (isFrozen)
-        {
-            arm.CancelPunch();
-        }
-        else
-        {
-            //add to velocity of the faller based on the punch direction and velocity
-            Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
-            float punchVelocity = arm.getPunchingVelocity();
-            r.AddForce(new Vector2(punchVelocity * Constants.blockPunchForceMultiplier, 0.0f), ForceMode2D.Impulse);
-            arm.CancelPunch();
-        }*/
+        
     }
     public void Collided()
     {
@@ -252,5 +209,13 @@ public class FallerController : MonoBehaviour
     public void RemoveTint()
     {
         behavior?.RemoveTint(this);
+    }
+    public void SetVertices(Vector2[] verts)
+    {
+        vertices = verts;
+    }
+    public Vector2[] GetVertices()
+    {
+        return vertices;
     }
 }

@@ -263,7 +263,7 @@ namespace Assets.Scripts.PlayerScripts
         }
         public void SetCrushed(bool value)
         {
-            //GameManager.instance().Print("Attempting to set crushed from " + Crushed + " to " + value, 1);
+            GameManager.instance().Print("Attempting to set crushed from " + Crushed + " to " + value, 7);
             if(value && !Crushed)
             {
                 // When crushed, reset all states so it goes idle after crush finishes

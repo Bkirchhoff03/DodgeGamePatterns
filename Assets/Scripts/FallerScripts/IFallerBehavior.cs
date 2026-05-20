@@ -13,4 +13,5 @@ public interface IFallerBehavior
     void AddImpulse(FallerController fc, Vector2 direction);
     void AddTint(FallerController fc, Color tint);
     void RemoveTint(FallerController fc);
+    bool IsRidingMe(FallerController fc, Vector2 playerPosition);
 }

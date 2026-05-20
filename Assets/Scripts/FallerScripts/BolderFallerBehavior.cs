@@ -60,10 +60,12 @@ public class BolderFallerBehavior : IFallerBehavior
     {
         BoulderShape shape = Shapes[Random.Range(0, Shapes.Length)];
         shapeColor = shape.color;
+        
+        fallerObj.GetComponent<FallerController>().SetVertices(shape.vertices);
 
         MeshFilter mf = fallerObj.AddComponent<MeshFilter>();
         mf.mesh = BuildMesh(shape.vertices);
-
+                
         meshRenderer = fallerObj.AddComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Sprites/Default"));
         meshRenderer.material.color = shapeColor;
@@ -133,5 +135,30 @@ public class BolderFallerBehavior : IFallerBehavior
             return;
         }
         fc.gameObject.GetComponent<MeshRenderer>().material.color = shapeColor;
+    }
+    public bool IsRidingMe(FallerController fc, Vector2 playerPosition)
+    {
+        Rect playerBounds = new Rect(
+            playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight), 
+            new Vector2(Constants.halfPlayerWidth*2f, Constants.halfPlayerHeight*2f));
+        PolygonCollider2D poly = fc.gameObject.GetComponent<PolygonCollider2D>();
+        if (poly == null) return false; // safety check
+        Vector2 bottomLeft = playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight);
+        Vector2 bottomRight = playerPosition - new Vector2(-Constants.halfPlayerWidth, Constants.halfPlayerHeight);
+        if (poly.OverlapPoint(bottomLeft) || poly.OverlapPoint(bottomRight))
+        {
+            return true;
+        }
+        if(Vector2.Distance(poly.ClosestPoint(bottomRight), bottomRight) < 0.05f)
+        {
+            return true;
+        }
+        if(Vector2.Distance(poly.ClosestPoint(bottomLeft), bottomLeft) < 0.05f)
+        {
+            return true;
+        }
+        return false;
+
+
     }
 }

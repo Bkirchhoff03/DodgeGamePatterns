@@ -80,7 +80,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            GameManager.instance().Print("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity, 3);
+            //5GameManager.instance().Print("Falling state linear velocity " + playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity, 3);
             IPlayerState nextState = this;
             timeInState += Time.deltaTime;
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.yellow;
