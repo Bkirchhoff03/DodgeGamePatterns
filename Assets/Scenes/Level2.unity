@@ -2356,15 +2356,27 @@ PrefabInstance:
       objectReference: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verboseAnimations
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: spawnFallersFromFile
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseFallerCollision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verbosePlayerCollision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseFallerStateChanges
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verbosePlayerStateChanges
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910538271402616942, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Name

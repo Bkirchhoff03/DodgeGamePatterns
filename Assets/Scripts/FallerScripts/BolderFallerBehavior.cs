@@ -157,8 +157,11 @@ public class BolderFallerBehavior : IFallerBehavior
         {
             return true;
         }
+        RaycastHit2D hit = Physics2D.Raycast(bottomLeft, Vector2.right, bottomRight.x - bottomLeft.x, LayerMask.GetMask("Fallers"));
+        if (hit.collider != null && hit.collider.gameObject.name == fc.gameObject.name)
+        {
+            return true;
+        }
         return false;
-
-
     }
 }

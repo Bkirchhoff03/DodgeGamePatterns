@@ -23,10 +23,12 @@ namespace Assets.Scripts
             {
                 ridingFaller = FallerManager.instance().GetFallerBeingRidden().FallerObject;
             }
+            GameManager.instance().Print("Entering RidingFallerState with faller: " + ridingFaller.name, 3);
             ridingFaller.GetComponent<FallerController>().StartRiding();
         }
         public void ExitState(PlayerController playerController)
         {
+            GameManager.instance().Print("Exiting RidingFallerState", 3);
             ridingFaller.GetComponent<FallerController>().StopRiding();
         }
         public RidingFallerState(GameObject faller) {

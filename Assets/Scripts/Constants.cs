@@ -26,9 +26,9 @@ namespace Assets.Scripts
         public const float halfPlayerWidth = 0.375f;
         public const float halfPlayerHeight = 0.75f;
         public const float boulderDynamicMass = 5.0f;
-        public const float boulderSettleLinearThreshold = 0.15f;
+        public const float boulderSettleLinearThreshold = 0.05f;
         public const float boulderSettleAngularThreshold = 5.0f;
-        public const float boulderSettleTime = 0.5f;
+        public const float boulderSettleTime = 0.75f;
         public const float PunchingArmOffsetY = 0.45f;
         public const float PunchingArmOffsetX = 0.475f;
         public const int fallerCollisionFreezeThreshold = 30;

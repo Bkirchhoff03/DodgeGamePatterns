@@ -306,20 +306,25 @@ public class GameManager : MonoBehaviour
         {
             if (playerController.canBeDamaged())
             {
-                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position+" collided to lose a life with Faller " + faller.name,3);
+                Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position + " collided to lose a life with Faller " + faller.name, 3);
                 MinusLife();
                 playerController.crush();
                 DeleteFaller(faller.name);
             }
-            else if(playerController.state.getName() == Constants.jumpingStateName)
+            else if (playerController.state.getName() == Constants.jumpingStateName)
             {
                 playerController.setState(playerController.GetStateFromName(Constants.fallingStateName));
+            }
+            else if (!fallerBehavior.IsFrozen && playerController.state.getName() == Constants.crushedStateName)
+            {
+                fallerBehavior.gameObject.transform.position = new Vector3(fallerBehavior.gameObject.transform.position.x, fallerBehavior.gameObject.transform.position.y + 0.1f, fallerBehavior.gameObject.transform.position.z);
+                fallerBehavior.gameObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0f, 0.0001f);
             }
         }else if(collisionType == PlayerFallerCollisionType.Top)
         {
             if(faller.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
             {
-                faller.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0.0f, 0.0001f);
+                faller.GetComponent<Rigidbody2D>().linearVelocity = faller.GetComponent<Rigidbody2D>().linearVelocity / 2f; //new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
         }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)

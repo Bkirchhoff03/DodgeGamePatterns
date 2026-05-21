@@ -23,7 +23,7 @@ namespace Assets.Scripts.PlayerScripts
         private bool Crushed;
         private readonly string CrushedParameter = "Crush";
         private float checkAnimationStateTimer = 0.0f;
-        private readonly float checkAnimationInterval = 5.0f;
+        private readonly float checkAnimationInterval = 0.5f;
         //private string CrushedFromWhere = "";
         //private float punchFrameTimer = 0.0f;
         public enum PlayerAnimationState
@@ -100,12 +100,15 @@ namespace Assets.Scripts.PlayerScripts
         {
             if(!Crushed && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerCrushedAnimation"))
             {
+                // Crushed is already false but the animation is stuck — SetCrushed(false) would be a no-op here
+                // so force the state directly
                 GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 3);
-                SetCrushed(false); // This will also reset to idle after crushed animation finishes
-                animator.SetBool(CrushedParameter, Crushed);
-                animator.SetBool(PunchingParameter, Punching);
-                animator.SetBool(RunningParameter, Running);
-                animator.SetBool(IdleParameter, Idle);
+                Idle = true;
+                animator.SetBool(CrushedParameter, false);
+                animator.SetBool(PunchingParameter, false);
+                animator.SetBool(RunningParameter, false);
+                animator.SetBool(IdleParameter, true);
+                animator.Play("PlayerIdleAnimation");
             }
             if (!Punching && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation"))
             {
@@ -275,7 +278,11 @@ namespace Assets.Scripts.PlayerScripts
             {
                 // Goes from crushed to not crushed, reset to idle
                 Idle = true;
-                animator.SetBool(IdleParameter, Idle); // Set idle parameter immediately so that it goes to idle animation right after crushed animation finishes
+                animator.SetBool(CrushedParameter, false);
+                animator.SetBool(IdleParameter, true);
+                // Force the animator out of CrushedAnimation in case the bool-based transition doesn't fire
+                // (can happen when crushed states occur back-to-back)
+                animator.Play("PlayerIdleAnimation");
             }
             Crushed = value;
             // Apply immediately so the Animator sees the change this frame regardless of script execution order
