@@ -86,11 +86,11 @@ public class PunchingArmController : MonoBehaviour
             backendTimer = 0;
             punchingVelocity = 0.0f;
             //punchingVelocity = -punchingVelocityAbsolute;
-        }
+        /*}
         else if(backend && backendTimer < backendDuration)
         {
-            backendTimer++;
-        }else if(backend && backendTimer >= backendDuration)
+            backendTimer++;*/
+        }else if(backend && playerController.animationManager.IsPunchAnimationComplete())
         {
             CancelPunch();
             return;
@@ -123,12 +123,14 @@ public class PunchingArmController : MonoBehaviour
             backendTimer = 0;
             punchingVelocity = 0.0f;
             //punchingVelocity = punchingVelocityAbsolute;
-        }
+            //backendTimer >= backendDuration check with
+            //playerController.animationManager.IsPunchAnimationComplete().
+        /*}
         else if (backend && backendTimer < backendDuration)
         {
-            backendTimer++;
+            backendTimer++;*/
         }
-        else if (backend && backendTimer >= backendDuration)
+        else if (backend && playerController.animationManager.IsPunchAnimationComplete())
         {
             CancelPunch();
             return;
@@ -158,4 +160,5 @@ public class PunchingArmController : MonoBehaviour
         playerController.animationManager.SetPunching(false);
 
     }
+    
 }
