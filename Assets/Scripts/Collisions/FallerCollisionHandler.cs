@@ -38,7 +38,7 @@ public class FallerCollisionHandler : MonoBehaviour
         { 
             return; 
         }
-        GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 1);
+        GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 0);
         if (thisFaller.UseSettleTimer) 
         {
             if (collision.gameObject.TryGetComponent<FallerController>(out var other)

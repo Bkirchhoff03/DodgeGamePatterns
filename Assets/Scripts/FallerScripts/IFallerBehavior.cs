@@ -4,6 +4,8 @@ public interface IFallerBehavior
 {
     bool UseSettleTimer { get; }
     bool FreezeRotation { get; }
+    void Update(FallerController fc);
+    GameObject CreateGameObject(string name, Vector2 size);
     void BuildVisuals(GameObject fallerObj, Vector2 size);
     void OnFloorPause(GameObject fallerObj, Vector2 fallerSize);
     void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize);
@@ -11,4 +13,5 @@ public interface IFallerBehavior
     void AddImpulse(FallerController fc, Vector2 direction);
     void AddTint(FallerController fc, Color tint);
     void RemoveTint(FallerController fc);
+    bool IsRidingMe(FallerController fc, Vector2 playerPosition);
 }

@@ -21,12 +21,14 @@ namespace Assets.Scripts
         public void EnterState(PlayerController playerController) {
             if (ridingFaller == null)
             {
-                ridingFaller = FallerManager.instance().GetFallerBeingRidden().fallerObject;
+                ridingFaller = FallerManager.instance().GetFallerBeingRidden().FallerObject;
             }
+            GameManager.instance().Print("Entering RidingFallerState with faller: " + ridingFaller.name, 3);
             ridingFaller.GetComponent<FallerController>().StartRiding();
         }
         public void ExitState(PlayerController playerController)
         {
+            GameManager.instance().Print("Exiting RidingFallerState", 3);
             ridingFaller.GetComponent<FallerController>().StopRiding();
         }
         public RidingFallerState(GameObject faller) {
@@ -120,7 +122,7 @@ namespace Assets.Scripts
                 ExitState(playerController);
                 newState = new DodgingState();
                 newState.EnterState(playerController);
-                GameManager.instance().Print("Transitioning to DodgingState because player is grounded", 1);
+                GameManager.instance().Print("Transitioning to DodgingState because player is grounded", 3);
             }
             else if (!isFallingOffFaller)
             {
@@ -137,8 +139,9 @@ namespace Assets.Scripts
                     Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
                     rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));
                 }
-                if (!ridingFaller.GetComponent<FallerController>().isRidingMe(playerController.transform.position))
+                if (!ridingFaller.GetComponent<FallerController>().IsRidingMe(playerController.transform.position))
                 {
+                    ExitState(playerController);
                     newState = new FallingState();
                     newState.EnterState(playerController);
                     isFallingOffFaller = true;

@@ -9,7 +9,7 @@ public class ArmCollisionHandler : MonoBehaviour
             return;
         }
 
-        GameManager.instance().Print("Player Arm Collision with " + collision.gameObject.name);
+        GameManager.instance().Print("Player Arm Collision with " + collision.gameObject.name, 1);
         HandleArmFallerCollision(collision);
     }
     private void HandleArmFallerCollision(Collision2D collision)

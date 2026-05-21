@@ -5,9 +5,26 @@ public class BlockFallerBehavior : IFallerBehavior
 {
     public bool UseSettleTimer => false;
     public bool FreezeRotation => true;
+    public void Update(FallerController fc) { }
+    public GameObject CreateGameObject(string name, Vector2 size) {
+        string xName = Mathf.Round(size.x * 2f) / 2f == size.x
+                    ? size.x.ToString("0.#") : size.x.ToString("0.#");
+        string yName = size.y.ToString("0.#");
+        GameObject fallerObject = GameObject.Instantiate(
+            Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
+        fallerObject.layer = LayerMask.NameToLayer("Fallers");
+        fallerObject.name = name;
+        return fallerObject;
+    }
     public void BuildVisuals(GameObject fallerObj, Vector2 size) 
     {
         BoxCollider2D col = fallerObj.AddComponent<BoxCollider2D>();
+        Bounds b = col.bounds;
+        
+        fallerObj.GetComponent<FallerController>().SetVertices(new Vector2[] { 
+            new Vector2(b.min.x, b.min.y), new Vector2(b.max.x, b.min.y), 
+            new Vector2(b.max.x, b.max.y), new Vector2(b.min.x, b.max.y) });
+        
         col.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         if(col.sharedMaterial == null)
         {
@@ -16,6 +33,11 @@ public class BlockFallerBehavior : IFallerBehavior
     }
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
+        Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.gravityScale = 0f;
+        rb.mass = 10000f;
         if (fallerSize.x == 0.5f)
         {
             fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
@@ -86,5 +108,27 @@ public class BlockFallerBehavior : IFallerBehavior
             sr.enabled = false;
         }
     }
+    public bool IsRidingMe(FallerController fc, Vector2 playerPosition)
+    {
+        BoxCollider2D col = fc.gameObject.GetComponent<BoxCollider2D>();
+        if (col == null)
+        {
+            Debug.LogError("BlockFallerBehavior IsRidingMe called but no BoxCollider2D found on faller");
+            return false;
+        }
+        Bounds bounds = col.bounds;
+        float leftBound = bounds.min.x;
+        float rightBound = bounds.max.x;
 
+        if ((playerPosition.y - bounds.max.y) > 0 &&
+            (playerPosition.y - bounds.max.y) < Constants.halfPlayerHeight + 0.1f &&
+            (playerPosition.x + Constants.halfPlayerWidth) > leftBound &&
+            (playerPosition.x - Constants.halfPlayerWidth) < rightBound)
+        {
+            return true;
+        }
+        return false;
+        
+       
+    }
 }

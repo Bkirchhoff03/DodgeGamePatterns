@@ -18,6 +18,7 @@ public class MainMenuController : MonoBehaviour
     private float flashDuration = 0.5f;
     private Sprite[] keyboardSpriteSheet;
     private Vector4 anchors;
+    private bool[] whichLevelToPlay = new bool[3] { true, false, false }; // Default to Level 1
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -217,10 +218,10 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Level1");
+        TimeManager.Instance.ResetTime();
         PlayerPrefs.SetString("SessionSaveFile", "Session_" + DateTime.Now.ToString("yyyyMMddHHmm")); 
         
     }
-    public void PlayLevel2() => SceneManager.LoadScene("Level2");
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() 
     { 
@@ -459,20 +460,83 @@ public class MainMenuController : MonoBehaviour
     private void OpenRunAsTesterPanelFromFile(string filePath)
     {
         runAsTesterPanel.SetActive(true);
+        GameObject.Find("Level1Toggle").GetComponent<Toggle>().interactable = false;
+        GameObject.Find("Level2Toggle").GetComponent<Toggle>().interactable = false;
+        GameObject.Find("Level3Toggle").GetComponent<Toggle>().interactable = false;
         var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
         if (loadBtn != null)
         {
             loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => LoadFromSaveFileForTester(filePath));
         }
     }
+    public void HideRunAsTesterPanel()
+    {
+        runAsTesterPanel.SetActive(false);
+    }
+    public void PlayLevel1(bool value)
+    {
+        if(!value) return;
+        GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn = false;
+        GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn = false;
+        whichLevelToPlay[0] = true;
+        whichLevelToPlay[1] = false;
+        whichLevelToPlay[2] = false;
+
+        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn);
+
+    }
+    public void PlayLevel2(bool value)
+    {
+        if(!value) return;
+        GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn = false;
+        GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn = false;
+        whichLevelToPlay[0] = false;
+        whichLevelToPlay[1] = true;
+        whichLevelToPlay[2] = false;
+        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn);
+
+    }
+    public void PlayLevel3(bool value)
+    {
+        if(!value) return;
+        GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn = false;
+        GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn = false;
+        whichLevelToPlay[0] = false;
+        whichLevelToPlay[1] = false;
+        whichLevelToPlay[2] = true;
+        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn);
+
+    }
+
     private void OpenRunAsTesterPanel()
     {
         runAsTesterPanel.SetActive(true);
+        GameObject l1t = GameObject.Find("Level1Toggle");
+        l1t.GetComponent<Toggle>().interactable = true;
+        l1t.GetComponent<Toggle>().isOn = true;
+        GameObject l2t = GameObject.Find("Level2Toggle");
+        l2t.GetComponent<Toggle>().interactable = true;
+        GameObject l3t = GameObject.Find("Level3Toggle");
+        l3t.GetComponent<Toggle>().interactable = true;
         var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
         if (loadBtn != null)
         {
-            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => PlayGame());
+            loadBtn.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => PlayGameAsTester());
         }
+    }
+    public void PlayGameAsTester()
+    {
+        string selectedScene = "Level1";
+        if (whichLevelToPlay[1])
+            selectedScene = "Level2";
+        else if (whichLevelToPlay[2])
+            selectedScene = "Level3";
+        TimeManager.Instance.ResetTime();
+
+        PlayerPrefs.SetString("pendingSaveFile", ""); // Clear pending save file to start fresh
+        PlayerPrefs.SetString("SessionSaveFile", "Session_Tester-" + DateTime.Now.ToString("yyyyMMddHHmm"));
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(selectedScene);
     }
     public void SetClickToSpawn(bool value)
     {
@@ -488,6 +552,7 @@ public class MainMenuController : MonoBehaviour
     }
     private void LoadFromSaveFile(string filePath)
     {
+        TimeManager.Instance.ResetTime();
         string scene = "Level1"; // Default scene to load; could be encoded in the save file name or contents if needed
         try
         {
@@ -495,6 +560,9 @@ public class MainMenuController : MonoBehaviour
             FallerManager.SaveData saveData = JsonUtility.FromJson<FallerManager.SaveData>(json);
             if(!string.IsNullOrEmpty(saveData.levelScene)){
                 scene = saveData.levelScene;
+            }
+            if(!string.IsNullOrEmpty(saveData.timer)){
+                TimeManager.Instance.UpdateTime(saveData.timer);
             }
         }
         catch
@@ -507,6 +575,7 @@ public class MainMenuController : MonoBehaviour
             sessionSaveName = sessionSaveName.Substring(5);
         PlayerPrefs.SetString("SessionSaveFile", sessionSaveName);
         PlayerPrefs.Save();
+        
         SceneManager.LoadScene(scene);
     }
 }

@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class FallerController : MonoBehaviour
 {
-    public GameObject fallerObject { get; private set; }
+    public GameObject FallerObject { get; private set; }
     float fallerSpeed;
     bool isFrozen = false;
     public Vector2 FallerSize;
@@ -20,6 +20,7 @@ public class FallerController : MonoBehaviour
     private Rigidbody2D rb;
     private float settleTimer = 0f;
     private int collisionCount = 0;
+    private Vector2[] vertices;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,16 +29,16 @@ public class FallerController : MonoBehaviour
     public void SetBehaviour(IFallerBehavior b) { behavior = b; }
     public void Init(Vector3 spawnPoint, Vector3 size, float speed, GameObject fallerObj)
     {
-        fallerObject = fallerObj;
+        FallerObject = fallerObj;
         fallerSpeed = speed;
-        FallerSize = new Vector2(size.x, size.y);
+        FallerSize = (Vector2)size;
         //SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
         //spriteRenderer.sortingOrder = 1;
         //spriteRenderer.sprite = sprite;
-        fallerObject.transform.position = spawnPoint;
-        fallerObject.transform.localScale = size; 
-        behavior.BuildVisuals(fallerObject, FallerSize);
-        rb = fallerObject.AddComponent<Rigidbody2D>();
+        FallerObject.transform.position = spawnPoint;
+        FallerObject.transform.localScale = size; 
+        behavior.BuildVisuals(FallerObject, FallerSize);
+        rb = FallerObject.AddComponent<Rigidbody2D>();
         rb.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         rb.gravityScale = Constants.gameGravity;
         //fallerObj.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
@@ -50,12 +51,36 @@ public class FallerController : MonoBehaviour
         }
         
     }
+    public void Init(Vector3 spawnPoint, Vector3 size, Vector2 speed, GameObject fallerObj)
+    {
+        FallerObject = fallerObj;
+        fallerSpeed = speed.y;
+        FallerSize = (Vector2)size;
+        //SpriteRenderer spriteRenderer = fallerObject.AddComponent<SpriteRenderer>();
+        //spriteRenderer.sortingOrder = 1;
+        //spriteRenderer.sprite = sprite;
+        FallerObject.transform.position = spawnPoint;
+        FallerObject.transform.localScale = size;
+        behavior.BuildVisuals(FallerObject, FallerSize);
+        rb = FallerObject.AddComponent<Rigidbody2D>();
+        rb.sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        rb.gravityScale = Constants.gameGravity;
+        //fallerObj.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
+        rb.linearVelocity = speed;
+        //rb.linearVelocity = new Vector2(0.0f, -0.01f);
+        rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
+        if (behavior.FreezeRotation)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
-        if (fallerObject.transform.position.y < -4.0f 
-            || fallerObject.transform.position.x > 12.5f 
-            || fallerObject.transform.position.x < -12.5f)
+        if (FallerObject.transform.position.y < -4.0f 
+            || FallerObject.transform.position.x > 12.5f 
+            || FallerObject.transform.position.x < -12.5f)
         {
             //Out of bounds either in the wall of water, or below the floor, so should be deleted
             DeleteMe();
@@ -77,6 +102,7 @@ public class FallerController : MonoBehaviour
                 settleTimer = 0f;
             }
         }
+        behavior?.Update(this);
     }
     public void StartRiding()
     {
@@ -87,12 +113,12 @@ public class FallerController : MonoBehaviour
     }
     public void DeleteMe()
     {
-        Destroy(fallerObject);
+        Destroy(FallerObject);
         Destroy(this);
     }
-    public bool shouldPointDamage(Vector2 collisionPoint)
+    public bool ShouldPointDamage(Vector2 collisionPoint)
     {
-        return collisionPoint.y < fallerObject.transform.position.y && !isFrozen;
+        return collisionPoint.y < FallerObject.transform.position.y && !isFrozen;
         /*bool pointDamages = false;
         Vector2 twoDPos = new Vector2(fallerObject.transform.position.x, fallerObject.transform.position.y);
         Vector2 direction = collisionPoint - twoDPos;
@@ -105,56 +131,23 @@ public class FallerController : MonoBehaviour
 
         return pointDamages;*/
     }
-    public bool isRidingMe(Vector3 playerPoint)
+    public bool IsRidingMe(Vector3 playerPoint)
     {
-        float leftBound = gameObject.transform.position.x - (gameObject.transform.localScale.x / 2.0f);
-        float rightBound = gameObject.transform.position.x + (gameObject.transform.localScale.x / 2.0f);
+        return behavior?.IsRidingMe(this, playerPoint) ?? false;
         
-        if ((playerPoint.x + Constants.halfPlayerWidth) > leftBound && (playerPoint.x - Constants.halfPlayerWidth) < rightBound)
-        { 
-            BeingRidden = true;
-            return true;
-        }
-        else
-        {
-            BeingRidden = false;
-            return false;
-        }
     }
-    public bool amIFrozen()
+    public bool AmIFrozen()
     {
         return isFrozen;
     }
 
     public void FloorPause()
     {
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Static;
-        rb.gravityScale = 0f;
-        rb.mass = 10000f;
+        
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
-        behavior?.OnFloorPause(fallerObject, FallerSize);
+        behavior?.OnFloorPause(FallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
-        /*if(FallerSize.x == 0.5f)
-        {
-            Transform t1 = transform.Find("T1");
-            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
-            //Debug.Log("Faller size is 0.5, setting tile to center grass tile");
-        }
-        else
-        {
-            Transform t1 = transform.Find("T1");
-            t1.GetComponent<SpriteRenderer>().sprite = GameManager.instance().LeftGrassTile;
-            Transform leftTop = transform.Find("T" + ((int)(FallerSize.x*2)).ToString());
-            leftTop.GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightGrassTile;
-            
-            for (int i = 2; i < (int)(FallerSize.x*2); i += 1)
-            {
-                Transform t = transform.Find("T" + i.ToString());
-                t.GetComponent<SpriteRenderer>().sprite = GameManager.instance().CenterGrassTile;
-            }
-            //Debug.Log("Faller size is " + FallerSize.x + ", setting tile 1 to left grass tile, tile (" + ((int)(FallerSize.x * 2)).ToString() +  ")right grass tile, and center grass tiles");
-        }*/
+        
         isFrozen = true;
     }
     public void Unfreeze()
@@ -175,18 +168,7 @@ public class FallerController : MonoBehaviour
     public void HandleArmCollision(PunchingArmController arm)
     {
         behavior?.HandleArmCollision(this, arm);
-        /*if (isFrozen)
-        {
-            arm.CancelPunch();
-        }
-        else
-        {
-            //add to velocity of the faller based on the punch direction and velocity
-            Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
-            float punchVelocity = arm.getPunchingVelocity();
-            r.AddForce(new Vector2(punchVelocity * Constants.blockPunchForceMultiplier, 0.0f), ForceMode2D.Impulse);
-            arm.CancelPunch();
-        }*/
+        
     }
     public void Collided()
     {
@@ -227,5 +209,13 @@ public class FallerController : MonoBehaviour
     public void RemoveTint()
     {
         behavior?.RemoveTint(this);
+    }
+    public void SetVertices(Vector2[] verts)
+    {
+        vertices = verts;
+    }
+    public Vector2[] GetVertices()
+    {
+        return vertices;
     }
 }

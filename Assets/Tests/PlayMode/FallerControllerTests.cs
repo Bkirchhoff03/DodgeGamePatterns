@@ -46,7 +46,7 @@ public class FallerControllerTests
 
         controller.FloorPause();
 
-        Assert.IsTrue(controller.amIFrozen());
+        Assert.IsTrue(controller.AmIFrozen());
     }
 
     [UnityTest]
@@ -95,7 +95,7 @@ public class FallerControllerTests
         fallerObject.transform.position = new Vector3(0f, 5f, 0f);
         yield return null;
 
-        bool result = controller.shouldPointDamage(new Vector2(0f, 3f));
+        bool result = controller.ShouldPointDamage(new Vector2(0f, 3f));
 
         Assert.IsTrue(result);
     }
@@ -106,7 +106,7 @@ public class FallerControllerTests
         fallerObject.transform.position = new Vector3(0f, 5f, 0f);
         yield return null;
 
-        bool result = controller.shouldPointDamage(new Vector2(0f, 7f));
+        bool result = controller.ShouldPointDamage(new Vector2(0f, 7f));
 
         Assert.IsFalse(result);
     }
@@ -121,7 +121,7 @@ public class FallerControllerTests
         yield return null;
 
         // Player at x=0 is within bounds (-1 to 1), but returns false (inverted)
-        bool result = controller.isRidingMe(new Vector3(0f, 6f, 0f));
+        bool result = controller.IsRidingMe(new Vector3(0f, 6f, 0f));
 
         Assert.IsFalse(result, "Known bug: returns false when player IS within bounds");
     }
@@ -134,7 +134,7 @@ public class FallerControllerTests
         yield return null;
 
         // Player at x=5 is outside bounds (-1 to 1), but returns true (inverted)
-        bool result = controller.isRidingMe(new Vector3(5f, 6f, 0f));
+        bool result = controller.IsRidingMe(new Vector3(5f, 6f, 0f));
 
         Assert.IsTrue(result, "Known bug: returns true when player is NOT within bounds");
     }

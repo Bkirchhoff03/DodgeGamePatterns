@@ -2,15 +2,18 @@ using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
+using static FallerManager;
 using Random = UnityEngine.Random;
 
 public class FallerManager
 {
     public int verbosity = 1; // Set to 1 to enable debug prints for rescue spawns and column checks
-    public enum FallerType { Block, Boulder }
+    public enum FallerType { Block, Boulder, BombBlock }
+
     static FallerManager instance_;
     [System.Serializable]
     public class FallerData
@@ -19,7 +22,7 @@ public class FallerManager
         public Vector3 position;
         public Vector3 size;
         public float rotation;
-        public float currentSpeed;
+        public Vector2 currentSpeed;
         public bool isFrozen;
         public bool beingRidden;
         public FallerType fallerType;
@@ -28,7 +31,7 @@ public class FallerManager
     public class FallerDataList
     {
         public List<FallerData> fallers;
-        public FallerDataList() { 
+        public FallerDataList() {
             fallers = new List<FallerData>();
         }
     }
@@ -38,6 +41,7 @@ public class FallerManager
         public string playerDataFileRef;
         public string fallerDataFileRef;
         public string levelScene;
+        public string timer;
     }
     private enum FallerSize
     {
@@ -51,6 +55,13 @@ public class FallerManager
 
     int numberOfSpawns = 0;
     FallerType _fallerType;
+    FallerType[] FallersForLevel;
+    Dictionary<FallerType, Func<IFallerBehavior>> fallerBehaviorFactory = new Dictionary<FallerType, Func<IFallerBehavior>>()
+    {
+        { FallerType.Block, () => new BlockFallerBehavior() },
+        { FallerType.Boulder, () => new BolderFallerBehavior() },
+        { FallerType.BombBlock, () => new BombBlockFallerBehavior() }
+    };
     Sprite sprite;
     float trapDoorHeight;
     int lastSpawnedFallerNumber = -1;
@@ -58,38 +69,46 @@ public class FallerManager
     public Dictionary<string, FallerController> fallersInPlay = new Dictionary<string, FallerController>();
     private readonly string FallerDirectory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
     private readonly string PlayerDirectory = Constants.playerDataSavePath + GameManager.instance().currentPlayerSaveFileName;
-
+    private List<FallerController> exposedFallers = new List<FallerController>();
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
-
+    int bombSpawnFrequency = 10; // Every 10th faller will be a bomb block, if bomb blocks are enabled for the level
     public static FallerManager instance() => instance_;
-    public void init(FallerType fallerType, float trapDoorHeight)
+    public void init(FallerType[] fallerTypes, float trapDoorHeight)
     {
         instance_ = this;
-        _fallerType = fallerType;
+        _fallerType = fallerTypes[0];
+        FallersForLevel = fallerTypes;
         this.trapDoorHeight = trapDoorHeight;
     }
-    /*public void init(Sprite sprite, float trapDoorHeight)
-    {
-        instance_ = this;
-        this.sprite = sprite;
-        this.trapDoorHeight = trapDoorHeight;
-    }*/
+
 
     // Spawns a new faller at a safe height above existing fallers.
     // baseSpawnHeight is the camera-relative default; actual height is raised
     // if any existing faller is within minSpawnGap, capped at the trapdoor.
     public void SpawnFaller(float baseSpawnHeight, bool rescueFaller = false)
     {
+        if (FallersForLevel.Length > 1)
+        {
+            if (FallersForLevel.Contains(FallerType.BombBlock) && numberOfSpawns % bombSpawnFrequency == 0 && numberOfSpawns > bombSpawnFrequency)
+            {
+                _fallerType = FallerType.BombBlock;
+            }
+            else
+            {
+                _fallerType = FallerType.Block;
+                //_fallerType = FallersForLevel[Random.Range(0, FallersForLevel.Length)];
+            }
+        }
         // Remove stale entries from fallers that self-destroyed off-screen
         CleanupDestroyedFallers();
-
+        GetExposedTopSurfaces(); // Update exposed surfaces before spawning so new faller can be reachable if spawned on top
         // Ensure new faller spawns at least minSpawnGap above the highest existing one
         float highestY = GetHighestFallerY();
-        if(GetHighestFrozenFallerY() >= trapDoorHeight)
+        if (GetHighestFrozenFallerY() >= trapDoorHeight)
         {
-            GameManager.instance().Print("Highest frozen faller is above trapdoor, You Lose");
+            GameManager.instance().Print("Highest frozen faller is above trapdoor, You Lose", 4);
             GameManager.instance().GameOver("Highest frozen faller is above trapdoor");
             return;
         }
@@ -100,11 +119,11 @@ public class FallerManager
 
 
         float randomX = GetSpawnXPos();
-        
-        
+
+
         float randomSizeX = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
         float randomSizeY = Random.Range(Constants.minFallerSize, Constants.maxFallerSize);
-        if(_fallerType == FallerType.Block)
+        if (_fallerType == FallerType.Block || _fallerType == FallerType.BombBlock)
         {
             randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
             randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
@@ -261,7 +280,7 @@ public class FallerManager
         GameObject fallerObject;
         FallerController fc;
 
-        if (type == FallerType.Block)
+        /*if (type == FallerType.Block)
         {
             string xName = Mathf.Round(size.x * 2f) / 2f == size.x
                 ? size.x.ToString("0.#") : size.x.ToString("0.#");
@@ -284,6 +303,10 @@ public class FallerManager
         IFallerBehavior behaviour = type == FallerType.Block
             ? (IFallerBehavior)new BlockFallerBehavior()
             : new BolderFallerBehavior();
+        */
+        IFallerBehavior behaviour = fallerBehaviorFactory[type]();
+        fallerObject = behaviour.CreateGameObject(name, size);
+        fc = fallerObject.GetComponent<FallerController>();
         fc.SetBehaviour(behaviour);
         return fc;
     }
@@ -303,10 +326,10 @@ public class FallerManager
 
         if (!isNamedSave && lastSpawnedFallerNumber == numberOfSpawns)
         {
-            GameManager.instance().Print("No new fallers to save since last save.");
+            GameManager.instance().Print("No new fallers to save since last save.", 5);
             return;
         }
-        GameManager.instance().Print("Saving faller data to file...");
+        GameManager.instance().Print("Saving faller data to file...", 5);
         lastSpawnedFallerNumber = numberOfSpawns;
 
         FallerDataList fallerDataList = new FallerDataList();
@@ -320,8 +343,8 @@ public class FallerManager
                 position = faller.transform.position,
                 size = faller.transform.localScale,
                 rotation = faller.transform.rotation.eulerAngles.z,
-                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
-                isFrozen = faller.amIFrozen(),
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocity,
+                isFrozen = faller.AmIFrozen(),
                 beingRidden = faller.BeingRidden,
                 fallerType = _fallerType
             };
@@ -350,8 +373,8 @@ public class FallerManager
         if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
         File.WriteAllText(PlayerDirectory, playerJson);
 
-        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
-        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}");
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name, timer = TimeManager.Instance.GetTimeInGame() }, true));
+        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}", 5);
     }
     public string SaveFallersToFile(PlayerController playerController, string saveName = null)
     {
@@ -360,10 +383,10 @@ public class FallerManager
 
         if (!isNamedSave && lastSpawnedFallerNumber == numberOfSpawns)
         {
-            GameManager.instance().Print("No new fallers to save since last save.");
+            GameManager.instance().Print("No new fallers to save since last save.", 5);
             return null;
         }
-        GameManager.instance().Print("Saving faller data to file...");
+        GameManager.instance().Print("Saving faller data to file...", 5);
         lastSpawnedFallerNumber = numberOfSpawns;
 
         FallerDataList fallerDataList = new FallerDataList();
@@ -377,8 +400,8 @@ public class FallerManager
                 position = faller.transform.position,
                 size = faller.transform.localScale,
                 rotation = faller.transform.rotation.eulerAngles.z,
-                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocityY,
-                isFrozen = faller.amIFrozen(),
+                currentSpeed = faller.gameObject.GetComponent<Rigidbody2D>().linearVelocity,
+                isFrozen = faller.AmIFrozen(),
                 beingRidden = faller.BeingRidden,
                 fallerType = _fallerType
             };
@@ -403,8 +426,8 @@ public class FallerManager
         if (File.Exists(PlayerDirectory)) File.Delete(PlayerDirectory);
         File.WriteAllText(PlayerDirectory, playerJson);
 
-        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name }, true));
-        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}");
+        File.WriteAllText(NewSaveFile, JsonUtility.ToJson(new SaveData { playerDataFileRef = NewPlayerFileSave, fallerDataFileRef = NewFallerFileSave, levelScene = SceneManager.GetActiveScene().name, timer = TimeManager.Instance.GetTimeInGame() }, true));
+        GameManager.instance().Print($"Saved {fallerDataList.fallers.Count} fallers to {NewSaveFile}", 5);
         return NewSaveFile;
     }
     public void LoadFallersFromFile(PlayerController playerController)
@@ -418,7 +441,7 @@ public class FallerManager
         FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(json);
         foreach (FallerData data in fallerDataList.fallers) 
         {
-            GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
+            GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}", 5);
             SpawnFallerAtData(data);
         }
         if(File.Exists(PlayerDirectory))
@@ -451,7 +474,7 @@ public class FallerManager
             FallerDataList fallerDataList = JsonUtility.FromJson<FallerDataList>(FallerJson);
             foreach (FallerData data in fallerDataList.fallers)
             {
-                GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}");
+                GameManager.instance().Print($"Loading faller {data.name} at position {data.position} with size {data.size}, speed {data.currentSpeed}, frozen: {data.isFrozen}, being ridden: {data.beingRidden}", 5);
                 SpawnFallerAtData(data);
             }
         }
@@ -498,7 +521,7 @@ public class FallerManager
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
-            if (!kvp.Value.amIFrozen()) continue;
+            if (!kvp.Value.AmIFrozen()) continue;
             float y = kvp.Value.transform.position.y;
             if (y > highest)
             {
@@ -512,7 +535,7 @@ public class FallerManager
         //string reachableFallers = "Reachable fallers: ";
         FallerController lowestReachable = null;
         float lowestY = float.PositiveInfinity;
-        List<FallerController> exposedFallers = GetExposedTopSurfaces();
+        //exposedFallers = GetExposedTopSurfaces();
         foreach (var faller in exposedFallers)
         {
             if (faller == null) continue;
@@ -585,9 +608,9 @@ public class FallerManager
         return lowestReachable;
     }
     
-    private List<FallerController> GetExposedTopSurfaces()
+    private void GetExposedTopSurfaces()
     {
-        List<FallerController> exposedFallers = new List<FallerController>();
+        exposedFallers.Clear();
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
@@ -616,7 +639,7 @@ public class FallerManager
             }
         }
         //GameManager.instance().Print($"Exposed fallers: {string.Join(", ", exposedFallers.ConvertAll(f => f.name))}", verbosity);
-        return exposedFallers;
+        
     }
 
     // Removes null entries left behind when fallers self-destroy after falling off-screen
@@ -637,16 +660,16 @@ public class FallerManager
     }
     public FallerController GetFallerBeingRidden()
     {
-        GameManager.instance().Print("Checking for faller being ridden...");
+        GameManager.instance().Print("Checking for faller being ridden...", 2);
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value != null && kvp.Value.BeingRidden)
             {
-                GameManager.instance().Print($"Faller being ridden: {kvp.Key}");
+                GameManager.instance().Print($"Faller being ridden: {kvp.Key}", 2);
                 return kvp.Value;
             }
         }
-        GameManager.instance().Print("No faller is currently being ridden.");
+        GameManager.instance().Print("No faller is currently being ridden.", 2);
         return null;
     }
 
@@ -654,14 +677,14 @@ public class FallerManager
     {
         float farLeftXBound = Mathf.Max(Constants.minXRescueSpawn, playerPosition.x - Constants.maxXJumpDistance);
         float farRightXBound = Mathf.Min(Constants.maxXRescueSpawn, playerPosition.x + Constants.maxXJumpDistance);
-        GameManager.instance().Print("Triggering rescue spawn! from " + farLeftXBound + " to " + farRightXBound, verbosity);
+        GameManager.instance().Print("Triggering rescue spawn! from " + farLeftXBound + " to " + farRightXBound, 6);
         for (float x = playerPosition.x+0.5f; x <= farRightXBound; x += 0.25f)
         {
             if (IsColumnClear(x, 0.55f, playerPosition.y, spawnHeight + 2f))
             {
                 FallerController f = ForceSpawnFaller(spawnHeight, x, new Vector2(0.5f, 3f), 3.0f, true);
                 if (f != null){
-                    GameManager.instance().Print("Rescue spawn successful!", verbosity);
+                    GameManager.instance().Print("Rescue spawn successful!", 6);
                     return f;
                 }
             }
@@ -673,7 +696,7 @@ public class FallerManager
                 FallerController f = ForceSpawnFaller(spawnHeight, x, new Vector2(0.5f, 3f), 3.0f, true);
                 if (f != null)
                 {
-                    GameManager.instance().Print("Rescue spawn successful!", verbosity);
+                    GameManager.instance().Print("Rescue spawn successful!", 6);
                     return f;
                 }
             }
@@ -683,7 +706,7 @@ public class FallerManager
             FallerController f = ForceSpawnFaller(spawnHeight, playerPosition.x, new Vector2(0.5f, 3f), 3.0f, true);
             if (f != null)
             {
-                GameManager.instance().Print("Rescue spawn successful at player's current position!", verbosity);
+                GameManager.instance().Print("Rescue spawn successful at player's current position!", 6);
                 return f;
             }
         }
@@ -695,19 +718,19 @@ public class FallerManager
         RaycastHit2D right = Physics2D.Raycast(new Vector2(x + (fallerWidth / 2f), fromY), Vector2.up, toY - fromY, LayerMask.GetMask("Fallers"));
         if(left.collider != null)
         {
-            GameManager.instance().Print($"Column check at x={x}: Hit {left.collider.gameObject.name} on the left side", verbosity);
+            GameManager.instance().Print($"Column check at x={x}: Hit {left.collider.gameObject.name} on the left side", 6);
         }
         else
         {
-            GameManager.instance().Print($"Column check at x={x}: No hit on the left side", verbosity);
+            GameManager.instance().Print($"Column check at x={x}: No hit on the left side", 6);
         }
         if (right.collider != null)
         {
-            GameManager.instance().Print($"Column check at x={x}: Hit {right.collider.gameObject.name} on the right side", verbosity);
+            GameManager.instance().Print($"Column check at x={x}: Hit {right.collider.gameObject.name} on the right side", 6);
         }
         else
         {
-            GameManager.instance().Print($"Column check at x={x}: No hit on the right side", verbosity);
+            GameManager.instance().Print($"Column check at x={x}: No hit on the right side", 6);
         }
         if (left.collider != null || right.collider != null)
         {
@@ -772,10 +795,10 @@ public class FallerManager
         }
         return fallersOutRadius;
     }
-    public void UnfreezeImpulse(Vector3 playerPosition)
+    public void UnfreezeImpulse(Vector3 bombPosition, float force = 1f)
     {
-        List<FallerController> fallersInRadius = GetFallersInRadius(playerPosition, Constants.EMT_Radius);
-        List<FallerController> fallersOutRadius = GetFallersOutRadius(playerPosition, Constants.EMT_Radius);
+        List<FallerController> fallersInRadius = GetFallersInRadius(bombPosition, Constants.EMT_Radius);
+        List<FallerController> fallersOutRadius = GetFallersOutRadius(bombPosition, Constants.EMT_Radius);
         
         foreach (FallerController faller in fallersOutRadius)
         {
@@ -785,8 +808,8 @@ public class FallerManager
         foreach (FallerController faller in fallersInRadius) 
         {
             faller.Unfreeze();
-            Vector3 direction = (faller.transform.position - playerPosition);
-            faller.AddImpulse(new Vector2(direction.x, direction.y));
+            Vector3 direction = (faller.transform.position - bombPosition).normalized;
+            faller.AddImpulse(new Vector2(direction.x, direction.y) * force);
             //faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
         }
     }

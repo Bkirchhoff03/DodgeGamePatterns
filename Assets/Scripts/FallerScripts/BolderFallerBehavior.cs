@@ -46,15 +46,26 @@ public class BolderFallerBehavior : IFallerBehavior
     private bool isPaused = false;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
+    public void Update(FallerController fc) { }
+    public GameObject CreateGameObject(string name, Vector2 size) 
+    {
+        GameObject fallerObject = new GameObject(name);
+        fallerObject.layer = LayerMask.NameToLayer("Fallers");
+        fallerObject.AddComponent<FallerController>();
+        fallerObject.AddComponent<FallerCollisionHandler>();
+        return fallerObject;
+    }
 
     public void BuildVisuals(GameObject fallerObj, Vector2 size)
     {
         BoulderShape shape = Shapes[Random.Range(0, Shapes.Length)];
         shapeColor = shape.color;
+        
+        fallerObj.GetComponent<FallerController>().SetVertices(shape.vertices);
 
         MeshFilter mf = fallerObj.AddComponent<MeshFilter>();
         mf.mesh = BuildMesh(shape.vertices);
-
+                
         meshRenderer = fallerObj.AddComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Sprites/Default"));
         meshRenderer.material.color = shapeColor;
@@ -67,6 +78,11 @@ public class BolderFallerBehavior : IFallerBehavior
 
     public void OnFloorPause(GameObject fallerObj, Vector2 fallerSize)
     {
+        Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+        rb.gravityScale = 0f;
+        rb.mass = 10000f;
         meshRenderer.material.color = new Color(0f, 0.58f, 0f);
         isPaused = true;
     }
@@ -119,5 +135,33 @@ public class BolderFallerBehavior : IFallerBehavior
             return;
         }
         fc.gameObject.GetComponent<MeshRenderer>().material.color = shapeColor;
+    }
+    public bool IsRidingMe(FallerController fc, Vector2 playerPosition)
+    {
+        Rect playerBounds = new Rect(
+            playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight), 
+            new Vector2(Constants.halfPlayerWidth*2f, Constants.halfPlayerHeight*2f));
+        PolygonCollider2D poly = fc.gameObject.GetComponent<PolygonCollider2D>();
+        if (poly == null) return false; // safety check
+        Vector2 bottomLeft = playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight);
+        Vector2 bottomRight = playerPosition - new Vector2(-Constants.halfPlayerWidth, Constants.halfPlayerHeight);
+        if (poly.OverlapPoint(bottomLeft) || poly.OverlapPoint(bottomRight))
+        {
+            return true;
+        }
+        if(Vector2.Distance(poly.ClosestPoint(bottomRight), bottomRight) < 0.05f)
+        {
+            return true;
+        }
+        if(Vector2.Distance(poly.ClosestPoint(bottomLeft), bottomLeft) < 0.05f)
+        {
+            return true;
+        }
+        RaycastHit2D hit = Physics2D.Raycast(bottomLeft, Vector2.right, bottomRight.x - bottomLeft.x, LayerMask.GetMask("Fallers"));
+        if (hit.collider != null && hit.collider.gameObject.name == fc.gameObject.name)
+        {
+            return true;
+        }
+        return false;
     }
 }
