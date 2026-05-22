@@ -18,7 +18,8 @@
  - Save / load system with timestamped save files
  - Main menu, pause screen, and how-to-play panel
  - System to spawn rescue block if the player is stuck
- - Two levels with different block types 
+ - Three levels with different block types 
 
  ## Play With
- - Zip file in BuildZips folder 
+ - Zip file in BuildZips folder
+   - Use the one with the most recent date :) 
