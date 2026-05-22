@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class FallerManager
 {
     public int verbosity = 1; // Set to 1 to enable debug prints for rescue spawns and column checks
-    public enum FallerType { Block, Boulder, BombBlock }
+    public enum FallerType { Block, Boulder, BombBlock, BombBolder}
 
     static FallerManager instance_;
     [System.Serializable]
@@ -60,7 +60,8 @@ public class FallerManager
     {
         { FallerType.Block, () => new BlockFallerBehavior() },
         { FallerType.Boulder, () => new BolderFallerBehavior() },
-        { FallerType.BombBlock, () => new BombBlockFallerBehavior() }
+        { FallerType.BombBlock, () => new BombBlockFallerBehavior() },
+        { FallerType.BombBolder, () => new BombBolderFallerBehavior() }
     };
     Sprite sprite;
     float trapDoorHeight;
@@ -74,6 +75,7 @@ public class FallerManager
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
     int bombSpawnFrequency = 10; // Every 10th faller will be a bomb block, if bomb blocks are enabled for the level
+    int bombBolderSpawnFrequency = 20; // Every 20th faller will be a bomb bolder, if bomb bolders are enabled for the level
     public static FallerManager instance() => instance_;
     public void init(FallerType[] fallerTypes, float trapDoorHeight)
     {
@@ -91,13 +93,31 @@ public class FallerManager
     {
         if (FallersForLevel.Length > 1)
         {
-            if (FallersForLevel.Contains(FallerType.BombBlock) && numberOfSpawns % bombSpawnFrequency == 0 && numberOfSpawns > bombSpawnFrequency)
+            if (FallersForLevel.Contains(FallerType.BombBlock))
             {
-                _fallerType = FallerType.BombBlock;
+                if (numberOfSpawns % bombSpawnFrequency == 0 && numberOfSpawns > bombSpawnFrequency)
+                {
+                    _fallerType = FallerType.BombBlock;
+                }
+                else
+                {
+                    _fallerType = FallerType.Block;
+                }
+            }
+            else if(FallersForLevel.Contains(FallerType.BombBolder))
+            {
+                if (numberOfSpawns % bombBolderSpawnFrequency == 0 && numberOfSpawns > bombBolderSpawnFrequency)
+                {
+                    _fallerType = FallerType.BombBolder;
+                }
+                else
+                {
+                    _fallerType = FallerType.Boulder;
+                }
             }
             else
             {
-                _fallerType = FallerType.Block;
+                
                 //_fallerType = FallersForLevel[Random.Range(0, FallersForLevel.Length)];
             }
         }
