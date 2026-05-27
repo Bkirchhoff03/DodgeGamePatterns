@@ -12,7 +12,9 @@ public class BlockFallerBehavior : IFallerBehavior
         string yName = size.y.ToString("0.#");
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
-        fallerObject.layer = LayerMask.NameToLayer("Fallers");
+        int fallerLayer = LayerMask.NameToLayer("Fallers");
+        foreach (Transform t in fallerObject.GetComponentsInChildren<Transform>(true))
+            t.gameObject.layer = fallerLayer;
         fallerObject.name = name;
         return fallerObject;
     }
