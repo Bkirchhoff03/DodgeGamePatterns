@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         public Vector3 position;
         public Vector2 currentSpeed;
         public string currentStateName;
-        public int lives;
+        public float lives;
     }
     public IPlayerState state = new DodgingState();
     delegate void MoveAction();
@@ -109,6 +109,11 @@ public class PlayerController : MonoBehaviour
             }*/
             if(newState.getName() == Constants.jumpingStateName)
             {
+                if (!GameManager.instance().HasStamina(Constants.jumpStaminaCost))
+                {
+                    GameManager.instance().Print("Not enough stamina to jump", 3);
+                    return;
+                }
                 GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 3);
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f);
                 if(hit.collider != null && hit.collider.gameObject != gameObject)
@@ -129,6 +134,7 @@ public class PlayerController : MonoBehaviour
                         return;
                     }
                 }
+                GameManager.instance().UseStamina(Constants.jumpStaminaCost);
             }
             state.ExitState(this);
             state = newState;

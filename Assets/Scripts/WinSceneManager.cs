@@ -29,7 +29,7 @@ public class WinSceneManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         TimeManager.Instance.ResetTime();
-        PlayerPrefs.SetInt("PlayerLivesFromLevel1", 3);
+        PlayerPrefs.SetFloat("PlayerLivesFromLevel1", 3f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
     }
 }

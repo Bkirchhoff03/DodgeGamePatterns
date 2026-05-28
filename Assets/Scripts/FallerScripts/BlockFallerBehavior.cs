@@ -78,7 +78,19 @@ public class BlockFallerBehavior : IFallerBehavior
     {
         if (fc.IsFrozen)
         {
-            arm.CancelPunch();  // can't punch a frozen block
+            if (!GameManager.instance().HasStamina(Constants.frozenPunchStaminaCost))
+            {
+                arm.CancelPunch();
+                return;
+            }
+            float punchDir = arm.getPunchingVelocity() > 0 ? 1f : -1f;
+            int stackCount = FallerManager.instance().GetFrozenFallersAbove(fc);
+            float shift = punchDir * Constants.frozenBlockShiftAmount / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
+            shift = Mathf.Max(Mathf.Abs(shift), 0.05f) * punchDir;
+            fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
+            GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
+            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
+            arm.CancelPunch();
         }
         else
         {

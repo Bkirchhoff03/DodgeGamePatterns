@@ -98,10 +98,24 @@ public class BolderFallerBehavior : IFallerBehavior
         float punchVelocity = arm.getPunchingVelocity();
         if (fc.IsFrozen)
         {
-            fc.Unfreeze();  // punch unfreezes a frozen boulder
+            if (!GameManager.instance().HasStamina(Constants.frozenPunchStaminaCost))
+            {
+                arm.CancelPunch();
+                return;
+            }
+            int stackCount = FallerManager.instance().GetFrozenFallersAbove(fc);
+            float forceMult = Constants.boulderPunchForceMultiplier / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
+            fc.Unfreeze();
+            fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                new Vector2(punchVelocity * forceMult, 0f), ForceMode2D.Impulse);
+            GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
+            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
         }
-        fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
-            new Vector2(punchVelocity * Constants.boulderPunchForceMultiplier, 0f), ForceMode2D.Impulse);
+        else
+        {
+            fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                new Vector2(punchVelocity * Constants.boulderPunchForceMultiplier, 0f), ForceMode2D.Impulse);
+        }
         arm.CancelPunch();
     }
 

@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 //using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 [DefaultExecutionOrder(-10)]
 public class GameManager : MonoBehaviour
@@ -16,8 +17,11 @@ public class GameManager : MonoBehaviour
     float TimeBetweenSpawns;
     public Sprite sprite;
     static GameManager instance_;
-    private int playerLives = 3;
+    private float playerLives = Constants.maxPlayerLives;
+    private float playerStamina = Constants.maxPlayerStamina;
     public TextMeshProUGUI lifeCounter;
+    [SerializeField] public Image lifeBarFill;
+    [SerializeField] public Image staminaBarFill;
     //public GameObject camera;
     public GameObject player;
     public GameObject trapDoor; // Assign the TrapDoor GameObject in the Inspector
@@ -180,7 +184,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            int livesFromLevel1 = PlayerPrefs.GetInt("PlayerLivesFromLevel1");
+            float livesFromLevel1 = PlayerPrefs.GetFloat("PlayerLivesFromLevel1");
             if (livesFromLevel1 != 0)
             {
                 playerLives = livesFromLevel1;
@@ -221,6 +225,7 @@ public class GameManager : MonoBehaviour
         }
 
         CheckIfPlayerStuck();
+        UpdateStaminaRegen();
         /*Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
         spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;*/
         if (player != null && player.transform.position.y > cameraInitialY)
@@ -334,22 +339,55 @@ public class GameManager : MonoBehaviour
     }
     private void MinusLife()
     {
+        TakeDamage(1.0f);
+    }
+    public void TakeDamage(float amount)
+    {
         if (!unlimitedLives)
+            playerLives = Mathf.Max(0f, playerLives - amount);
+        UpdateLifeUI();
+        if (playerLives <= 0f)
         {
-            playerLives--;
-        }
-        string text = "";
-        for (int i = 0; i < playerLives; i++)
-        {
-            text += "I";
-        }
-        lifeCounter.text = text;
-        if (playerLives <= 0)
-        {
-            playerLives = 3;
+            playerLives = Constants.maxPlayerLives;
+            playerStamina = Constants.maxPlayerStamina;
+            UpdateLifeUI();
+            UpdateStaminaUI();
             Print("GAME OVER", 4);
             GameOver("You ran out of lives!");
         }
+    }
+    public bool HasStamina(float amount)
+    {
+        return playerStamina >= amount;
+    }
+    public bool UseStamina(float amount)
+    {
+        if (playerStamina < amount) return false;
+        playerStamina -= amount;
+        UpdateStaminaUI();
+        return true;
+    }
+    private void UpdateStaminaRegen()
+    {
+        if (playerController == null) return;
+        bool isMoving = Mathf.Abs(playerController.GetComponent<Rigidbody2D>().linearVelocity.x) > 0.5f;
+        if (!isMoving && playerStamina < Constants.maxPlayerStamina)
+        {
+            playerStamina = Mathf.Min(Constants.maxPlayerStamina, playerStamina + Constants.staminaRegenRate * Time.deltaTime);
+            UpdateStaminaUI();
+        }
+    }
+    private void UpdateLifeUI()
+    {
+        if (lifeCounter != null)
+            lifeCounter.text = playerLives.ToString("F1");
+        if (lifeBarFill != null)
+            lifeBarFill.fillAmount = playerLives / Constants.maxPlayerLives;
+    }
+    private void UpdateStaminaUI()
+    {
+        if (staminaBarFill != null)
+            staminaBarFill.fillAmount = playerStamina / Constants.maxPlayerStamina;
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()
@@ -542,19 +580,14 @@ public class GameManager : MonoBehaviour
             playerController.GetBombed(faller.transform.position);
         }
     }
-    public int GetPlayerLives()
+    public float GetPlayerLives()
     {
         return playerLives;
     }
-    public void SetPlayerLives(int lives)
+    public void SetPlayerLives(float lives)
     {
         playerLives = lives;
-        string text = "";
-        for (int i = 0; i < playerLives; i++)
-        {
-            text += "I";
-        }
-        lifeCounter.text = text;
+        UpdateLifeUI();
     }
     /*public BoxCollider2D GetPlayerCollider()
     {
