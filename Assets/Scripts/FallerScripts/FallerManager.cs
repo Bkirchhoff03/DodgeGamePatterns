@@ -815,6 +815,25 @@ public class FallerManager
         }
         return fallersOutRadius;
     }
+    public int GetFrozenFallersAbove(FallerController faller)
+    {
+        int count = 0;
+        Collider2D fallerCol = faller.gameObject.GetComponent<Collider2D>();
+        if (fallerCol == null) return 0;
+        Bounds bounds = fallerCol.bounds;
+        foreach (var kvp in fallersInPlay)
+        {
+            FallerController other = kvp.Value;
+            if (other == null || other == faller || !other.IsFrozen) continue;
+            Collider2D otherCol = other.gameObject.GetComponent<Collider2D>();
+            if (otherCol == null) continue;
+            Bounds otherBounds = otherCol.bounds;
+            if (otherBounds.min.y < bounds.max.y - 0.1f) continue;
+            if (otherBounds.max.x <= bounds.min.x || otherBounds.min.x >= bounds.max.x) continue;
+            count++;
+        }
+        return count;
+    }
     public void UnfreezeImpulse(Vector3 bombPosition, float force = 1f)
     {
         List<FallerController> fallersInRadius = GetFallersInRadius(bombPosition, Constants.EMT_Radius);

@@ -41,6 +41,14 @@ namespace Assets.Scripts
         public const float EMT_Impulse_block = 2.5f;
         public const float EMT_Impulse_bolder = 10f;
         public const float EMT_Impulse_player = 10f;
+        public const float maxPlayerLives = 3.0f;
+        public const float maxPlayerStamina = 100.0f;
+        public const float staminaRegenRate = 15.0f;
+        public const float jumpStaminaCost = 20.0f;
+        public const float frozenPunchStaminaCost = 10.0f;
+        public const float frozenPunchLifeCost = 0.25f;
+        public const float frozenBlockShiftAmount = 0.4f;
+        public const float frozenPunchStackWeightFactor = 0.4f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string timeTrackerText = " seconds in this run";
