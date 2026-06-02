@@ -9,13 +9,24 @@ public class FallerCollisionHandler : MonoBehaviour
         {
             return;
         }
-
+        
         // Get this faller's controller; skip if already frozen
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT())
+        
+        if (thisFaller == null || GameManager.instance().IsPlayerInEMT())
         {
             return;
         }
+        if (collision.gameObject.name == "PunchingArm")
+        {
+            GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
+            GetComponent<FallerController>().HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
+        }
+        if (thisFaller.IsFrozen)
+        {
+            return;
+        }
+        
         if (thisFaller.UseSettleTimer)
         {
             GetComponent<Rigidbody2D>().gravityScale = Constants.fallerGravityPostCollision;
@@ -29,14 +40,26 @@ public class FallerCollisionHandler : MonoBehaviour
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player") 
-        { 
-            return; 
+        if (collision.gameObject.name == "Player")
+        {
+            return;
         }
+
+        // Get this faller's controller; skip if already frozen
         FallerController thisFaller = GetComponent<FallerController>();
-        if (thisFaller == null || thisFaller.IsFrozen || GameManager.instance().IsPlayerInEMT()) 
-        { 
-            return; 
+
+        if (thisFaller == null || GameManager.instance().IsPlayerInEMT())
+        {
+            return;
+        }
+        if (collision.gameObject.name == "PunchingArm")
+        {
+            GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
+            GetComponent<FallerController>().HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
+        }
+        if (thisFaller.IsFrozen)
+        {
+            return;
         }
         GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 0);
         if (thisFaller.UseSettleTimer) 

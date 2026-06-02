@@ -13,6 +13,7 @@ public class PunchingArmController : MonoBehaviour
     private int backendTimer = 0;
     private int backendDuration = 13;
     private Rigidbody2D rb;
+    private bool reset = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,11 +29,11 @@ public class PunchingArmController : MonoBehaviour
         Vector3 playerCenter = player.transform.position;
         if (isPunchingRight)
         {
-
             ExecuteRightPunch();
             if (transform.position.x <= playerCenter.x)
             {
                 isPunchingRight = false;
+                reset = true;
                 transform.position = new Vector3(playerCenter.x, playerCenter.y + Constants.PunchingArmOffsetY, playerCenter.z);
                 playerController.animationManager.SetPunching(false);
                 playerController.animationManager.lookRight(true);
@@ -46,18 +47,20 @@ public class PunchingArmController : MonoBehaviour
             if (transform.position.x >= playerCenter.x)
             {
                 isPunchingLeft = false;
+                reset = true;
                 transform.position = new Vector3(playerCenter.x, playerCenter.y + Constants.PunchingArmOffsetY, playerCenter.z);
                 playerController.animationManager.SetPunching(false);
                 playerController.animationManager.lookLeft(true);
                 //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetBool("Punching", false);
             }
         }
-        else
+        else if(reset)
         {
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             transform.position = playerCenter;
             playerController.animationManager.SetPunching(false);
+            reset = false;
         }
         transform.localPosition = new Vector3(transform.localPosition.x, Constants.PunchingArmOffsetY, transform.localPosition.z);
     }
@@ -68,6 +71,7 @@ public class PunchingArmController : MonoBehaviour
         {
             return;
         }
+        GameManager.instance().UseStamina(Constants.punchStaminaCost);
         playerController.animationManager.lookRight(true);
         playerController.animationManager.SetPunching(true);
         GetComponent<Collider2D>().enabled = true;
@@ -105,6 +109,7 @@ public class PunchingArmController : MonoBehaviour
         {
             return;
         }
+        GameManager.instance().UseStamina(Constants.punchStaminaCost);
         playerController.animationManager.lookLeft(true);
         playerController.animationManager.SetPunching(true);
         GetComponent<Collider2D>().enabled = true;
@@ -152,6 +157,7 @@ public class PunchingArmController : MonoBehaviour
     }
     public void CancelPunch()
     {
+        GameManager.instance().Print("Cancelling punch", 3);
         isPunchingLeft = false;
         isPunchingRight = false;
         backend = false;

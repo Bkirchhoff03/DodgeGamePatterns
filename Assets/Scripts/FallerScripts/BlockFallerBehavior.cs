@@ -76,17 +76,22 @@ public class BlockFallerBehavior : IFallerBehavior
     }
     public void HandleArmCollision(FallerController fc, PunchingArmController arm)
     {
+        GameManager.instance().Print("Block handle arm collision", 0);
         if (fc.IsFrozen)
         {
+            GameManager.instance().Print("Faller is frozen: " + fc.IsFrozen, 0);
             if (!GameManager.instance().HasStamina(Constants.frozenPunchStaminaCost))
             {
+                GameManager.instance().Print("No Stamina:( to punch block", 3);
                 arm.CancelPunch();
                 return;
             }
             float punchDir = arm.getPunchingVelocity() > 0 ? 1f : -1f;
             int stackCount = FallerManager.instance().GetFrozenFallersAbove(fc);
+            GameManager.instance().Print("Frozen fallers above: " + stackCount, 0);
             float shift = punchDir * Constants.frozenBlockShiftAmount / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
             shift = Mathf.Max(Mathf.Abs(shift), 0.05f) * punchDir;
+            GameManager.instance().Print("Moving block by: " + shift, 2);
             fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
             GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);

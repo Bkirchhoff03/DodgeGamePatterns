@@ -2252,7 +2252,27 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseAnimations
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: spawnFallersFromFile
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseFallerCollision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verbosePlayerCollision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseFallerStateChanges
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verbosePlayerStateChanges
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910538271402616942, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
@@ -2598,6 +2618,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2401194486041201110, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841878213920210632, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841878213920210632, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}
+      propertyPath: m_UseFullKinematicContacts
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452441033669662077, guid: 9e57c93b0b3a85545b2e12deae18fab6, type: 3}

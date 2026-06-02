@@ -104,10 +104,14 @@ public class BolderFallerBehavior : IFallerBehavior
                 return;
             }
             int stackCount = FallerManager.instance().GetFrozenFallersAbove(fc);
-            float forceMult = Constants.boulderPunchForceMultiplier / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
-            fc.Unfreeze();
-            fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
-                new Vector2(punchVelocity * forceMult, 0f), ForceMode2D.Impulse);
+            if(stackCount == 0)
+            {
+                float forceMult = Constants.boulderPunchForceMultiplier / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
+                fc.Unfreeze();
+                fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                    new Vector2(punchVelocity * forceMult, 0f), ForceMode2D.Impulse);
+            }
+            
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
             GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
         }

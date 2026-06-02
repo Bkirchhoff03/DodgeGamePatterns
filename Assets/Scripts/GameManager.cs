@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
             }
             UpdateSaveSession();
         }
-        
+        UpdateLifeUI();
 
     }
 
@@ -312,7 +312,7 @@ public class GameManager : MonoBehaviour
             if (playerController.canBeDamaged())
             {
                 Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position + " collided to lose a life with Faller " + faller.name, 3);
-                MinusLife();
+                TakeDamage(Constants.headBonkLifeCost);
                 playerController.crush();
                 DeleteFaller(faller.name);
             }
@@ -337,10 +337,7 @@ public class GameManager : MonoBehaviour
             playerController.BounceOff(faller, collisionType);
         }*/
     }
-    private void MinusLife()
-    {
-        TakeDamage(1.0f);
-    }
+    
     public void TakeDamage(float amount)
     {
         if (!unlimitedLives)
@@ -518,7 +515,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartEMT()
     {
-        if (playerLives <= 1)
+        if (playerLives <= 10)
         {
             Print("Not applying unfreeze impulse to fallers because player is on their last life", 4);
             EMT.instance().EMTOnOneLife();
@@ -530,7 +527,7 @@ public class GameManager : MonoBehaviour
             return; // Don't apply impulse if already in EMT
         }
         GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 4);
-        MinusLife();
+        TakeDamage(Constants.EMTLifeCost);
         EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
         Time.timeScale = 0f;
