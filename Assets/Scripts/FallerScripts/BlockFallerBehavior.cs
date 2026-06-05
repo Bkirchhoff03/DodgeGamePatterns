@@ -37,7 +37,8 @@ public class BlockFallerBehavior : IFallerBehavior
     {
         Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Static;
+        //rb.bodyType = RigidbodyType2D.Static;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         rb.gravityScale = 0f;
         rb.mass = 10000f;
         if (fallerSize.x == 0.5f)
@@ -91,6 +92,23 @@ public class BlockFallerBehavior : IFallerBehavior
             GameManager.instance().Print("Frozen fallers above: " + stackCount, 0);
             float shift = punchDir * Constants.frozenBlockShiftAmount / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
             shift = Mathf.Max(Mathf.Abs(shift), 0.05f) * punchDir;
+            float sixSections = fc.FallerSize.y / 6f;
+            for (int i = -3; i <= 3; i += 1)
+            {
+                if(Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y + (sixSections * i)), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f))
+                {
+                    GameManager.instance().Print("Block punch would move block onto something at height offset: " + (sixSections * i) + ", cancelling punch", 3);
+                    arm.CancelPunch();
+                    return;
+                }
+            }
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f);
+            if (hit && hit.collider.name != fc.gameObject.name)
+            {
+                GameManager.instance().Print("Block punch would move block onto "+hit.collider.name+", cancelling punch", 3);
+                arm.CancelPunch();
+                return;
+            }
             GameManager.instance().Print("Moving block by: " + shift, 2);
             fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);

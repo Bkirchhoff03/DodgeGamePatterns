@@ -294,6 +294,6 @@ public class PlayerController : MonoBehaviour
                 newPosition.x = faller.transform.position.x + faller.GetComponent<SpriteRenderer>().bounds.size.x / 2 + GetComponent<SpriteRenderer>().bounds.size.x / 2;
                 break;
         }
-        MoveTo(newPosition);
+        gameObject.transform.position = newPosition;
     }
 }

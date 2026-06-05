@@ -80,7 +80,8 @@ public class BolderFallerBehavior : IFallerBehavior
     {
         Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Static;
+        //rb.bodyType = RigidbodyType2D.Static;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         rb.gravityScale = 0f;
         rb.mass = 10000f;
         meshRenderer.material.color = new Color(0f, 0.58f, 0f);

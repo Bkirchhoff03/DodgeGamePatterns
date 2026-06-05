@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -21,6 +22,7 @@ public class FallerController : MonoBehaviour
     private float settleTimer = 0f;
     private int collisionCount = 0;
     private Vector2[] vertices;
+    private Dictionary<string, FallerController> fallersCollidingWithMe = new Dictionary<string, FallerController>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,6 +46,7 @@ public class FallerController : MonoBehaviour
         //fallerObj.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         rb.linearVelocity = new Vector2(0.0f, -speed);
         //rb.linearVelocity = new Vector2(0.0f, -0.01f);
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
         if(behavior.FreezeRotation)
         {
@@ -67,6 +70,7 @@ public class FallerController : MonoBehaviour
         rb.gravityScale = Constants.gameGravity;
         //fallerObj.GetComponent<BoxCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>(Constants.fallerPhysicsMaterial2DPath);
         rb.linearVelocity = speed;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         //rb.linearVelocity = new Vector2(0.0f, -0.01f);
         rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
         if (behavior.FreezeRotation)
@@ -155,8 +159,12 @@ public class FallerController : MonoBehaviour
         collisionCount = 0;
         settleTimer = 0f;
         rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.constraints = behavior.FreezeRotation
+          ? RigidbodyConstraints2D.FreezeRotation
+          : RigidbodyConstraints2D.None;
 
         rb.gravityScale = Constants.gameGravity;
+        rb.linearVelocity = new Vector2(0.0f, 0.0f);
         rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
         behavior?.OnUnfreeze(gameObject, FallerSize);
         //rb.bodyType = RigidbodyType2D.Dynamic;
@@ -218,4 +226,26 @@ public class FallerController : MonoBehaviour
     {
         return vertices;
     }
+    public void FallerCollidesWithMe(FallerController otherController)
+    {
+        if(!fallersCollidingWithMe.ContainsKey(otherController.FallerObject.name))
+        {
+            fallersCollidingWithMe.Add(otherController.FallerObject.name, otherController);
+        }
+        GameManager.instance().Print("Fallers Colliding with me ("+gameObject.name+"): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
+    }
+    public void FallerStopsCollidingWithMe(FallerController otherController)
+    {
+        fallersCollidingWithMe.Remove(otherController.FallerObject.name);
+        GameManager.instance().Print("Fallers Colliding with me (" + gameObject.name + "): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
+        if(otherController.FallerObject.transform.position.y < FallerObject.transform.position.y)
+        {
+            //If the faller that stopped colliding with me is below me, I should check if I need to unfreeze since I may have been frozen due to being on top of them
+            if (isFrozen)
+            {
+                Unfreeze();
+            }
+        }
+    }
+
 }

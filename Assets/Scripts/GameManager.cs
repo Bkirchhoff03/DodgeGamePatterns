@@ -332,10 +332,11 @@ public class GameManager : MonoBehaviour
                 faller.GetComponent<Rigidbody2D>().linearVelocity = faller.GetComponent<Rigidbody2D>().linearVelocity / 2f; //new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
-        }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
+        }
+        else if (collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
             playerController.BounceOff(faller, collisionType);
-        }*/
+        }
     }
     
     public void TakeDamage(float amount)
@@ -510,7 +511,40 @@ public class GameManager : MonoBehaviour
     {
         if (message != null && verboseSettings[level])
         {
-            Debug.Log(message);
+            if(level == 0)
+            {
+                Debug.Log("<color=cyan>" + message + "</color>");
+            }
+            else if(level == 1)
+            {
+                Debug.Log("<color=magenta>" + message + "</color>");
+            }
+            else if(level == 2)
+            {
+                Debug.Log("<color=yellow>" + message + "</color>");
+            }
+            else if(level == 3)
+            {
+                Debug.Log("<color=teal>" + message + "</color>");
+            }
+            else if(level == 4)
+            {
+                Debug.Log("<color=green>" + message + "</color>");
+            } else if(level == 5)
+            {
+                Debug.Log("<color=blue>" + message + "</color>");
+            }else if(level == 6)
+            {
+                Debug.Log("<color=orange>" + message + "</color>");
+            }
+             else if (level == 7)
+            {
+                Debug.Log("<color=purple>" + message + "</color>");
+            }
+            else
+            {
+                 Debug.Log(message);
+            }
         }
     }
     public void StartEMT()
