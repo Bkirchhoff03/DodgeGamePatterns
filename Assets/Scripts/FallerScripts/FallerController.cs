@@ -147,7 +147,7 @@ public class FallerController : MonoBehaviour
 
     public void FloorPause()
     {
-        
+        GameManager.instance().Print($"Floor pausing {gameObject.name}", 0);
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(FallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);

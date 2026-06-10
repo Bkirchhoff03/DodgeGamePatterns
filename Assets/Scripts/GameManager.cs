@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public bool verboseSavingLoading = false;
     public bool verboseRescuing = false;
     public bool verboseAnimations = false;
+    public bool verboseTesting = false;
     private bool[] verboseSettings = new bool[] {
             false,
             false,
@@ -70,7 +71,9 @@ public class GameManager : MonoBehaviour
             false,
             false,
             false,
-            false}; // Array to control verbose logging for different levels or categories of logs
+            false,
+            false
+    }; // Array to control verbose logging for different levels or categories of logs
      
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
@@ -79,6 +82,45 @@ public class GameManager : MonoBehaviour
     private bool checkstuck = false;
     private float EMT_timer = 0f;
     private float EMT_duration = 5f; // Duration of the EMT effect in seconds
+    public float TestingFallerSpawnSize = 7f;
+    private Vector2[] TestingFallerSpawnSizeOptions = new Vector2[] {
+        new Vector2(0.5f, 0.5f),
+        new Vector2(0.5f, 1f),
+        new Vector2(0.5f, 1.5f),
+        new Vector2(0.5f, 2f),
+        new Vector2(0.5f, 2.5f),
+        new Vector2(0.5f, 3f),
+        new Vector2(1f, 0.5f),
+        new Vector2(1f, 1f),
+        new Vector2(1f, 1.5f),
+        new Vector2(1f, 2f),
+        new Vector2(1f, 2.5f),
+        new Vector2(1f, 3f),
+        new Vector2(1.5f, 0.5f),
+        new Vector2(1.5f, 1f),
+        new Vector2(1.5f, 1.5f),
+        new Vector2(1.5f, 2f),
+        new Vector2(1.5f, 2.5f),
+        new Vector2(1.5f, 3f),
+        new Vector2(2f, 0.5f),
+        new Vector2(2f, 1f),
+        new Vector2(2f, 1.5f),
+        new Vector2(2f, 2f),
+        new Vector2(2f, 2.5f),
+        new Vector2(2f, 3f),
+        new Vector2(2.5f, 0.5f),
+        new Vector2(2.5f, 1f),
+        new Vector2(2.5f, 1.5f),
+        new Vector2(2.5f, 2f),
+        new Vector2(2.5f, 2.5f),
+        new Vector2(2.5f, 3f),
+        new Vector2(3f, 0.5f),
+        new Vector2(3f, 1f),
+        new Vector2(3f, 1.5f),
+        new Vector2(3f, 2f),
+        new Vector2(3f, 2.5f),
+        new Vector2(3f, 3f)
+    };
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -104,7 +146,8 @@ public class GameManager : MonoBehaviour
             verboseGameState,
             verboseSavingLoading,
             verboseRescuing,
-            verboseAnimations
+            verboseAnimations,
+            verboseTesting
         };
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
@@ -204,6 +247,16 @@ public class GameManager : MonoBehaviour
         {
             clickSpawnCooldown -= Time.deltaTime;
         }
+        if (clickToSpawn && Input.mouseScrollDelta.y != 0f)
+        {
+            TestingFallerSpawnSize += Input.mouseScrollDelta.y;
+            if(TestingFallerSpawnSize < 0)
+            {
+                TestingFallerSpawnSize = TestingFallerSpawnSizeOptions.Length - 1;
+            }
+            TestingFallerSpawnSize %= TestingFallerSpawnSizeOptions.Length;
+            Print("Testing faller spawn size: " + TestingFallerSpawnSizeOptions[(int)TestingFallerSpawnSize], 8);
+        }
         if (EMT_timer > 0f)
         {
             EMT_timer -= Time.deltaTime;
@@ -239,7 +292,8 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
-        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText; 
+        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText;
+        
     }
     public bool IsPlayerInEMT() => EMT_timer > 0f;
     private void triggerRescueSpawn()
@@ -495,7 +549,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnFallerAtClick(Vector3 clickPosition)
     {
-        if (clickSpawnCooldown > 0)
+        if (clickSpawnCooldown > 0 || !clickToSpawn)
         {
             return; // Prevent spawning if cooldown is active
         }
@@ -504,7 +558,7 @@ public class GameManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
         //GameManager.instance().Print("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
         worldPosition.z = 0f; // Set z to 0 for 2D
-        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, Constants.defaultFallerSize, Constants.maxFallerSpeed, false);
+        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, TestingFallerSpawnSizeOptions[(int)TestingFallerSpawnSize], Constants.maxFallerSpeed, false);
         //FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
     public void Print(string message, int level = 0)
@@ -541,9 +595,13 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("<color=purple>" + message + "</color>");
             }
+            else if (level == 8)
+            {
+                Debug.Log("<color=black>" + message + "</color>");
+            }
             else
             {
-                 Debug.Log(message);
+                Debug.Log(message);
             }
         }
     }
@@ -609,6 +667,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             playerController.GetBombed(faller.transform.position);
+            TakeDamage(Constants.EMTLifeCost);
         }
     }
     public float GetPlayerLives()
