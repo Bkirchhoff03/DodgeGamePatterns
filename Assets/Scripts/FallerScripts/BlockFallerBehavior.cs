@@ -110,7 +110,8 @@ public class BlockFallerBehavior : IFallerBehavior
                 return;
             }
             GameManager.instance().Print("Moving block by: " + shift, 2);
-            fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
+            //fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
+            fc.gameObject.GetComponent<Rigidbody2D>().position += new Vector2(shift, 0f);
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
             GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
             arm.CancelPunch();

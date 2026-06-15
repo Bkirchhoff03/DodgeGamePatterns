@@ -936,8 +936,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0.034736037, y: -0.031499386, z: 0}
-    m_Extent: {x: 1.9867159, y: 1.2999792, z: 0}
+    m_Center: {x: 0.034735918, y: -0.031499386, z: 0}
+    m_Extent: {x: 1.986716, y: 1.2999792, z: 0}
   m_SpriteSortPoint: 0
 --- !u!4 &739160224
 Transform:
@@ -2273,19 +2273,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verboseFallerCollision
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verbosePlayerCollision
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verboseFallerStateChanges
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: verbosePlayerStateChanges
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4910538271402616942, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Name

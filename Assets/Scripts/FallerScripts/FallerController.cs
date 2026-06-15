@@ -23,6 +23,8 @@ public class FallerController : MonoBehaviour
     private int collisionCount = 0;
     private Vector2[] vertices;
     private Dictionary<string, FallerController> fallersCollidingWithMe = new Dictionary<string, FallerController>();
+    private float justFrozenCooldown = 0f; // Time after freezing during which the faller won't unfreeze, to prevent immediate unfreezing if it's still colliding with something
+    private const float freezeCooldownDuration = 0.1f; // Duration of the just frozen cooldown in seconds
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -106,6 +108,10 @@ public class FallerController : MonoBehaviour
                 settleTimer = 0f;
             }
         }
+        if(justFrozenCooldown > 0f)
+        {
+            justFrozenCooldown -= Time.deltaTime;
+        }
         behavior?.Update(this);
     }
     public void StartRiding()
@@ -148,6 +154,7 @@ public class FallerController : MonoBehaviour
     public void FloorPause()
     {
         GameManager.instance().Print($"Floor pausing {gameObject.name}", 0);
+        justFrozenCooldown = freezeCooldownDuration;
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(FallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
@@ -239,9 +246,9 @@ public class FallerController : MonoBehaviour
         fallersCollidingWithMe.Remove(otherController.FallerObject.name);
         GameManager.instance().Print("Fallers Colliding with me (" + gameObject.name + "): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
         if(otherController.FallerObject.transform.position.y < FallerObject.transform.position.y)
-        {
+        { 
             //If the faller that stopped colliding with me is below me, I should check if I need to unfreeze since I may have been frozen due to being on top of them
-            if (isFrozen)
+            if (isFrozen && justFrozenCooldown <= 0f)
             {
                 Unfreeze();
             }

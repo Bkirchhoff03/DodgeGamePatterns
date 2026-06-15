@@ -108,7 +108,8 @@ namespace Assets.Scripts
             else
             {
                 //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
-                playerController.Move(currentDirection);
+                //playerController.Move(currentDirection);
+                rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
             }
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {

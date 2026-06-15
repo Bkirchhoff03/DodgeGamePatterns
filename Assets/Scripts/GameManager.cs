@@ -389,7 +389,7 @@ public class GameManager : MonoBehaviour
         }
         else if (collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
-            playerController.BounceOff(faller, collisionType);
+            //playerController.BounceOff(faller, collisionType);
         }
     }
     

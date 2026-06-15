@@ -122,7 +122,8 @@ namespace Assets.Scripts
                 }
             }
             //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
-            playerController.Move(currentDirection);
+            //playerController.Move(currentDirection);
+            playerController.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, playerController.GetComponent<Rigidbody2D>().linearVelocity.y);
             return nextState;
         }
     }
