@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class FallerCollisionHandler : MonoBehaviour
 {
+    private FallerController thisFaller;
+    private Rigidbody2D rb;
+
+    private void Awake()
+    {
+        thisFaller = GetComponent<FallerController>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
@@ -10,8 +19,6 @@ public class FallerCollisionHandler : MonoBehaviour
             return;
         }
 
-        // Get this faller's controller; skip if already frozen
-        FallerController thisFaller = GetComponent<FallerController>();
 
         if (thisFaller == null || GameManager.instance().IsPlayerInEMT())
         {
@@ -20,18 +27,21 @@ public class FallerCollisionHandler : MonoBehaviour
         if (collision.gameObject.name == "PunchingArm")
         {
             GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
-            GetComponent<FallerController>().HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
+            thisFaller.HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
         }
 
         if (thisFaller.IsFrozen)
         {
             return;
         }
-        
 
         if (thisFaller.UseSettleTimer)
         {
-            GetComponent<Rigidbody2D>().gravityScale = Constants.fallerGravityPostCollision;
+            if(rb == null)
+            {
+                rb = thisFaller.GetComponent<Rigidbody2D>();
+            }
+            rb.gravityScale = Constants.fallerGravityPostCollision;
         }
         else
         {
@@ -42,39 +52,23 @@ public class FallerCollisionHandler : MonoBehaviour
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            return;
-        }
+        // Frozen blocks have nothing to do on stay — exit before any string comparisons or singleton calls
+        if (thisFaller != null && thisFaller.IsFrozen && !thisFaller.UseSettleTimer) return;
 
-        // Get this faller's controller; skip if already frozen
-        FallerController thisFaller = GetComponent<FallerController>();
+        if (collision.gameObject.name == "Player") return;
 
-        if (thisFaller == null || GameManager.instance().IsPlayerInEMT())
-        {
-            return;
-        }
-        if (collision.gameObject.name == "PunchingArm")
-        {
-            GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
-            GetComponent<FallerController>().HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
-        }
-        if (thisFaller.IsFrozen)
-        {
-            return;
-        }
+        if (thisFaller == null || GameManager.instance().IsPlayerInEMT()) return;
+
+        if (thisFaller.IsFrozen) return;
+
         GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 0);
-        UnityEngine.Debug.Break();
+
         if (thisFaller.UseSettleTimer)
         {
             if (collision.gameObject.TryGetComponent<FallerController>(out var other)
-                && other.IsFrozen && !thisFaller.IsFrozen)
+                && other.IsFrozen)
             {
                 thisFaller.Collided();
-            }
-            else if (collision.gameObject.TryGetComponent<FallerController>(out var other2) && !other2.IsFrozen && thisFaller.IsFrozen)
-            {
-                other2.Collided();
             }
         }
         else
@@ -90,7 +84,6 @@ public class FallerCollisionHandler : MonoBehaviour
             return;
         }
         FallerController otherFaller = collision.gameObject.GetComponent<FallerController>();
-        FallerController thisFaller = GetComponent<FallerController>();
         if (otherFaller != null && thisFaller != null)
         {
             thisFaller.FallerStopsCollidingWithMe(otherFaller);

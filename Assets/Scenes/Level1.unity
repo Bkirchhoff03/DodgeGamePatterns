@@ -2069,7 +2069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_text
-      value: 3.0
+      value: 100.0
       objectReference: {fileID: 0}
     - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_margin.w
@@ -2078,6 +2078,42 @@ PrefabInstance:
     - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_margin.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_xAdvance
+      value: 90.4186
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_LastBaseGlyphIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_lastCharacterOfLine
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_totalCharacterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_lineVisibleCharacterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_lastVisibleCharacterOfLine
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 792165140823627600, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: m_InternalTextProcessingArraySize
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1393720120004894575, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -32,8 +32,9 @@ public class PlayerController : MonoBehaviour
     public GameObject PlayerAnimationGameObject;
     public Animator PlayerAnimator;
     public PlayerAnimationManager animationManager;
+    public SpriteRenderer animationSpriteRenderer { get; private set; }
     private float leftOrRightOrNone = 0f;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb { get; private set; }
     private Vector3 pendingDirection = Vector3.zero;
     //private bool running = false;
     //private bool isPunchingLeft = false;
@@ -45,8 +46,9 @@ public class PlayerController : MonoBehaviour
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
         PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
         animationManager = PlayerAnimationGameObject.GetComponent<PlayerAnimationManager>();
+        animationSpriteRenderer = PlayerAnimationGameObject.GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        //rb.mass = 0.00001f;
+        rb.mass = 0.00001f;
         if (GameManager.instance() != null && GameManager.instance().spawnFallersFromFile)
         {
             return;
@@ -56,11 +58,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         state = state.Update(this);
-        //GameManager.instance().Print("Player state: " + state.getName() + " at " + gameObject.transform.position.y, 0);
         ChangeColorBasedOnState();
     }
     private void FixedUpdate()
@@ -74,30 +74,19 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeColorBasedOnState()
     {
+        if (animationSpriteRenderer == null) return;
         if (state.getName() == Constants.crushedStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.red;
-        }
+            animationSpriteRenderer.color = Color.red;
         else if (state.getName() == Constants.dodgingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
+            animationSpriteRenderer.color = Color.blue;
         else if (state.getName() == Constants.jumpingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.green;
-        }
+            animationSpriteRenderer.color = Color.green;
         else if (state.getName() == Constants.ridingFallerStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-        }
+            animationSpriteRenderer.color = Color.yellow;
         else if (state.getName() == Constants.fallingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
-        }
+            animationSpriteRenderer.color = Color.cyan;
         else
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        }
+            animationSpriteRenderer.color = Color.white;
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
@@ -151,6 +140,7 @@ public class PlayerController : MonoBehaviour
             state.ExitState(this);
             state = newState;
             state.EnterState(this);
+            ChangeColorBasedOnState();
         }
     }
     public void Move(Vector3 direction)

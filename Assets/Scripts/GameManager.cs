@@ -78,7 +78,8 @@ public class GameManager : MonoBehaviour
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
-    private Queue<float> maxPlayerHeightRecently = new Queue<float>(); // Track the maximum height the player has reached recently to help determine if they're stuck
+    private Queue<float> maxPlayerHeightRecently = new Queue<float>();
+    private float maxRecentHeight = float.NegativeInfinity;
     private bool checkstuck = false;
     private float EMT_timer = 0f;
     private float EMT_duration = 5f; // Duration of the EMT effect in seconds
@@ -320,14 +321,23 @@ public class GameManager : MonoBehaviour
             //FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f));
             //GameManager.instance().Print(string.Join(", ", maxPlayerHeightRecently), 1);
             //playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            maxPlayerHeightRecently.Enqueue(player.transform.position.y);
+            float currentY = player.transform.position.y;
+            maxPlayerHeightRecently.Enqueue(currentY);
+            if (currentY > maxRecentHeight) maxRecentHeight = currentY;
             if (maxPlayerHeightRecently.Count > recentHeightRecordCount)
             {
                 float oldest = maxPlayerHeightRecently.Dequeue();
-                if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
+                if (oldest >= maxRecentHeight && currentY < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
                     GameManager.instance().Print("Player may be stuck, starting timer...", 6);
+                }
+                // Recalculate max if the dequeued value was the current max
+                if (oldest >= maxRecentHeight)
+                {
+                    maxRecentHeight = float.NegativeInfinity;
+                    foreach (float h in maxPlayerHeightRecently)
+                        if (h > maxRecentHeight) maxRecentHeight = h;
                 }
             }
         }
@@ -351,6 +361,7 @@ public class GameManager : MonoBehaviour
                 stuckTimer = 0f;
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
+                maxRecentHeight = float.NegativeInfinity;
                 GameManager.instance().Print("Found a reachable faller!!", 6);
                 //l.AddRedTint();
             }
@@ -422,10 +433,15 @@ public class GameManager : MonoBehaviour
     private void UpdateStaminaRegen()
     {
         if (playerController == null) return;
-        bool isMoving = Mathf.Abs(playerController.GetComponent<Rigidbody2D>().linearVelocity.x) > 0.5f;
+        bool isMoving = Mathf.Abs(playerController.rb.linearVelocity.x) > 0.5f;
         if (!isMoving && playerStamina < Constants.maxPlayerStamina)
         {
             playerStamina = Mathf.Min(Constants.maxPlayerStamina, playerStamina + Constants.staminaRegenRate * Time.deltaTime);
+            UpdateStaminaUI();
+        }
+        else if (isMoving && playerStamina < Constants.maxPlayerStamina)
+        {
+            playerStamina = Mathf.Min(Constants.maxPlayerStamina, playerStamina + (Constants.staminaRegenRateMoving) * Time.deltaTime);
             UpdateStaminaUI();
         }
     }

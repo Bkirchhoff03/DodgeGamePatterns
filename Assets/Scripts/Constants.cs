@@ -44,7 +44,8 @@ namespace Assets.Scripts
         public const float maxPlayerLives = 100.0f;
         public const float maxPlayerStamina = 100.0f;
         public const float staminaRegenRate = 15.0f;
-        public const float jumpStaminaCost = 20.0f;
+        public const float staminaRegenRateMoving = 7.5f;
+        public const float jumpStaminaCost = 10.0f;
         public const float punchStaminaCost = 5.0f;
         public const float frozenPunchStaminaCost = 10.0f;
         public const float frozenPunchLifeCost = 2f;

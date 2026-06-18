@@ -162,7 +162,7 @@ public class BolderFallerBehavior : IFallerBehavior
             new Vector2(Constants.halfPlayerWidth*2f, Constants.halfPlayerHeight*2f));
         PolygonCollider2D poly = fc.gameObject.GetComponent<PolygonCollider2D>();
         if (poly == null) return false; // safety check
-        Vector2 bottomLeft = playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight);
+        /*Vector2 bottomLeft = playerPosition - new Vector2(Constants.halfPlayerWidth, Constants.halfPlayerHeight);
         Vector2 bottomRight = playerPosition - new Vector2(-Constants.halfPlayerWidth, Constants.halfPlayerHeight);
         if (poly.OverlapPoint(bottomLeft) || poly.OverlapPoint(bottomRight))
         {
@@ -178,6 +178,15 @@ public class BolderFallerBehavior : IFallerBehavior
         }
         RaycastHit2D hit = Physics2D.Raycast(bottomLeft, Vector2.right, bottomRight.x - bottomLeft.x, LayerMask.GetMask("Fallers"));
         if (hit.collider != null && hit.collider.gameObject.name == fc.gameObject.name)
+        {
+            return true;
+        }*/
+        ColliderDistance2D distance = GameManager.instance().player.GetComponent<Collider2D>().Distance(poly);
+        if (distance.isOverlapped)
+        {
+            return true;
+        }
+        if (distance.distance < 0.05f)
         {
             return true;
         }

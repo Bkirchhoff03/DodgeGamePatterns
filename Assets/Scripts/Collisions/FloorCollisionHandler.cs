@@ -28,6 +28,9 @@ public class FloorCollisionHandler : MonoBehaviour
             if (!faller.IsFrozen && !faller.UseSettleTimer && !GameManager.instance().IsPlayerInEMT())
             {
                 faller.FloorPause();
+            }else if(!faller.IsFrozen && faller.UseSettleTimer && !GameManager.instance().IsPlayerInEMT())
+            {
+                faller.Collided();
             }
         }
     }

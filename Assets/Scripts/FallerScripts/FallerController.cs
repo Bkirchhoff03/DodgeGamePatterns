@@ -158,7 +158,7 @@ public class FallerController : MonoBehaviour
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(FallerObject, FallerSize);
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(0.0f, 0.580392157f, 0.0f);
-        
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         isFrozen = true;
     }
     public void Unfreeze()
@@ -173,6 +173,7 @@ public class FallerController : MonoBehaviour
         rb.gravityScale = Constants.gameGravity;
         rb.linearVelocity = new Vector2(0.0f, 0.0f);
         rb.mass = behavior.UseSettleTimer ? Constants.boulderDynamicMass : 1.0f;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         behavior?.OnUnfreeze(gameObject, FallerSize);
         //rb.bodyType = RigidbodyType2D.Dynamic;
         //gameObject.GetComponent<SpriteRenderer>().color = new UnityEngine.Color(1.0f, 1.0f, 1.0f);

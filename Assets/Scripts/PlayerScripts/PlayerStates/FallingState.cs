@@ -26,7 +26,8 @@ namespace Assets.Scripts
             playerController.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
             playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
-            
+            GameManager.instance().Print("Entering FallingState", 3);
+
         }
         public void ExitState(PlayerController playerController)
         {
