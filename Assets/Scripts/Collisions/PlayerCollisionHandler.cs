@@ -2,24 +2,19 @@ using UnityEngine;
 
 public class PlayerCollisionHandler : MonoBehaviour
 {
+    private PlayerController pc;
+    private int fallerLayer;
+
+    private void Awake()
+    {
+        pc = GetComponent<PlayerController>();
+        fallerLayer = LayerMask.NameToLayer("Fallers");
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         GameManager.instance().Print("Player collided with: " + collision.gameObject.name, 1);
-        if (collision.gameObject.GetComponent<FallerController>() == null)
-        {
-            return;
-        }
-        /*if (collision.gameObject.name == "LeftWall")
-        {
-            this.GetComponent<PlayerController>().BounceOff(collision.gameObject, GameManager.PlayerFallerCollisionType.Right);
-            return;
-        }
-        else if (collision.gameObject.name == "RightWall")
-        {
-            this.GetComponent<PlayerController>().BounceOff(collision.gameObject, GameManager.PlayerFallerCollisionType.Left);
-            return;
-        }*/
-
+        if (collision.gameObject.layer != fallerLayer) return;
         HandlePlayerCollision(collision);
     }
 
@@ -28,19 +23,9 @@ public class PlayerCollisionHandler : MonoBehaviour
     // Only acts when the player is already in FallingState and resting on a faller's top surface.
     public void OnCollisionStay2D(Collision2D collision)
     {
-        
-
-        if (collision.gameObject.GetComponent<FallerController>() == null)
-        {
-            return;
-        }
-
-        PlayerController pc = gameObject.GetComponent<PlayerController>();
-        if (pc == null || pc.state.getName() != Assets.Scripts.Constants.fallingStateName)
-        {
-            return;
-        }
-
+        // State check first — cheapest guard, avoids layer lookup on most frames
+        if (pc == null || pc.state.getName() != Assets.Scripts.Constants.fallingStateName) return;
+        if (collision.gameObject.layer != fallerLayer) return;
         HandlePlayerCollision(collision);
     }
 

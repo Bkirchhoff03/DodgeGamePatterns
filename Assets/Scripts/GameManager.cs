@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 //using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 [DefaultExecutionOrder(-10)]
 public class GameManager : MonoBehaviour
@@ -16,8 +17,11 @@ public class GameManager : MonoBehaviour
     float TimeBetweenSpawns;
     public Sprite sprite;
     static GameManager instance_;
-    private int playerLives = 3;
+    private float playerLives = Constants.maxPlayerLives;
+    private float playerStamina = Constants.maxPlayerStamina;
     public TextMeshProUGUI lifeCounter;
+    [SerializeField] public Image lifeBarFill;
+    [SerializeField] public Image staminaBarFill;
     //public GameObject camera;
     public GameObject player;
     public GameObject trapDoor; // Assign the TrapDoor GameObject in the Inspector
@@ -58,6 +62,7 @@ public class GameManager : MonoBehaviour
     public bool verboseSavingLoading = false;
     public bool verboseRescuing = false;
     public bool verboseAnimations = false;
+    public bool verboseTesting = false;
     private bool[] verboseSettings = new bool[] {
             false,
             false,
@@ -66,15 +71,57 @@ public class GameManager : MonoBehaviour
             false,
             false,
             false,
-            false}; // Array to control verbose logging for different levels or categories of logs
+            false,
+            false
+    }; // Array to control verbose logging for different levels or categories of logs
      
     private float stuckTimer = 0f;
     private float stuckThreshold = 5.0f; // Set a default value for the stuck threshold
     private int recentHeightRecordCount = 50; // Number of recent heights to track for determining if the player is stuck
-    private Queue<float> maxPlayerHeightRecently = new Queue<float>(); // Track the maximum height the player has reached recently to help determine if they're stuck
+    private Queue<float> maxPlayerHeightRecently = new Queue<float>();
+    private float maxRecentHeight = float.NegativeInfinity;
     private bool checkstuck = false;
     private float EMT_timer = 0f;
     private float EMT_duration = 5f; // Duration of the EMT effect in seconds
+    public float TestingFallerSpawnSize = 7f;
+    private Vector2[] TestingFallerSpawnSizeOptions = new Vector2[] {
+        new Vector2(0.5f, 0.5f),
+        new Vector2(0.5f, 1f),
+        new Vector2(0.5f, 1.5f),
+        new Vector2(0.5f, 2f),
+        new Vector2(0.5f, 2.5f),
+        new Vector2(0.5f, 3f),
+        new Vector2(1f, 0.5f),
+        new Vector2(1f, 1f),
+        new Vector2(1f, 1.5f),
+        new Vector2(1f, 2f),
+        new Vector2(1f, 2.5f),
+        new Vector2(1f, 3f),
+        new Vector2(1.5f, 0.5f),
+        new Vector2(1.5f, 1f),
+        new Vector2(1.5f, 1.5f),
+        new Vector2(1.5f, 2f),
+        new Vector2(1.5f, 2.5f),
+        new Vector2(1.5f, 3f),
+        new Vector2(2f, 0.5f),
+        new Vector2(2f, 1f),
+        new Vector2(2f, 1.5f),
+        new Vector2(2f, 2f),
+        new Vector2(2f, 2.5f),
+        new Vector2(2f, 3f),
+        new Vector2(2.5f, 0.5f),
+        new Vector2(2.5f, 1f),
+        new Vector2(2.5f, 1.5f),
+        new Vector2(2.5f, 2f),
+        new Vector2(2.5f, 2.5f),
+        new Vector2(2.5f, 3f),
+        new Vector2(3f, 0.5f),
+        new Vector2(3f, 1f),
+        new Vector2(3f, 1.5f),
+        new Vector2(3f, 2f),
+        new Vector2(3f, 2.5f),
+        new Vector2(3f, 3f)
+    };
     public enum PlayerFallerCollisionType
     {
         Top,
@@ -100,7 +147,8 @@ public class GameManager : MonoBehaviour
             verboseGameState,
             verboseSavingLoading,
             verboseRescuing,
-            verboseAnimations
+            verboseAnimations,
+            verboseTesting
         };
         instance_ = this;
         TimeBetweenSpawns = currentTimeBetweenSpawns;
@@ -180,7 +228,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            int livesFromLevel1 = PlayerPrefs.GetInt("PlayerLivesFromLevel1");
+            float livesFromLevel1 = PlayerPrefs.GetFloat("PlayerLivesFromLevel1");
             if (livesFromLevel1 != 0)
             {
                 playerLives = livesFromLevel1;
@@ -188,7 +236,7 @@ public class GameManager : MonoBehaviour
             }
             UpdateSaveSession();
         }
-        
+        UpdateLifeUI();
 
     }
 
@@ -199,6 +247,16 @@ public class GameManager : MonoBehaviour
         if (clickSpawnCooldown > 0)
         {
             clickSpawnCooldown -= Time.deltaTime;
+        }
+        if (clickToSpawn && Input.mouseScrollDelta.y != 0f)
+        {
+            TestingFallerSpawnSize += Input.mouseScrollDelta.y;
+            if(TestingFallerSpawnSize < 0)
+            {
+                TestingFallerSpawnSize = TestingFallerSpawnSizeOptions.Length - 1;
+            }
+            TestingFallerSpawnSize %= TestingFallerSpawnSizeOptions.Length;
+            Print("Testing faller spawn size: " + TestingFallerSpawnSizeOptions[(int)TestingFallerSpawnSize], 8);
         }
         if (EMT_timer > 0f)
         {
@@ -221,6 +279,7 @@ public class GameManager : MonoBehaviour
         }
 
         CheckIfPlayerStuck();
+        UpdateStaminaRegen();
         /*Camera.main.transform.position = new Vector3(0.0f, player.transform.position.y, -20.0f);
         spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;*/
         if (player != null && player.transform.position.y > cameraInitialY)
@@ -234,7 +293,8 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = new Vector3(0.0f, cameraInitialY, -20.0f);
             spawnHeight = Camera.main.transform.position.y + fallerSpawnCameraDiff;
         }
-        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText; 
+        HeightTracker.text = (Mathf.Round((trapDoorHeight - player.transform.position.y)*10f)/10f).ToString("0.0") + Constants.heightTrackerText;
+        
     }
     public bool IsPlayerInEMT() => EMT_timer > 0f;
     private void triggerRescueSpawn()
@@ -261,14 +321,23 @@ public class GameManager : MonoBehaviour
             //FallerController l = FallerManager.instance().GetLowestReachableFaller(playerController.transform.position, new Vector3(3.83f, 4.94f, 0f));
             //GameManager.instance().Print(string.Join(", ", maxPlayerHeightRecently), 1);
             //playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            maxPlayerHeightRecently.Enqueue(player.transform.position.y);
+            float currentY = player.transform.position.y;
+            maxPlayerHeightRecently.Enqueue(currentY);
+            if (currentY > maxRecentHeight) maxRecentHeight = currentY;
             if (maxPlayerHeightRecently.Count > recentHeightRecordCount)
             {
                 float oldest = maxPlayerHeightRecently.Dequeue();
-                if (oldest >= System.Linq.Enumerable.Max(maxPlayerHeightRecently) && player.transform.position.y < FallerManager.instance().GetHighestFrozenFallerY())
+                if (oldest >= maxRecentHeight && currentY < FallerManager.instance().GetHighestFrozenFallerY())
                 {
                     checkstuck = true;
                     GameManager.instance().Print("Player may be stuck, starting timer...", 6);
+                }
+                // Recalculate max if the dequeued value was the current max
+                if (oldest >= maxRecentHeight)
+                {
+                    maxRecentHeight = float.NegativeInfinity;
+                    foreach (float h in maxPlayerHeightRecently)
+                        if (h > maxRecentHeight) maxRecentHeight = h;
                 }
             }
         }
@@ -292,6 +361,7 @@ public class GameManager : MonoBehaviour
                 stuckTimer = 0f;
                 checkstuck = false;
                 maxPlayerHeightRecently.Clear();
+                maxRecentHeight = float.NegativeInfinity;
                 GameManager.instance().Print("Found a reachable faller!!", 6);
                 //l.AddRedTint();
             }
@@ -307,7 +377,7 @@ public class GameManager : MonoBehaviour
             if (playerController.canBeDamaged())
             {
                 Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.gameObject.transform.position + " collided to lose a life with Faller " + faller.name, 3);
-                MinusLife();
+                TakeDamage(Constants.headBonkLifeCost);
                 playerController.crush();
                 DeleteFaller(faller.name);
             }
@@ -327,29 +397,65 @@ public class GameManager : MonoBehaviour
                 faller.GetComponent<Rigidbody2D>().linearVelocity = faller.GetComponent<Rigidbody2D>().linearVelocity / 2f; //new Vector2(0.0f, 0.0001f);
             }
             playerController.rideFaller(faller);
-        }/*else if(collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
+        }
+        else if (collisionType == PlayerFallerCollisionType.Left || collisionType == PlayerFallerCollisionType.Right)
         {
-            playerController.BounceOff(faller, collisionType);
-        }*/
+            //playerController.BounceOff(faller, collisionType);
+        }
     }
-    private void MinusLife()
+    
+    public void TakeDamage(float amount)
     {
         if (!unlimitedLives)
+            playerLives = Mathf.Max(0f, playerLives - amount);
+        UpdateLifeUI();
+        if (playerLives <= 0f)
         {
-            playerLives--;
-        }
-        string text = "";
-        for (int i = 0; i < playerLives; i++)
-        {
-            text += "I";
-        }
-        lifeCounter.text = text;
-        if (playerLives <= 0)
-        {
-            playerLives = 3;
+            playerLives = Constants.maxPlayerLives;
+            playerStamina = Constants.maxPlayerStamina;
+            UpdateLifeUI();
+            UpdateStaminaUI();
             Print("GAME OVER", 4);
             GameOver("You ran out of lives!");
         }
+    }
+    public bool HasStamina(float amount)
+    {
+        return playerStamina >= amount;
+    }
+    public bool UseStamina(float amount)
+    {
+        if (playerStamina < amount) return false;
+        playerStamina -= amount;
+        UpdateStaminaUI();
+        return true;
+    }
+    private void UpdateStaminaRegen()
+    {
+        if (playerController == null) return;
+        bool isMoving = Mathf.Abs(playerController.rb.linearVelocity.x) > 0.5f;
+        if (!isMoving && playerStamina < Constants.maxPlayerStamina)
+        {
+            playerStamina = Mathf.Min(Constants.maxPlayerStamina, playerStamina + Constants.staminaRegenRate * Time.deltaTime);
+            UpdateStaminaUI();
+        }
+        else if (isMoving && playerStamina < Constants.maxPlayerStamina)
+        {
+            playerStamina = Mathf.Min(Constants.maxPlayerStamina, playerStamina + (Constants.staminaRegenRateMoving) * Time.deltaTime);
+            UpdateStaminaUI();
+        }
+    }
+    private void UpdateLifeUI()
+    {
+        if (lifeCounter != null)
+            lifeCounter.text = playerLives.ToString("F1");
+        if (lifeBarFill != null)
+            lifeBarFill.fillAmount = playerLives / Constants.maxPlayerLives;
+    }
+    private void UpdateStaminaUI()
+    {
+        if (staminaBarFill != null)
+            staminaBarFill.fillAmount = playerStamina / Constants.maxPlayerStamina;
     }
     // Delegates faller creation to FallerManager, which handles positioning and tracking
     void SpawnObject()
@@ -459,7 +565,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnFallerAtClick(Vector3 clickPosition)
     {
-        if (clickSpawnCooldown > 0)
+        if (clickSpawnCooldown > 0 || !clickToSpawn)
         {
             return; // Prevent spawning if cooldown is active
         }
@@ -468,19 +574,56 @@ public class GameManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clickPosition);
         //GameManager.instance().Print("Spawning faller at: " + worldPosition + " from click position: " + clickPosition);
         worldPosition.z = 0f; // Set z to 0 for 2D
-        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, Constants.defaultFallerSize, Constants.maxFallerSpeed, false);
+        FallerManager.instance().ForceSpawnFaller(worldPosition.y, worldPosition.x, TestingFallerSpawnSizeOptions[(int)TestingFallerSpawnSize], Constants.maxFallerSpeed, false);
         //FallerManager.instance().SpawnFallerAtPosition(worldPosition, Constants.defaultFallerSize);
     }
     public void Print(string message, int level = 0)
     {
         if (message != null && verboseSettings[level])
         {
-            Debug.Log(message);
+            if(level == 0)
+            {
+                Debug.Log("<color=cyan>" + message + "</color>");
+            }
+            else if(level == 1)
+            {
+                Debug.Log("<color=magenta>" + message + "</color>");
+            }
+            else if(level == 2)
+            {
+                Debug.Log("<color=yellow>" + message + "</color>");
+            }
+            else if(level == 3)
+            {
+                Debug.Log("<color=teal>" + message + "</color>");
+            }
+            else if(level == 4)
+            {
+                Debug.Log("<color=green>" + message + "</color>");
+            } else if(level == 5)
+            {
+                Debug.Log("<color=blue>" + message + "</color>");
+            }else if(level == 6)
+            {
+                Debug.Log("<color=orange>" + message + "</color>");
+            }
+             else if (level == 7)
+            {
+                Debug.Log("<color=purple>" + message + "</color>");
+            }
+            else if (level == 8)
+            {
+                Debug.Log("<color=black>" + message + "</color>");
+            }
+            else
+            {
+                Debug.Log(message);
+            }
         }
     }
     public void StartEMT()
     {
-        if (playerLives <= 1)
+        if (playerLives <= 10)
         {
             Print("Not applying unfreeze impulse to fallers because player is on their last life", 4);
             EMT.instance().EMTOnOneLife();
@@ -492,7 +635,7 @@ public class GameManager : MonoBehaviour
             return; // Don't apply impulse if already in EMT
         }
         GameManager.instance().Print("Applying EMT unfreeze impulse to fallers", 4);
-        MinusLife();
+        TakeDamage(Constants.EMTLifeCost);
         EMT.instance().EMTMe(player.transform.position);
         EMT_timer = EMT_duration;
         Time.timeScale = 0f;
@@ -540,21 +683,17 @@ public class GameManager : MonoBehaviour
                 }
             }
             playerController.GetBombed(faller.transform.position);
+            TakeDamage(Constants.EMTLifeCost);
         }
     }
-    public int GetPlayerLives()
+    public float GetPlayerLives()
     {
         return playerLives;
     }
-    public void SetPlayerLives(int lives)
+    public void SetPlayerLives(float lives)
     {
         playerLives = lives;
-        string text = "";
-        for (int i = 0; i < playerLives; i++)
-        {
-            text += "I";
-        }
-        lifeCounter.text = text;
+        UpdateLifeUI();
     }
     /*public BoxCollider2D GetPlayerCollider()
     {

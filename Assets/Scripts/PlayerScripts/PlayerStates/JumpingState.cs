@@ -23,12 +23,11 @@ namespace Assets.Scripts
             // Initialize jumping state if needed
         }
         public void EnterState(PlayerController playerController) {
-            
-            playerController.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            playerController.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity = startingjumpVelocity;
-            playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
+            Rigidbody2D rb = playerController.rb;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.linearVelocity = startingjumpVelocity;
+            rb.gravityScale = Constants.playerGravity;
             //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
 
         }
@@ -86,7 +85,7 @@ namespace Assets.Scripts
             //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
             IPlayerState nextState = this;
             //UnityEngine.GameManager.instance().Print("Starting Jump Position: " + startingPosition.ToString());
-            Rigidbody2D rb = playerController.gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = playerController.rb;
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.green;
             /*if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
             {
@@ -108,7 +107,8 @@ namespace Assets.Scripts
             else
             {
                 //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
-                playerController.Move(currentDirection);
+                //playerController.Move(currentDirection);
+                rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
             }
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {

@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         public Vector3 position;
         public Vector2 currentSpeed;
         public string currentStateName;
-        public int lives;
+        public float lives;
     }
     public IPlayerState state = new DodgingState();
     delegate void MoveAction();
@@ -32,7 +32,10 @@ public class PlayerController : MonoBehaviour
     public GameObject PlayerAnimationGameObject;
     public Animator PlayerAnimator;
     public PlayerAnimationManager animationManager;
+    public SpriteRenderer animationSpriteRenderer { get; private set; }
     private float leftOrRightOrNone = 0f;
+    public Rigidbody2D rb { get; private set; }
+    private Vector3 pendingDirection = Vector3.zero;
     //private bool running = false;
     //private bool isPunchingLeft = false;
     //private float punchingVelocity;
@@ -43,7 +46,9 @@ public class PlayerController : MonoBehaviour
         punchingArm.GetComponent<SpriteRenderer>().enabled = false;
         PlayerAnimator = PlayerAnimationGameObject.GetComponent<Animator>();
         animationManager = PlayerAnimationGameObject.GetComponent<PlayerAnimationManager>();
-        GetComponent<Rigidbody2D>().mass = 0.00001f;
+        animationSpriteRenderer = PlayerAnimationGameObject.GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        rb.mass = 0.00001f;
         if (GameManager.instance() != null && GameManager.instance().spawnFallersFromFile)
         {
             return;
@@ -53,39 +58,35 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         state = state.Update(this);
-        //GameManager.instance().Print("Player state: " + state.getName() + " at " + gameObject.transform.position.y, 0);
         ChangeColorBasedOnState();
     }
+    private void FixedUpdate()
+    {
+        if (pendingDirection != Vector3.zero)
+        {
+            rb.MovePosition(transform.position + pendingDirection * Time.fixedDeltaTime * Constants.moveSpeed);
+            pendingDirection = Vector3.zero;
+        }
+    }
+
     private void ChangeColorBasedOnState()
     {
+        if (animationSpriteRenderer == null) return;
         if (state.getName() == Constants.crushedStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.red;
-        }
+            animationSpriteRenderer.color = Color.red;
         else if (state.getName() == Constants.dodgingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
+            animationSpriteRenderer.color = Color.blue;
         else if (state.getName() == Constants.jumpingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.green;
-        }
+            animationSpriteRenderer.color = Color.green;
         else if (state.getName() == Constants.ridingFallerStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-        }
+            animationSpriteRenderer.color = Color.yellow;
         else if (state.getName() == Constants.fallingStateName)
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
-        }
+            animationSpriteRenderer.color = Color.cyan;
         else
-        {
-            PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        }
+            animationSpriteRenderer.color = Color.white;
     }
     public void HandleInput(PlayerController.MoveDirection moveInput)
     {
@@ -109,6 +110,11 @@ public class PlayerController : MonoBehaviour
             }*/
             if(newState.getName() == Constants.jumpingStateName)
             {
+                if (!GameManager.instance().HasStamina(Constants.jumpStaminaCost))
+                {
+                    GameManager.instance().Print("Not enough stamina to jump", 3);
+                    return;
+                }
                 GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 3);
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f);
                 if(hit.collider != null && hit.collider.gameObject != gameObject)
@@ -129,15 +135,19 @@ public class PlayerController : MonoBehaviour
                         return;
                     }
                 }
+                GameManager.instance().UseStamina(Constants.jumpStaminaCost);
             }
             state.ExitState(this);
             state = newState;
             state.EnterState(this);
+            ChangeColorBasedOnState();
         }
     }
     public void Move(Vector3 direction)
     {
-        transform.position += direction * Time.deltaTime * Constants.moveSpeed;
+        //transform.position += direction * Time.deltaTime * Constants.moveSpeed;
+        //rb.MovePosition(transform.position + direction * Time.deltaTime * Constants.moveSpeed);
+        pendingDirection = direction;
         if (direction.x < 0 && leftOrRightOrNone >= 0)
         {
             //SetAnimationDirection(direction);
@@ -273,21 +283,32 @@ public class PlayerController : MonoBehaviour
         GameManager.instance().Print("Bouncing off faller. Collision type: " + collisionType, 1);
         //ensure player does not go through the faller, but stays on the same side of the faller as they were before the collision
         Vector3 newPosition = transform.position;
+        BoxCollider2D fallerCol = faller.GetComponent<BoxCollider2D>();
+        float fallerHalfW = fallerCol.bounds.size.x / 2f;
+        float fallerHalfH = fallerCol.bounds.size.y / 2f;
+        float playerHalfW = GetComponent<SpriteRenderer>().bounds.size.x / 2f;
+        float playerHalfH = GetComponent<SpriteRenderer>().bounds.size.y / 2f;
+        Vector2 fallerPos = faller.GetComponent<Rigidbody2D>().position;
         switch (collisionType)
         {
             case GameManager.PlayerFallerCollisionType.Top:
-                newPosition.y = faller.transform.position.y + faller.GetComponent<SpriteRenderer>().bounds.size.y / 2 + GetComponent<SpriteRenderer>().bounds.size.y / 2;
+                newPosition.y = fallerPos.y + fallerHalfH + playerHalfH;
+                GameManager.instance().Print("Bouncing off top of faller. New player y position: " + newPosition.y, 1);
                 break;
             case GameManager.PlayerFallerCollisionType.Bottom:
-                newPosition.y = faller.transform.position.y - faller.GetComponent<SpriteRenderer>().bounds.size.y / 2 - GetComponent<SpriteRenderer>().bounds.size.y / 2;
+                newPosition.y = fallerPos.y - fallerHalfH - playerHalfH;
+                GameManager.instance().Print("Bouncing off bottom of faller. New player y position: " + newPosition.y, 1);
                 break;
             case GameManager.PlayerFallerCollisionType.Left:
-                newPosition.x = faller.transform.position.x - faller.GetComponent<SpriteRenderer>().bounds.size.x / 2 - GetComponent<SpriteRenderer>().bounds.size.x / 2;
+                newPosition.x = fallerPos.x - fallerHalfW - playerHalfW;
+                GameManager.instance().Print("Bouncing off left of faller. New player x position: " + newPosition.x, 1);
                 break;
             case GameManager.PlayerFallerCollisionType.Right:
-                newPosition.x = faller.transform.position.x + faller.GetComponent<SpriteRenderer>().bounds.size.x / 2 + GetComponent<SpriteRenderer>().bounds.size.x / 2;
+                newPosition.x = fallerPos.x + fallerHalfW + playerHalfW;
+                GameManager.instance().Print("Bouncing off right of faller. New player x position: " + newPosition.x, 1);
                 break;
         }
-        MoveTo(newPosition);
+        gameObject.transform.position = newPosition;
+        rb.position = new Vector2(newPosition.x, newPosition.y);
     }
 }

@@ -59,41 +59,7 @@ namespace Assets.Scripts.PlayerScripts
             {
                 checkAnimationStateTimer += Time.deltaTime;
             }
-            /*if (Crushed)
-            {
-                animator.SetBool(CrushedParameter, true);
-                animator.SetBool(PunchingParameter, Punching);
-                animator.SetBool(RunningParameter, Running);
-                animator.SetBool(IdleParameter, Idle);
-            }
-            else
-            {
-                animator.SetBool(CrushedParameter, false);
-                if (Punching)
-                {
-                    animator.SetBool(PunchingParameter, true);
-                }
-                else
-                {
-                    animator.SetBool(PunchingParameter, false);
-                    if (Running)
-                    {
-                        animator.SetBool(RunningParameter, true);
-                    }
-                    else
-                    {
-                        animator.SetBool(RunningParameter, false);
-                        if (Idle)
-                        {
-                            animator.SetBool(IdleParameter, true);
-                        }
-                        else
-                        {
-                            animator.SetBool(IdleParameter, false);
-                        }
-                    }
-                }
-            }*/
+            
         }
 
         private void checkAnimationStates()
@@ -102,7 +68,7 @@ namespace Assets.Scripts.PlayerScripts
             {
                 // Crushed is already false but the animation is stuck — SetCrushed(false) would be a no-op here
                 // so force the state directly
-                GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 3);
+                GameManager.instance().Print("Player is not crushed but is playing crushed animation, resetting to idle", 7);
                 Idle = true;
                 animator.SetBool(CrushedParameter, false);
                 animator.SetBool(PunchingParameter, false);
@@ -112,7 +78,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if (!Punching && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation"))
             {
-                GameManager.instance().Print("Player is not punching but is playing punching animation, resetting to idle", 3);
+                GameManager.instance().Print("Player is not punching but is playing punching animation, resetting to idle", 7);
                 SetPunching(false); // This will also reset to idle after punching animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -121,7 +87,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if(!Running && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerRunningAnimation"))
             {
-                GameManager.instance().Print("Player is not running but is playing running animation, resetting to idle", 3);
+                GameManager.instance().Print("Player is not running but is playing running animation, resetting to idle", 7);
                 SetRunning(false); // This will also reset to idle after running animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -130,7 +96,7 @@ namespace Assets.Scripts.PlayerScripts
             }
             if(!Idle && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerIdleAnimation"))
             {
-                GameManager.instance().Print("Player is not idle but is playing idle animation, resetting to idle", 3);
+                GameManager.instance().Print("Player is not idle but is playing idle animation, resetting to idle", 7);
                 SetIdle(false); // This will also reset to idle after idle animation finishes
                 animator.SetBool(CrushedParameter, Crushed);
                 animator.SetBool(PunchingParameter, Punching);
@@ -249,7 +215,7 @@ namespace Assets.Scripts.PlayerScripts
         }
         public void SetPunching(bool value)
         {
-            //GameManager.instance().Print("Attempting to set punching from " + Punching + " to " + value, 1);
+            GameManager.instance().Print("Attempting to set punching from " + Punching + " to " + value, 7);
             if (value && !Punching)
             {
                 // Attempt a transition to punching
@@ -261,6 +227,9 @@ namespace Assets.Scripts.PlayerScripts
             }else if(!value && Punching)
             {
                 Punching = value;
+            }else if(value && Punching)
+            {
+                animator.Play("PlayerPunchingAnimation", 0, 0f); // Restart punching animation if already punching and trying to punch again (e.g. for chained punches)
             }
 
         }
@@ -293,7 +262,7 @@ namespace Assets.Scripts.PlayerScripts
         {
             return Punching
                 && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerPunchingAnimation")
-                && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f;
+                && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f;
         }
     }
 }
