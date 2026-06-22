@@ -13,8 +13,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public FallerManager fallerManager { get; private set; }
-    float currentTimeBetweenSpawns = 1.5f;
-    float TimeBetweenSpawns;
+    public float beginningTimeBetweenSpawns = 1.5f;
+    public float currentTimeBetweenSpawns = 1.5f;
+    public float TimeBetweenSpawns;
+    public float FallerStartingSpeed = 1f;
     public Sprite sprite;
     static GameManager instance_;
     private float playerLives = Constants.maxPlayerLives;
@@ -151,7 +153,7 @@ public class GameManager : MonoBehaviour
             verboseTesting
         };
         instance_ = this;
-        TimeBetweenSpawns = currentTimeBetweenSpawns;
+        SetSpawnTime(beginningTimeBetweenSpawns);
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
         trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
 
@@ -276,6 +278,7 @@ public class GameManager : MonoBehaviour
         {
             SpawnObject();
             TimeBetweenSpawns = currentTimeBetweenSpawns;
+            TimeBetweenSpawns -= currentTimeBetweenSpawns * 0.025f;
         }
 
         CheckIfPlayerStuck();
@@ -297,6 +300,16 @@ public class GameManager : MonoBehaviour
         
     }
     public bool IsPlayerInEMT() => EMT_timer > 0f;
+    public void SetSpawnTime(float time)
+    {
+        TimeBetweenSpawns = time;
+        currentTimeBetweenSpawns = time;
+        beginningTimeBetweenSpawns = time;
+    }
+    public void SetFallerSpeedMultiplier(float multiplier)
+    {
+        FallerStartingSpeed *= multiplier;
+    }
     private void triggerRescueSpawn()
     {
         float distance = Mathf.Abs(Camera.main.transform.position.z); // Distance from the camera
@@ -461,6 +474,7 @@ public class GameManager : MonoBehaviour
     void SpawnObject()
     {
         FallerManager.instance().SpawnFaller(spawnHeight);
+         
     }
     // Delegates faller destruction to FallerManager, which handles cleanup from its dictionary
     void DeleteFaller(string nameOfFaller)

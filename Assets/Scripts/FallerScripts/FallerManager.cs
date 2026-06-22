@@ -155,7 +155,8 @@ public class FallerManager
         Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
 
         FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
-        fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
+        float speed = GameManager.instance().FallerStartingSpeed; //Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed);
+        fallerBehavior.Init(spawnPosition, size, speed, fallerBehavior.gameObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
         if (rescueFaller)
         {

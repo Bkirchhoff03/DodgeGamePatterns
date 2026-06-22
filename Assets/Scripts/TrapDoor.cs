@@ -35,8 +35,19 @@ public class TrapDoor : MonoBehaviour
             if(SceneManager.GetActiveScene().name == "Level1")
             {
                 PlayerPrefs.SetFloat("PlayerLivesFromLevel1", GameManager.instance().GetPlayerLives());
-                SceneManager.LoadScene("Level2");
+                // TEMPORARILY RESET LEVEL 1 WITH SLIGHTLY HARDER FALLER SPAWNING (FASTER AND MORE FREQUENT) TO TEST PROGRESSION
+                    
+                    // Space invaders: Less sprites to draw increases speed of the game, so when the level progresses, game gets faster
+                    // New levels, enemies spawn lower on the screen, but still lots of sprites, so slower game.
+
+                // Spawn fallers faster and faster as the level progresses, but also increase the speed fallers spawn with. 
+                // This will make the game more difficult as the player progresses, but also more rewarding when they succeed.
+                float timeBetweenSpawns = GameManager.instance().beginningTimeBetweenSpawns;
+                SceneManager.LoadScene("Level1");
                 GameManager.instance().UpdateSaveSession();
+                GameManager.instance().SetSpawnTime(timeBetweenSpawns * 0.8f);
+                GameManager.instance().SetFallerSpeedMultiplier(1.25f);
+                GameManager.instance().Print("Spawn time: " + GameManager.instance().beginningTimeBetweenSpawns + ", Faller speed: " + GameManager.instance().FallerStartingSpeed);
             }
             else if(SceneManager.GetActiveScene().name == "Level2") 
             {
