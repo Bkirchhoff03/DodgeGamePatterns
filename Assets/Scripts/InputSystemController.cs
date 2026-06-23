@@ -18,7 +18,7 @@ public class InputSystemController : MonoBehaviour
     private KeyCode MoveRight = KeyCode.D;
     private KeyCode Jump = KeyCode.Space;
     private KeyCode EMT = KeyCode.M;
-
+    private KeyCode DebugPause = KeyCode.Equals;
     private KeyCode PunchLeft = KeyCode.Mouse0;
     private KeyCode PunchRight = KeyCode.Mouse1;
 
@@ -134,6 +134,10 @@ public class InputSystemController : MonoBehaviour
         if (Input.GetKey(EMT))
         {
             GameManager.instance().StartEMT();
+        }
+        if (Input.GetKey(DebugPause))
+        {
+            GameManager.instance().Print("Debug Pausing Game", 8);
         }
         playerController.HandleInput(moveDirection);
     }

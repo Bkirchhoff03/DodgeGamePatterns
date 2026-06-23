@@ -43,11 +43,16 @@ public class TrapDoor : MonoBehaviour
                 // Spawn fallers faster and faster as the level progresses, but also increase the speed fallers spawn with. 
                 // This will make the game more difficult as the player progresses, but also more rewarding when they succeed.
                 float timeBetweenSpawns = GameManager.instance().beginningTimeBetweenSpawns;
+                
+                PlayerPrefs.SetFloat("beginningTimeBetweenSpawns", timeBetweenSpawns * 0.8f);
+                PlayerPrefs.SetFloat("FallerSpeedMultiplier", PlayerPrefs.GetFloat("FallerSpeedMultiplier", 1.25f)*1.25f);
+                PlayerPrefs.SetFloat("PlayerLivesFromLevel1", GameManager.instance().GetPlayerLives());
                 SceneManager.LoadScene("Level1");
                 GameManager.instance().UpdateSaveSession();
-                GameManager.instance().SetSpawnTime(timeBetweenSpawns * 0.8f);
-                GameManager.instance().SetFallerSpeedMultiplier(1.25f);
-                GameManager.instance().Print("Spawn time: " + GameManager.instance().beginningTimeBetweenSpawns + ", Faller speed: " + GameManager.instance().FallerStartingSpeed);
+                /*              GameManager.instance().SetSpawnTime(timeBetweenSpawns * 0.8f);
+                                GameManager.instance().SetFallerSpeedMultiplier(1.25f);*/
+                GameManager.instance().Print("Spawn time: " + GameManager.instance().beginningTimeBetweenSpawns + ", Faller speed: " + GameManager.instance().FallerStartingSpeed,8);
+                
             }
             else if(SceneManager.GetActiveScene().name == "Level2") 
             {
@@ -67,6 +72,8 @@ public class TrapDoor : MonoBehaviour
                 Time.timeScale = 0f;
                 SceneManager.LoadScene("WinTheGame");
             }
+            PlayerPrefs.SetInt("EnteringFromMain", 0);
+
         }
     }
 }

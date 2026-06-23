@@ -2284,6 +2284,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: verboseTesting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: CenterGrassTile
       value: 
       objectReference: {fileID: -1766307359, guid: 5fe5454ec8605de43809133b020d1b69, type: 3}

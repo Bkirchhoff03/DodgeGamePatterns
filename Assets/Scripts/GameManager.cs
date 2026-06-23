@@ -153,7 +153,8 @@ public class GameManager : MonoBehaviour
             verboseTesting
         };
         instance_ = this;
-        SetSpawnTime(beginningTimeBetweenSpawns);
+        SetSpawnTime(PlayerPrefs.GetFloat("beginningTimeBetweenSpawns", 1.5f));
+        
         // Read trapdoor height to cap faller spawn height; default to 50 if no trapdoor assigned
         trapDoorHeight = trapDoor != null ? trapDoor.GetComponent<TrapDoor>().height : 50.0f;
 
@@ -164,7 +165,8 @@ public class GameManager : MonoBehaviour
             FallerTypes = new FallerManager.FallerType[] { fallerType };
         }
         fallerManager.init(FallerTypes, trapDoorHeight+10.0f);
-
+        SetFallerSpeedMultiplier(PlayerPrefs.GetFloat("FallerSpeedMultiplier", 1.25f));
+        Print("Spawn time: " + beginningTimeBetweenSpawns + ", Faller speed: " + FallerStartingSpeed, 8);
         playerController = player.GetComponent<PlayerController>();
         HeightTracker = GameObject.Find("HeightTracker").GetComponent<TextMeshProUGUI>();
         HeightTracker.text = (trapDoorHeight - player.transform.position.y).ToString("0.00") + Constants.heightTrackerText;
@@ -179,12 +181,8 @@ public class GameManager : MonoBehaviour
             }
         }
         TimeTracker.text = TimeManager.Instance.GetTimeInGame().ToString() + Constants.timeTrackerText;
-        //if (GetComponent<Camera>() == null)
-        //{
-        //    camera = new GameObject("Main Camera");
-        //    GetComponent<Camera>().AddComponent<Camera>();
-        //    GetComponent<Camera>().transform.position = new Vector3(0.0f, 7.0f, -20.0f);
-        //}
+        
+
         cameraInitialY = Camera.main.transform.position.y;
         fallerSpawnCameraDiff = spawnHeight - Camera.main.transform.position.y;
         string pendingSave = PlayerPrefs.GetString("pendingSaveFile", "");
@@ -224,18 +222,19 @@ public class GameManager : MonoBehaviour
         saveNameInput = saveNamePanel.GetComponentInChildren<TMPro.TMP_InputField>();
         gameOverPanel = GameObject.Find("GameOverPanel");
         gameOverPanel.SetActive(false);
+        float livesFromLevel1 = PlayerPrefs.GetFloat("PlayerLivesFromLevel1");
+        if (livesFromLevel1 != 0)
+        {
+            playerLives = livesFromLevel1;
+
+        }
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             StartSaveSession();
         }
         else
         {
-            float livesFromLevel1 = PlayerPrefs.GetFloat("PlayerLivesFromLevel1");
-            if (livesFromLevel1 != 0)
-            {
-                playerLives = livesFromLevel1;
-
-            }
+            
             UpdateSaveSession();
         }
         UpdateLifeUI();
@@ -277,8 +276,10 @@ public class GameManager : MonoBehaviour
         else if (!clickToSpawn)
         {
             SpawnObject();
+            currentTimeBetweenSpawns -= (currentTimeBetweenSpawns * 0.0025f);
             TimeBetweenSpawns = currentTimeBetweenSpawns;
-            TimeBetweenSpawns -= currentTimeBetweenSpawns * 0.025f;
+            
+            Print("speed: "+ GameManager.instance().FallerStartingSpeed + " number of spawns: " + fallerManager.fallersInPlay.Count + " time to next spawn: " + TimeBetweenSpawns + " Beginning time between spawns: " + beginningTimeBetweenSpawns, 8);
         }
 
         CheckIfPlayerStuck();
@@ -474,7 +475,6 @@ public class GameManager : MonoBehaviour
     void SpawnObject()
     {
         FallerManager.instance().SpawnFaller(spawnHeight);
-         
     }
     // Delegates faller destruction to FallerManager, which handles cleanup from its dictionary
     void DeleteFaller(string nameOfFaller)

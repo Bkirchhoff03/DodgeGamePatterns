@@ -127,7 +127,7 @@ public class FallerCollisionHandler : MonoBehaviour
                     Bounds dif = GetDifference(thisBounds, frozenBounds);
                     /*Debug.DrawLine(dif.min, dif.max, Color.red, 5f);
                     Debug.DrawLine(new Vector3(dif.min.x, dif.max.y), new Vector3(dif.max.x, dif.min.y), Color.red, 5f);*/
-                    GameManager.instance().Print("Drew lines", 8);
+                    //GameManager.instance().Print("Drew lines", 8);
                     if (dif.size.x >= dif.size.y)
                     {
                         // Handle Y difference

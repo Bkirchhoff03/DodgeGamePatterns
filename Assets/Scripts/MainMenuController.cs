@@ -219,8 +219,12 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("Level1");
         TimeManager.Instance.ResetTime();
-        PlayerPrefs.SetString("SessionSaveFile", "Session_" + DateTime.Now.ToString("yyyyMMddHHmm")); 
-        
+        PlayerPrefs.SetString("SessionSaveFile", "Session_" + DateTime.Now.ToString("yyyyMMddHHmm"));
+        PlayerPrefs.SetInt("EnteringFromMain", 1);
+        PlayerPrefs.SetFloat("PlayerLivesFromLevel1", 100.0f);
+        PlayerPrefs.SetFloat("beginningTimeBetweenSpawns", 1.5f);
+        PlayerPrefs.SetFloat("FallerSpeedMultiplier", 1f);
+
     }
     public void QuitGame() => Application.Quit();
     public void ShowHowToPlay() 
