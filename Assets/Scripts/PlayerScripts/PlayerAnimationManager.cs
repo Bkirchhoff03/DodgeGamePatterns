@@ -224,7 +224,10 @@ namespace Assets.Scripts.PlayerScripts
                     return; // Can't transition to punching if currently crushed
                 }
                 Punching = value;
-            }else if(!value && Punching)
+                animator.SetBool(PunchingParameter, Punching);
+                animator.Play("PlayerPunchingAnimation", 0, 0f);
+            }
+            else if(!value && Punching)
             {
                 Punching = value;
             }else if(value && Punching)

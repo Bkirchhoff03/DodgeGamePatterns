@@ -29,6 +29,7 @@ namespace Assets.Scripts
             IPlayerState nextState = this;
             if (moveInput.isPunch != 0)
             {
+                //Debug.Break();
                 playerController.HandlePunch(moveInput);
             }
             if(moveInput.Ydirection > 0)// && playerController.isGrounded())

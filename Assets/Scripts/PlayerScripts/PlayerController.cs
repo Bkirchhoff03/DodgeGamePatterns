@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
-        ChangeColorBasedOnState();
+        //ChangeColorBasedOnState();
     }
     private void FixedUpdate()
     {

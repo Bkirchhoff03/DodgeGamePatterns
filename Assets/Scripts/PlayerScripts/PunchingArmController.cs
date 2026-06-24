@@ -42,7 +42,6 @@ public class PunchingArmController : MonoBehaviour
         }
         else if (isPunchingLeft)
         {
-
             ExecutePunchLeft();
             if (transform.position.x >= playerCenter.x)
             {
@@ -71,6 +70,7 @@ public class PunchingArmController : MonoBehaviour
         {
             return;
         }
+        //Debug.Break();
         GameManager.instance().UseStamina(Constants.punchStaminaCost);
         playerController.animationManager.lookRight(true);
         playerController.animationManager.SetPunching(true);
