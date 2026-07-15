@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c09ea59d749446947a6806091515242b
+guid: d1bc224408ef71e46815bf7dd2aa9635
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2583234861737783134
-    second: StalactiteCavePixelated_0
+      213: 5010667785912921096
+    second: BigCavernDrawingPixelated_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StalactiteCavePixelated_0
+      name: BigCavernDrawingPixelated_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 597
-        height: 1077
+        width: 1024
+        height: 2048
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a0d6be6491862cd0800000000000000
-      internalID: -2583234861737783134
+      spriteID: 80c25dabdc7798540800000000000000
+      internalID: 5010667785912921096
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      StalactiteCavePixelated_0: -2583234861737783134
+      BigCavernDrawingPixelated_0: 5010667785912921096
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
