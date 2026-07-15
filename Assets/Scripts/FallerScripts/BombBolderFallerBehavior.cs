@@ -74,7 +74,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
             if(force < 1f) force = 1f;
             FallerManager.instance().UnfreezeImpulse(fc.transform.position, force);
             GameManager.instance().ImpulsePlayer(fc);
-            GameManager.instance().StartFallerEMT(2.5f);
+            GameManager.instance().StartFallerEMT(1.0f);
             fc.DeleteMe();
         }
 
