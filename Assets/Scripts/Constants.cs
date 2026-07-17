@@ -53,6 +53,7 @@ namespace Assets.Scripts
         public const float frozenPunchStackWeightFactor = 0.4f;
         public const float headBonkLifeCost = 25f;
         public const float EMTLifeCost = 15f;
+        public const float jumpCutMultiplier = 0.5f;
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string timeTrackerText = " seconds in this run";

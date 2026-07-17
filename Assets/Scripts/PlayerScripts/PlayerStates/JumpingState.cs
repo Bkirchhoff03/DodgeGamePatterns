@@ -17,6 +17,8 @@ namespace Assets.Scripts
         private const float idleDelay = Constants.idleDelay;
         private Vector3 startingjumpVelocity = new Vector3(0, 22f, 0);
         private Vector3 currentJumpSpeed = new Vector3(0, 5.0f, 0);
+        private bool isJumpHeld = true;
+        private bool jumpCutApplied = false;
         //private List<Vector2> testingJumpPositions = new List<Vector2>();
         public JumpingState()
         {
@@ -72,7 +74,15 @@ namespace Assets.Scripts
                     leftNoneRight = 0;
                 }
             }
-
+            if(moveInput.Ydirection > 0 && isJumpHeld)
+            {
+                // Continue holding jump
+            }
+            else if (moveInput.Ydirection <= 0 && isJumpHeld)
+            {
+                // Jump button released, apply jump cut
+                isJumpHeld = false;
+            }
             // Handle input specific to dodging state
             return this;
         }
@@ -106,10 +116,17 @@ namespace Assets.Scripts
             }
             else
             {
+                if (!isJumpHeld && !jumpCutApplied)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * Constants.jumpCutMultiplier);
+                    jumpCutApplied = true;
+                    GameManager.instance().Print("Jump Cut Applied", 3);
+                }
                 //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
                 //playerController.Move(currentDirection);
                 rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
             }
+            
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {
                 playerController.animationManager.SetRunning(true);
