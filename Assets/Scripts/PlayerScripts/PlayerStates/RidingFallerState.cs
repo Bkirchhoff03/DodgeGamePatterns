@@ -18,11 +18,14 @@ namespace Assets.Scripts
         private bool isFallingOffFaller = false;
         private Vector3 currentDirection = Vector3.zero;
         private GameObject ridingFaller;
+        private Rigidbody2D fallerRB;
         public void EnterState(PlayerController playerController) {
             if (ridingFaller == null)
             {
                 ridingFaller = FallerManager.instance().GetFallerBeingRidden().FallerObject;
             }
+            fallerRB = ridingFaller.GetComponent<Rigidbody2D>();
+
             GameManager.instance().Print("Entering RidingFallerState with faller: " + ridingFaller.name, 3);
             ridingFaller.GetComponent<FallerController>().StartRiding();
         }
@@ -116,9 +119,8 @@ namespace Assets.Scripts
 
             if (playerController.isGrounded())
             {
-                playerController.transform.GetComponent<Rigidbody2D>().gravityScale = 0f;
-                playerController.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                playerController.PlayerAnimationGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                playerController.rb.gravityScale = 0f;
+                playerController.rb.bodyType = RigidbodyType2D.Static;
                 ExitState(playerController);
                 newState = new DodgingState();
                 newState.EnterState(playerController);
@@ -127,17 +129,17 @@ namespace Assets.Scripts
             else if (!isFallingOffFaller)
             {
                 //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.magenta;
+                Rigidbody2D rb = playerController.rb;
                 if (leftNoneRight != 0)
-                { 
-                    Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
+                {
                     //rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
-                    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-                    playerController.Move(currentDirection);
+                    rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, fallerRB.linearVelocity.y);
                 }
                 else
                 {
-                    Rigidbody2D rb = playerController.transform.GetComponent<Rigidbody2D>();
-                    rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));
+                    //rb.linearVelocity = new Vector2(0f, Mathf.Min(rb.linearVelocity.y, 0f));
+                    rb.linearVelocity = new Vector2(0f, Mathf.Min(fallerRB.linearVelocity.y, 0f));
+
                 }
                 if (!ridingFaller.GetComponent<FallerController>().IsRidingMe(playerController.transform.position))
                 {

@@ -17,18 +17,19 @@ namespace Assets.Scripts
         private const float idleDelay = Constants.idleDelay;
         private Vector3 startingjumpVelocity = new Vector3(0, 22f, 0);
         private Vector3 currentJumpSpeed = new Vector3(0, 5.0f, 0);
+        private bool isJumpHeld = true;
+        private bool jumpCutApplied = false;
         //private List<Vector2> testingJumpPositions = new List<Vector2>();
         public JumpingState()
         {
             // Initialize jumping state if needed
         }
         public void EnterState(PlayerController playerController) {
-            
-            playerController.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            playerController.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity = startingjumpVelocity;
-            playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
+            Rigidbody2D rb = playerController.rb;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.linearVelocity = startingjumpVelocity;
+            rb.gravityScale = Constants.playerGravity;
             //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
 
         }
@@ -73,7 +74,15 @@ namespace Assets.Scripts
                     leftNoneRight = 0;
                 }
             }
-
+            if(moveInput.Ydirection > 0 && isJumpHeld)
+            {
+                // Continue holding jump
+            }
+            else if (moveInput.Ydirection <= 0 && isJumpHeld)
+            {
+                // Jump button released, apply jump cut
+                isJumpHeld = false;
+            }
             // Handle input specific to dodging state
             return this;
         }
@@ -86,7 +95,7 @@ namespace Assets.Scripts
             //testingJumpPositions.Add(new Vector2(playerController.transform.position.x, playerController.transform.position.y));
             IPlayerState nextState = this;
             //UnityEngine.GameManager.instance().Print("Starting Jump Position: " + startingPosition.ToString());
-            Rigidbody2D rb = playerController.gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = playerController.rb;
             //playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.green;
             /*if (playerController.transform.position.y < startingPosition.y) // && currentJumpSpeed.y < 0)
             {
@@ -107,9 +116,17 @@ namespace Assets.Scripts
             }
             else
             {
+                if (!isJumpHeld && !jumpCutApplied)
+                {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * Constants.jumpCutMultiplier);
+                    jumpCutApplied = true;
+                    GameManager.instance().Print("Jump Cut Applied", 3);
+                }
                 //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
-                playerController.Move(currentDirection);
+                //playerController.Move(currentDirection);
+                rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
             }
+            
             if (moving && !playerController.animationManager.isRunning())// !playerController.PlayerAnimator.GetBool("Running"))
             {
                 playerController.animationManager.SetRunning(true);

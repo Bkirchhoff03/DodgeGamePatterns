@@ -29,6 +29,7 @@ namespace Assets.Scripts
             IPlayerState nextState = this;
             if (moveInput.isPunch != 0)
             {
+                //Debug.Break();
                 playerController.HandlePunch(moveInput);
             }
             if(moveInput.Ydirection > 0)// && playerController.isGrounded())
@@ -92,10 +93,10 @@ namespace Assets.Scripts
                     playerController.animationManager.lookRight();
                 }
             }
-            Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
-            //rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-            playerController.Move(currentDirection);
+            Rigidbody2D rb = playerController.rb;
+            rb.linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, rb.linearVelocity.y);
+            //rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            //playerController.Move(currentDirection);
             return this;
             // Update logic specific to dodging state
         }

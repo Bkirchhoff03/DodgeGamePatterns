@@ -127,7 +127,7 @@ public class InputSystemController : MonoBehaviour
         {
             moveDirection.isPunch = 1;
         }
-        if(Input.GetKey(SpawnAtMouse))
+        if (Input.GetKey(SpawnAtMouse))
         {
             GameManager.instance().SpawnFallerAtClick(Input.mousePosition);
         }

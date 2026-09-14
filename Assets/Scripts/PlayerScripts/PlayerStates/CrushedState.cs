@@ -54,7 +54,7 @@ namespace Assets.Scripts
         }
         public IPlayerState Update(PlayerController playerController)
         {
-            GameManager.instance().Print("Is player in crushed animation: " + playerController.animationManager.isCrushed().ToString(), 3);
+            GameManager.instance().Print("Is player in crushed animation: " + playerController.animationManager.isCrushed().ToString(), 7);
             //playerController.transform.GetComponent<SpriteRenderer>().color = Color.red;
             IPlayerState nextState = this; 
             if (crushedTimer > 0)

@@ -26,7 +26,8 @@ namespace Assets.Scripts
             playerController.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             playerController.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
             playerController.gameObject.GetComponent<Rigidbody2D>().gravityScale = Constants.playerGravity;
-            
+            GameManager.instance().Print("Entering FallingState", 3);
+
         }
         public void ExitState(PlayerController playerController)
         {
@@ -122,7 +123,8 @@ namespace Assets.Scripts
                 }
             }
             //currentJumpSpeed = new Vector3(currentJumpSpeed.x, currentJumpSpeed.y + -9.8f * Time.deltaTime, currentJumpSpeed.z);
-            playerController.Move(currentDirection);
+            //playerController.Move(currentDirection);
+            playerController.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(leftNoneRight * Constants.moveSpeed, playerController.GetComponent<Rigidbody2D>().linearVelocity.y);
             return nextState;
         }
     }

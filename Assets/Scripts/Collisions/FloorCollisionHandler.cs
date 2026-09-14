@@ -25,9 +25,12 @@ public class FloorCollisionHandler : MonoBehaviour
         FallerController faller = collision.gameObject.GetComponent<FallerController>();
         if (faller != null)
         {
-            if (!faller.UseSettleTimer && !GameManager.instance().IsPlayerInEMT())
+            if (!faller.IsFrozen && !faller.UseSettleTimer && !GameManager.instance().IsPlayerInEMT())
             {
                 faller.FloorPause();
+            }else if(!faller.IsFrozen && faller.UseSettleTimer && !GameManager.instance().IsPlayerInEMT())
+            {
+                faller.Collided();
             }
         }
     }

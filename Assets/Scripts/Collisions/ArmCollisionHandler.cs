@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class ArmCollisionHandler : MonoBehaviour
 {
-    public void OnCollisionEnter2D(Collision2D collision)
+    // Arm collider is a trigger on a Kinematic Rigidbody2D so it fires against
+    // both Dynamic (falling) and Static (frozen) fallers.
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.GetComponent<FallerController>() == null)
+        GameManager.instance().Print("Player Arm Trigger with " + other.gameObject.name, 1);
+
+        FallerController fc = other.gameObject.GetComponent<FallerController>();
+        if (fc == null)
         {
             return;
         }
 
-        GameManager.instance().Print("Player Arm Collision with " + collision.gameObject.name, 1);
-        HandleArmFallerCollision(collision);
-    }
-    private void HandleArmFallerCollision(Collision2D collision)
-    {
-        collision.gameObject.GetComponent<FallerController>().HandleArmCollision(GetComponent<PunchingArmController>());
+        fc.HandleArmCollision(GetComponent<PunchingArmController>());
     }
 }

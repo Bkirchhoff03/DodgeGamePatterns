@@ -16,3 +16,13 @@
 - In the bolder level, the player switches to dodging state sometimes to avoid getting stuck in a wedge, but then they can't jump for some reason.
 
 - Physics in bolder level are a little unpredictable.  
+
+- Bolders freeze and unfreeze weirdly.
+
+- Lives need to be reset when you enter level 2, 3, or 4 straight from main menu.
+
+- Level 4 needs difficulty tuning. 
+
+- Need a signifier when hurt.
+
+- Can't punch certain frozen fallers.  
