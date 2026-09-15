@@ -66,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 37
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1029,6 +1029,138 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_0
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 985729471f9f1814180876ba6b5f99a8
+      internalID: 672448391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_1
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb4780223b67bc449aaea9cdd7dd6e8
+      internalID: 1540454085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_2
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee5397f8635ab4a44b29c06539f5bbd2
+      internalID: -1670350185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_3
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5f2cfcdd2cec40469fff209764e6eb5
+      internalID: 1252143703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_4
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cdf6e89d81d74644a350167601dbd6f
+      internalID: -1107205870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_5
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a077f9f4c696f64191ffd67f388aa32
+      internalID: -604411980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1084,6 +1216,12 @@ TextureImporter:
       BlockSection_5_3: 1618603965
       BlockSection_5_4: 904277930
       BlockSection_5_5: -1012726364
+      BlockSection_T_0: 672448391
+      BlockSection_T_1: 1540454085
+      BlockSection_T_2: -1670350185
+      BlockSection_T_3: 1252143703
+      BlockSection_T_4: -1107205870
+      BlockSection_T_5: -604411980
       V: 2028897421
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
