@@ -45,7 +45,7 @@ public class BlockFallerBehavior : IFallerBehavior
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         rb.gravityScale = 0f;
         rb.mass = 10000f;
-        if (fallerSize.x == 0.5f)
+        /*if (fallerSize.x == 0.5f)
         {
             fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
                 GameManager.instance().CenterGrassTile;
@@ -59,7 +59,7 @@ public class BlockFallerBehavior : IFallerBehavior
             for (int i = 2; i < (int)(fallerSize.x * 2); i++)
                 fallerObj.transform.Find("T" + i).GetComponent<SpriteRenderer>().sprite =
                     GameManager.instance().CenterGrassTile;
-        }
+        }*/
     }
     public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize) 
     {

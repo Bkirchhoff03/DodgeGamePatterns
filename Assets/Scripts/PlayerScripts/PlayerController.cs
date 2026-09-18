@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
             state.ExitState(this);
             state = newState;
             state.EnterState(this);
-            ChangeColorBasedOnState();
+            //ChangeColorBasedOnState();
         }
     }
     public void Move(Vector3 direction)
