@@ -680,6 +680,128 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
+--- !u!1 &1840038502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1840038506}
+  - component: {fileID: 1840038505}
+  - component: {fileID: 1840038504}
+  - component: {fileID: 1840038503}
+  - component: {fileID: 1840038507}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &1840038503
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840038502}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1840038504
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840038502}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 238
+  m_Materials:
+  - {fileID: 2100000, guid: deaba782b828b4a49a11fbeadd6e5d29, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1840038505
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840038502}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1840038506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840038502}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -8.3419, y: 2.4446, z: -26.394234}
+  m_LocalScale: {x: 0.35038662, y: 1, z: 0.4328351}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!210 &1840038507
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840038502}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 60
+  m_SortAtRoot: 0
 --- !u!1001 &1864010805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1129,6 +1251,70 @@ PrefabInstance:
       propertyPath: verbosePlayerStateChanges
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1771178805, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1367127552, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: 111971199, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1253986803, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[4]'
+      value: 
+      objectReference: {fileID: -1461308412, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[5]'
+      value: 
+      objectReference: {fileID: -1344076117, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1242850617, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSprites.Array.data[7]'
+      value: 
+      objectReference: {fileID: 1274798190, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1017882642, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: 515324289, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: 126118240, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1068486379, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[4]'
+      value: 
+      objectReference: {fileID: -1810669134, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1275519650, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[6]'
+      value: 
+      objectReference: {fileID: 704837890, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
+    - target: {fileID: 4583627252876996692, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
+      propertyPath: 'BoulderSettledSprites.Array.data[7]'
+      value: 
+      objectReference: {fileID: -1487900501, guid: 1f7de97f11fa4ce4882130c0ae8776ef, type: 3}
     - target: {fileID: 4910538271402616942, guid: 952f7c8287df2c246ab9429bf9928096, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1468,3 +1654,4 @@ SceneRoots:
   - {fileID: 298033736}
   - {fileID: 609466124}
   - {fileID: 389094144}
+  - {fileID: 1840038506}

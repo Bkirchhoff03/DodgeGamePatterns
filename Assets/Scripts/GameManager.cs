@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
     public Sprite RightDirtTile;
     public Sprite CenterDirtTile;
 
+    // Indexed by BolderFallerBehavior/BombBolderFallerBehavior's shapeIndex (0-7, one per Shapes[] entry)
+    public Sprite[] BoulderSprites;
+    public Sprite[] BoulderSettledSprites;
+
     public FallerManager.FallerType fallerType = FallerManager.FallerType.Block;
     public FallerManager.FallerType[] FallerTypes;
     public bool verboseLogging = true; // Set to true to enable debug logs for player-faller collisions and other events

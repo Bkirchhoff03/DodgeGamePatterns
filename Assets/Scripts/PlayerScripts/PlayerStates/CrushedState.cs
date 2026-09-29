@@ -33,6 +33,7 @@ namespace Assets.Scripts
             GameManager.instance().Print("Entering Crushed State", 3);
             animationStateHash = playerController.PlayerAnimationGameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).fullPathHash;
             playerController.animationManager.SetCrushed(true);
+            playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.red;
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("Crush");
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play("PlayerCrushedAnimation");
         }
@@ -41,6 +42,7 @@ namespace Assets.Scripts
             GameManager.instance().Print("Exiting Crushed State", 3);
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().Play(animationStateHash);
             playerController.animationManager.SetCrushed(false);
+            playerController.PlayerAnimationGameObject.transform.GetComponent<SpriteRenderer>().color = Color.white;
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().ResetTrigger("Crush");
             //playerController.PlayerAnimationGameObject.GetComponent<Animator>().SetTrigger("CrushFinished");
         }

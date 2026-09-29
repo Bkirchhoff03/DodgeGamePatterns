@@ -1051,6 +1051,886 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Bolder0_0
+      rect:
+        serializedVersion: 2
+        x: 1617
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7b95868260159743944f1c0943fdd93
+      internalID: 1771178805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_0
+      rect:
+        serializedVersion: 2
+        x: 1672
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aec72d5a043b7740afeb26f4269d237
+      internalID: 1367127552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_0
+      rect:
+        serializedVersion: 2
+        x: 1727
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f5d62081c8d654489c65fe40e8d81c
+      internalID: 111971199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_0
+      rect:
+        serializedVersion: 2
+        x: 1782
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58593d4f31b17864ba92068befb03a32
+      internalID: 1253986803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_0
+      rect:
+        serializedVersion: 2
+        x: 1837
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce821606c74ea77418e1a75d98e2046b
+      internalID: -1461308412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_0
+      rect:
+        serializedVersion: 2
+        x: 1892
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 449c1fb698762d640a0e3eede8d6d394
+      internalID: -1344076117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_0
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fec28ecbe64eac747bb06f03ff096040
+      internalID: 1242850617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_0
+      rect:
+        serializedVersion: 2
+        x: 2002
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd1c3baf0ef03e4ca66d0141be54db0
+      internalID: 1274798190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF1
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e0685074ead46d43ab1531c3f1cb022
+      internalID: 1017882642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF2
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b07d6c8eaf232954ca1d267e8b986d43
+      internalID: 515324289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF3
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2668aadeb39eaf748871185f1e820ebd
+      internalID: 126118240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF4
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d25e175be1670d94097e4d974d9f4a3b
+      internalID: 1068486379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF5
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23d12a08297eab0448033f80e3cff383
+      internalID: -1810669134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF6
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fde94152e6ea94849b8a18c2288598c1
+      internalID: 1275519650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF7
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376730cf7b533a9499a5a3737296c113
+      internalID: 704837890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderF8
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 3335
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaccafb89f88db34f9e0283d7ef4d484
+      internalID: -1487900501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_1
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc322f9b4d75c7547bd6986f3ce6e365
+      internalID: -891327093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_1
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b7b4c1c0972f6499b608d648c8b40f
+      internalID: -212918305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_1
+      rect:
+        serializedVersion: 2
+        x: 1862
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a06fb4d421569e24694f95d32b772a96
+      internalID: -680288836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_1
+      rect:
+        serializedVersion: 2
+        x: 1797
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04aedb21367ebd649ad9dca4bee78c2c
+      internalID: -429947651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_1
+      rect:
+        serializedVersion: 2
+        x: 1732
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f316964f2ecc45e459e5aaf9d5e22a9c
+      internalID: -402526411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_1
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05eb549e9e957da418da7474872b9350
+      internalID: 1684752428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_1
+      rect:
+        serializedVersion: 2
+        x: 1602
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af89919bf5b6ba44baa911579b94e368
+      internalID: 1914969091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_1
+      rect:
+        serializedVersion: 2
+        x: 1537
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6db987a21d633ec4b8fb6bba94919363
+      internalID: -1775772831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_2
+      rect:
+        serializedVersion: 2
+        x: 1457
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc0778b40fdbf90469e6b2e3df14a7bf
+      internalID: 1408898864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_2
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6320391507c76c741980fe91bd991417
+      internalID: 1431270368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_2
+      rect:
+        serializedVersion: 2
+        x: 1607
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 036513375a9715e4aa74653440af6674
+      internalID: -332144837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_2
+      rect:
+        serializedVersion: 2
+        x: 1682
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 732be6d5e8f973d4f844b1d5b18f40ff
+      internalID: -1653326163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_2
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 286bc03d8f6ad6545b80db51e67f1cc1
+      internalID: 624075245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_2
+      rect:
+        serializedVersion: 2
+        x: 1832
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f960e1036e6df144a59c23ea8c15d1a
+      internalID: -1572959990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_2
+      rect:
+        serializedVersion: 2
+        x: 1907
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6f00132b9c15ef439b54b335ca2aff3
+      internalID: -1465120585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_2
+      rect:
+        serializedVersion: 2
+        x: 1982
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a2e60bef35da64781f766ed2c8f9d3
+      internalID: -28003685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_3
+      rect:
+        serializedVersion: 2
+        x: 1972
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 583c7910028523a4b99bac3e8fa0cc1b
+      internalID: 846684550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_3
+      rect:
+        serializedVersion: 2
+        x: 1887
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6f62014d56e6ba4ba4961f050b03c5d
+      internalID: -144452440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_3
+      rect:
+        serializedVersion: 2
+        x: 1802
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6b58c242a21ec740b1fb63026acd108
+      internalID: 1207860091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_3
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b407d56cbc1aa0e4a9f36c493af56f3c
+      internalID: -1163555083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_3
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0369f8bcf582eb4f8c248af80a08634
+      internalID: 742312816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_3
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d683fa84ef0036478d5d8a25db682ec
+      internalID: -1828406108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_3
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f8e37991ddab84d821d6a99a459bd5
+      internalID: -610319447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_3
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f471982df99cf4cbe1cf04633fb72d
+      internalID: -976175110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1065,7 +1945,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BlockSection 1_0: -1728289878
+      7_0: 1242850617
       BlockSection_0: -6368795526887149595
       BlockSection_1: 57231692859385998
       BlockSection_2: 8567750362893327587
@@ -1077,6 +1957,46 @@ TextureImporter:
       BlockSection_T_3: 1252143703
       BlockSection_T_4: -1107205870
       BlockSection_T_5: -604411980
+      Bolder0_0: 1771178805
+      Bolder0_1: -1775772831
+      Bolder0_2: 1408898864
+      Bolder0_3: -976175110
+      Bolder1_0: 1367127552
+      Bolder1_1: 1914969091
+      Bolder1_2: 1431270368
+      Bolder1_3: -610319447
+      Bolder2_0: 111971199
+      Bolder2_1: 1684752428
+      Bolder2_2: -332144837
+      Bolder2_3: -1828406108
+      Bolder3_0: 1253986803
+      Bolder3_1: -402526411
+      Bolder3_2: -1653326163
+      Bolder3_3: 742312816
+      Bolder4_0: -1461308412
+      Bolder4_1: -429947651
+      Bolder4_2: 624075245
+      Bolder4_3: -1163555083
+      Bolder5_0: -1344076117
+      Bolder5_1: -680288836
+      Bolder5_2: -1572959990
+      Bolder5_3: 1207860091
+      Bolder6_0: 1242850617
+      Bolder6_1: -212918305
+      Bolder6_2: -1465120585
+      Bolder6_3: -144452440
+      Bolder7_0: 1274798190
+      Bolder7_1: -891327093
+      Bolder7_2: -28003685
+      Bolder7_3: 846684550
+      BolderF1: 1017882642
+      BolderF2: 515324289
+      BolderF3: 126118240
+      BolderF4: 1068486379
+      BolderF5: -1810669134
+      BolderF6: 1275519650
+      BolderF7: 704837890
+      BolderF8: -1487900501
       Faller_0_0: 767295903
       Faller_0_1: -943634298
       Faller_0_2: -199899203
