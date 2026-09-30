@@ -40,6 +40,7 @@ public class FallerController : MonoBehaviour
         //spriteRenderer.sortingOrder = 1;
         //spriteRenderer.sprite = sprite;
         FallerObject.transform.position = spawnPoint;
+        
         FallerObject.transform.localScale = size; 
         behavior.BuildVisuals(FallerObject, FallerSize);
         rb = FallerObject.AddComponent<Rigidbody2D>();
@@ -85,8 +86,8 @@ public class FallerController : MonoBehaviour
     void Update()
     {
         if (FallerObject.transform.position.y < -4.0f 
-            || FallerObject.transform.position.x > 12.5f 
-            || FallerObject.transform.position.x < -12.5f)
+            || FallerObject.transform.position.x > 14.5f 
+            || FallerObject.transform.position.x < -14.5f)
         {
             //Out of bounds either in the wall of water, or below the floor, so should be deleted
             DeleteMe();

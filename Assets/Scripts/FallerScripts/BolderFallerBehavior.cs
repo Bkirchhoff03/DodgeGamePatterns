@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System.Linq;
 using UnityEngine;
 
 public class BolderFallerBehavior : IFallerBehavior
@@ -51,12 +52,15 @@ public class BolderFallerBehavior : IFallerBehavior
     private int shapeIndex;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
+    private Vector2 NameSize = Vector2.zero;
     public void Update(FallerController fc) { }
     public GameObject CreateGameObject(string name, Vector2 size)
     {
         shapeIndex = Random.Range(0, Shapes.Length);
+        size = new Vector2(size.x - 1f, size.y - 1f);
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/Bolders/BolderBackground" + shapeIndex + "_" + Mathf.FloorToInt(size.x)));
+        NameSize = size;
         int fallerLayer = LayerMask.NameToLayer("Fallers");
         fallerObject.GetComponent<SpriteRenderer>().sortingOrder = 25;
         fallerObject.gameObject.layer = fallerLayer;
@@ -72,7 +76,15 @@ public class BolderFallerBehavior : IFallerBehavior
 
     public void BuildVisuals(GameObject fallerObj, Vector2 size)
     {
-        Vector2[] vertices = Shapes[shapeIndex];
+        Vector2[] vertices = Shapes[shapeIndex].ToArray();
+        // MAKE SURE TO SCALE THE VERTICES BASED ON THE NAME SIZE OF THE FALLER
+        float mult = ((NameSize.x * 10f) + 40f) / 35f;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            Vector2 v = vertices[i];
+            vertices[i] = new Vector2(v.x * mult, v.y * mult);
+        }
+
         fallerObj.GetComponent<FallerController>().SetVertices(vertices);
 
         PolygonCollider2D poly = fallerObj.AddComponent<PolygonCollider2D>();

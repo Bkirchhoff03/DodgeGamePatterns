@@ -238,7 +238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection0
+      name: BlockSection0_0
       rect:
         serializedVersion: 2
         x: 1417
@@ -260,7 +260,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection1
+      name: BlockSection1_0
       rect:
         serializedVersion: 2
         x: 1507
@@ -282,7 +282,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection2
+      name: BlockSection2_0
       rect:
         serializedVersion: 2
         x: 1582
@@ -304,7 +304,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection3
+      name: BlockSection3_0
       rect:
         serializedVersion: 2
         x: 1677
@@ -326,7 +326,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection4
+      name: BlockSection4_0
       rect:
         serializedVersion: 2
         x: 1807
@@ -348,7 +348,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection5
+      name: BlockSection5_0
       rect:
         serializedVersion: 2
         x: 1932
@@ -370,7 +370,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection6
+      name: BlockSection6_0
       rect:
         serializedVersion: 2
         x: 1922
@@ -392,7 +392,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlockSection7
+      name: BlockSection7_0
       rect:
         serializedVersion: 2
         x: 1897
@@ -598,7 +598,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -620,7 +620,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -642,7 +642,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -664,7 +664,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -686,7 +686,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -708,7 +708,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -730,7 +730,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -752,7 +752,7 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -774,7 +774,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -796,7 +796,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -818,7 +818,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -840,7 +840,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -862,7 +862,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -884,7 +884,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -906,7 +906,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -928,7 +928,7 @@ TextureImporter:
         width: 70
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -960,38 +960,39 @@ TextureImporter:
       BlockSection - Copy_2: -8905555844305780899
       BlockSection - Copy_3: 6848434662872482354
       BlockSection - Copy_4: 5099283677270945689
-      BlockSection0: -7937445780360194208
+      BlockSection0_0: -7937445780360194208
       BlockSection0_1: -1639446620
       BlockSection0_2: 1448697389
       BlockSection0_3: 980149298
-      BlockSection1: -622020807
+      BlockSection1_0: -622020807
       BlockSection1_1: 1207737654
       BlockSection1_2: -1302301903
       BlockSection1_3: -862799497
-      BlockSection2: 2143315677
+      BlockSection2_0: 2143315677
       BlockSection2_1: -1712025075
       BlockSection2_2: 477986515
       BlockSection2_3: -443867203
-      BlockSection3: -160085796
+      BlockSection3_0: -160085796
       BlockSection3_1: 1889815924
       BlockSection3_2: 946354455
       BlockSection3_3: 55244882
-      BlockSection4: -1804293510
+      BlockSection4_0: -1804293510
       BlockSection4_1: -908239798
       BlockSection4_2: -1157746472
       BlockSection4_3: -1713725614
-      BlockSection5: -643489004
+      BlockSection5_0: -643489004
       BlockSection5_1: 1559366264
       BlockSection5_2: 1296686955
       BlockSection5_3: 1937362232
-      BlockSection6: 456275628
+      BlockSection6_0: 456275628
       BlockSection6_1: 735030696
       BlockSection6_2: -1769553557
       BlockSection6_3: 1344629507
-      BlockSection7: -950621267
+      BlockSection7_0: -950621267
       BlockSection7_1: 1671738911
       BlockSection7_2: 1311994223
       BlockSection7_3: -973814813
+      _0: -622020807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

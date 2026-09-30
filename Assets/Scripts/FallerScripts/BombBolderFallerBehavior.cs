@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System.Linq;
 using UnityEngine;
 
 public class BombBolderFallerBehavior : IFallerBehavior
@@ -45,6 +46,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
     private float flashInterval = 0.2f; // interval between flashes
     private int frozenFlashCount = 0; // count of flashes while frozen
     private int shapeIndex;
+    private Vector2 NameSize = Vector2.zero;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
     public void Update(FallerController fc)
@@ -79,20 +81,32 @@ public class BombBolderFallerBehavior : IFallerBehavior
     public GameObject CreateGameObject(string name, Vector2 size)
     {
         shapeIndex = Random.Range(0, Shapes.Length);
+        size = new Vector2(size.x - 1f, size.y - 1f);
         GameObject fallerObject = GameObject.Instantiate(
-            Resources.Load<GameObject>("Prefabs/Boulder" + shapeIndex));
+            Resources.Load<GameObject>("Prefabs/Bolders/BolderBackground" + shapeIndex + "_" + Mathf.FloorToInt(size.x)));
+        NameSize = size;
+
         int fallerLayer = LayerMask.NameToLayer("Fallers");
-        foreach (Transform t in fallerObject.GetComponentsInChildren<Transform>(true))
+        fallerObject.GetComponent<SpriteRenderer>().sortingOrder = 25;
+
+        /*foreach (Transform t in fallerObject.GetComponentsInChildren<Transform>(true))
         {
             t.gameObject.layer = fallerLayer;
-        }
+        }*/
         fallerObject.name = name;
         AddTint(fallerObject.GetComponent<FallerController>(), new Color(1f, 0f, 0f, 0.5f)); // Add red tint to indicate it's a bomb bolder
         return fallerObject;
     }
     public void BuildVisuals(GameObject fallerObj, Vector2 size)
     {
-        Vector2[] vertices = Shapes[shapeIndex];
+        Vector2[] vertices = Shapes[shapeIndex].ToArray();
+        // MAKE SURE TO SCALE THE VERTICES BASED ON THE NAME SIZE OF THE FALLER
+        float mult = ((NameSize.x * 10f) + 40f) / 35f;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            Vector2 v = vertices[i];
+            vertices[i] = new Vector2(v.x * mult, v.y * mult);
+        }
         fallerObj.GetComponent<FallerController>().SetVertices(vertices);
 
         PolygonCollider2D poly = fallerObj.AddComponent<PolygonCollider2D>();
@@ -106,13 +120,14 @@ public class BombBolderFallerBehavior : IFallerBehavior
         //rb.bodyType = RigidbodyType2D.Static;
         //rb.gravityScale = 0f;
         //rb.mass = 10000f;
-        fallerObj.transform.Find("Body").GetComponent<SpriteRenderer>().sprite =
-            GameManager.instance().BoulderSettledSprites[shapeIndex];
+        fallerObj.transform.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        //fallerObj.transform.Find("Body").GetComponent<SpriteRenderer>().sprite = GameManager.instance().BoulderSettledSprites[shapeIndex];
     }
     public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize)
     {
-        fallerObj.transform.Find("Body").GetComponent<SpriteRenderer>().sprite =
-            GameManager.instance().BoulderSprites[shapeIndex];
+        fallerObj.transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+
+        //fallerObj.transform.Find("Body").GetComponent<SpriteRenderer>().sprite = GameManager.instance().BoulderSprites[shapeIndex];
     }
     public void HandleArmCollision(FallerController fc, PunchingArmController arm)
     {
