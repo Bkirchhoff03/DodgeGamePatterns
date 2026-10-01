@@ -75,39 +75,21 @@ public class BombBlockFallerBehavior : IFallerBehavior
         //rb.bodyType = RigidbodyType2D.Static;
         //rb.gravityScale = 0f;
         //rb.mass = 10000f;
-        if (fallerSize.x == 0.5f)
+        foreach (Transform t in fallerObj.GetComponentsInChildren<Transform>(true))
         {
-            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
-                GameManager.instance().CenterGrassTile;
+            SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(0.5f, 0.5f, 0.5f, 1f);
         }
-        else
-        {
-            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
-                GameManager.instance().LeftGrassTile;
-            fallerObj.transform.Find("T" + ((int)(fallerSize.x * 2)).ToString())
-                .GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightGrassTile;
-            for (int i = 2; i < (int)(fallerSize.x * 2); i++)
-                fallerObj.transform.Find("T" + i).GetComponent<SpriteRenderer>().sprite =
-                    GameManager.instance().CenterGrassTile;
-        }
+
     }
     public void OnUnfreeze(GameObject fallerObj, Vector2 fallerSize) 
     {
-        if (fallerSize.x == 0.5f)
+        foreach (Transform t in fallerObj.GetComponentsInChildren<Transform>(true))
         {
-            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
-                GameManager.instance().CenterDirtTile;
+            SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(1f, 1f, 1f, 1f);
         }
-        else
-        {
-            fallerObj.transform.Find("T1").GetComponent<SpriteRenderer>().sprite =
-                GameManager.instance().LeftDirtTile;
-            fallerObj.transform.Find("T" + ((int)(fallerSize.x * 2)).ToString())
-                .GetComponent<SpriteRenderer>().sprite = GameManager.instance().RightDirtTile;
-            for (int i = 2; i < (int)(fallerSize.x * 2); i++)
-                fallerObj.transform.Find("T" + i).GetComponent<SpriteRenderer>().sprite =
-                    GameManager.instance().CenterDirtTile;
-        }
+
     }
     public void HandleArmCollision(FallerController fc, PunchingArmController arm)
     {

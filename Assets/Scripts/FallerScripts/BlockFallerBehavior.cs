@@ -16,8 +16,8 @@ public class BlockFallerBehavior : IFallerBehavior
         foreach (Transform t in fallerObject.GetComponentsInChildren<Transform>(true))
         {
             t.gameObject.layer = fallerLayer;
-            SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
-            sr.sortingOrder = 25;
+            //SpriteRenderer sr = t.gameObject.GetComponent<SpriteRenderer>();
+            //sr.sortingOrder = 25;
         }
         fallerObject.name = name;
         return fallerObject;
