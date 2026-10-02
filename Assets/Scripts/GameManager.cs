@@ -408,8 +408,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, float delay = 0f)
     {
+        if (amount > 0f)
+        {
+            AudioManager.instance()?.PlayHurt(delay);
+        }
         if (!unlimitedLives)
             playerLives = Mathf.Max(0f, playerLives - amount);
         UpdateLifeUI();

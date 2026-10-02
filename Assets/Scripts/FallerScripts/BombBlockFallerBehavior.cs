@@ -96,12 +96,20 @@ public class BombBlockFallerBehavior : IFallerBehavior
         if (fc.IsFrozen)
         {
             arm.CancelPunch();  // can't punch a frozen block
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchCrush();
+            }
         }
         else
         {
             float punchVelocity = arm.getPunchingVelocity();
             fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2(punchVelocity * Constants.blockPunchForceMultiplier, 0f), ForceMode2D.Impulse);
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchConnect();
+            }
             arm.CancelPunch();
         }
     }

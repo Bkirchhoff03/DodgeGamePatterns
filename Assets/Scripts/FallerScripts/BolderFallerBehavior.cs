@@ -123,17 +123,32 @@ public class BolderFallerBehavior : IFallerBehavior
             int stackCount = FallerManager.instance().GetFrozenFallersAbove(fc);
             if (stackCount == 0)
             {
-                float forceMult = Constants.boulderPunchForceMultiplier / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
+                float forceMult = Constants.boulderPunchForceMultiplier;
                 fc.Unfreeze();
                 fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
                     new Vector2(punchVelocity * forceMult, 0f), ForceMode2D.Impulse);
             }
-
+            else
+            {
+                float forceMult = Constants.boulderPunchForceMultiplier / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
+                fc.Unfreeze();
+                fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                    new Vector2(punchVelocity * forceMult, 0f), ForceMode2D.Impulse);
+                
+            }
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchCrush();
+            }
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
-            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
+            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost, 0.25f); 
         }
         else
         {
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchConnect();
+            }
             fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2(punchVelocity * Constants.boulderPunchForceMultiplier, 0f), ForceMode2D.Impulse);
         }
