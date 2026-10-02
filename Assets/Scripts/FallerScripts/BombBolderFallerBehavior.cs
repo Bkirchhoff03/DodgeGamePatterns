@@ -47,6 +47,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
     private int frozenFlashCount = 0; // count of flashes while frozen
     private int shapeIndex;
     private Vector2 NameSize = Vector2.zero;
+    private GameObject tintGameObject;
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
     public void Update(FallerController fc)
@@ -85,7 +86,13 @@ public class BombBolderFallerBehavior : IFallerBehavior
         GameObject fallerObject = GameObject.Instantiate(
             Resources.Load<GameObject>("Prefabs/Bolders/BolderBackground" + shapeIndex + "_" + Mathf.FloorToInt(size.x)));
         NameSize = size;
-
+        tintGameObject = new GameObject("Tint");
+        tintGameObject.AddComponent<SpriteRenderer>();
+        tintGameObject.transform.SetParent(fallerObject.transform);
+        tintGameObject.transform.localPosition = Vector3.zero;
+        tintGameObject.transform.localScale = Vector3.one;
+        tintGameObject.GetComponent<SpriteRenderer>().sprite = fallerObject.transform.Find("Square").GetComponent<SpriteRenderer>().sprite;
+        tintGameObject.GetComponent<SpriteRenderer>().sortingOrder = 26;
         int fallerLayer = LayerMask.NameToLayer("Fallers");
         fallerObject.GetComponent<SpriteRenderer>().sortingOrder = 25;
 
@@ -146,7 +153,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
     }
     public void AddTint(FallerController fc, Color tint)
     {
-        SpriteRenderer sr = fc.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = tintGameObject.GetComponent<SpriteRenderer>();
         if (sr != null)
         {
             sr.enabled = true;
@@ -156,7 +163,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
     }
     public void RemoveTint(FallerController fc)
     {
-        SpriteRenderer sr = fc.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = tintGameObject.gameObject.GetComponent<SpriteRenderer>();
         if (sr != null)
         {
             sr.enabled = false;

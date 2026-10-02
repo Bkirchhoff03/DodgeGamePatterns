@@ -207,7 +207,7 @@ public class FallerController : MonoBehaviour
         if(sr != null && sr.color.r > 0.0f)
         {
             sr.enabled = true;
-            sr.sortingOrder = 2;
+            sr.sortingOrder = 26;
             sr.color = new UnityEngine.Color(1f, 0f, 0f, 0.098f);
         }
     }
