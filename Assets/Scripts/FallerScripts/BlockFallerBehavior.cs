@@ -111,8 +111,12 @@ public class BlockFallerBehavior : IFallerBehavior
             GameManager.instance().Print("Moving block by: " + shift, 2);
             //fc.gameObject.transform.position += new Vector3(shift, 0f, 0f);
             fc.gameObject.GetComponent<Rigidbody2D>().position += new Vector2(shift, 0f);
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchCrush();
+            }
             GameManager.instance().UseStamina(Constants.frozenPunchStaminaCost);
-            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost);
+            GameManager.instance().TakeDamage(Constants.frozenPunchLifeCost, 0.25f);
             arm.CancelPunch();
         }
         else
@@ -120,6 +124,10 @@ public class BlockFallerBehavior : IFallerBehavior
             float punchVelocity = arm.getPunchingVelocity();
             fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2(punchVelocity * Constants.blockPunchForceMultiplier, 0f), ForceMode2D.Impulse);
+            if (AudioManager.instance() != null)
+            {
+                AudioManager.instance().PlayPunchConnect();
+            }
             arm.CancelPunch();
         }
     }

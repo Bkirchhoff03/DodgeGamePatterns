@@ -145,6 +145,10 @@ public class BombBolderFallerBehavior : IFallerBehavior
         }
         fc.gameObject.GetComponent<Rigidbody2D>().AddForce(
             new Vector2(punchVelocity * Constants.boulderPunchForceMultiplier, 0f), ForceMode2D.Impulse);
+        if (AudioManager.instance() != null)
+        {
+            AudioManager.instance().PlayPunchConnect();
+        }
         arm.CancelPunch();
     }
     public void AddImpulse(FallerController fc, Vector2 direction)

@@ -70,6 +70,10 @@ public class PunchingArmController : MonoBehaviour
         {
             return;
         }
+        if(AudioManager.instance() != null)
+        {
+            AudioManager.instance().PlaySwing();
+        }
         //Debug.Break();
         GameManager.instance().UseStamina(Constants.punchStaminaCost);
         playerController.animationManager.lookRight(true);
@@ -108,6 +112,10 @@ public class PunchingArmController : MonoBehaviour
         if (isPunchingLeft)
         {
             return;
+        }
+        if (AudioManager.instance() != null)
+        {
+            AudioManager.instance().PlaySwing();
         }
         GameManager.instance().UseStamina(Constants.punchStaminaCost);
         playerController.animationManager.lookLeft(true);

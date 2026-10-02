@@ -852,5 +852,9 @@ public class FallerManager
             faller.AddImpulse(new Vector2(direction.x, direction.y) * force);
             //faller.AddTint(new Color(0f, 0f, 1f), 0.098f);
         }
+        if (AudioManager.instance() != null)
+        {
+            AudioManager.instance().PlayExplosion();
+        }
     }
 }
