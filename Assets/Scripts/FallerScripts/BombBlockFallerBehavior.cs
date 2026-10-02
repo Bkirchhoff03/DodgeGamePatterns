@@ -115,7 +115,7 @@ public class BombBlockFallerBehavior : IFallerBehavior
         if (sr != null)
         {
             sr.enabled = true;
-            sr.sortingOrder = 2;
+            sr.sortingOrder = 26;
             sr.color = new UnityEngine.Color(tint.r, tint.g, tint.b, tint.a);
         }
     }

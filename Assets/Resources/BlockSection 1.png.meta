@@ -1759,12 +1759,12 @@ TextureImporter:
       name: BolderBackground7_0
       rect:
         serializedVersion: 2
-        x: 996
-        y: 3509
-        width: 42
-        height: 42
+        x: 995
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1781,12 +1781,12 @@ TextureImporter:
       name: BolderBackground6_0
       rect:
         serializedVersion: 2
-        x: 941
-        y: 3509
-        width: 42
-        height: 42
+        x: 940
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1803,12 +1803,12 @@ TextureImporter:
       name: BolderBackground7_1
       rect:
         serializedVersion: 2
-        x: 986
-        y: 3444
-        width: 52
-        height: 52
+        x: 985
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1825,12 +1825,12 @@ TextureImporter:
       name: BolderBackground7_2
       rect:
         serializedVersion: 2
-        x: 976
-        y: 3369
-        width: 62
-        height: 62
+        x: 975
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1847,12 +1847,12 @@ TextureImporter:
       name: BolderBackground7_3
       rect:
         serializedVersion: 2
-        x: 966
-        y: 3284
-        width: 72
-        height: 72
+        x: 965
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1869,12 +1869,12 @@ TextureImporter:
       name: BolderBackground6_1
       rect:
         serializedVersion: 2
-        x: 921
-        y: 3444
-        width: 52
-        height: 52
+        x: 920
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1891,12 +1891,12 @@ TextureImporter:
       name: BolderBackground6_2
       rect:
         serializedVersion: 2
-        x: 901
-        y: 3369
-        width: 62
-        height: 62
+        x: 900
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1913,12 +1913,12 @@ TextureImporter:
       name: BolderBackground6_3
       rect:
         serializedVersion: 2
-        x: 881
-        y: 3284
-        width: 72
-        height: 72
+        x: 880
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1935,12 +1935,12 @@ TextureImporter:
       name: BolderBackground5_0
       rect:
         serializedVersion: 2
-        x: 886
-        y: 3509
-        width: 42
-        height: 42
+        x: 885
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1957,12 +1957,12 @@ TextureImporter:
       name: BolderBackground5_1
       rect:
         serializedVersion: 2
-        x: 856
-        y: 3444
-        width: 52
-        height: 52
+        x: 855
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1979,12 +1979,12 @@ TextureImporter:
       name: BolderBackground5_2
       rect:
         serializedVersion: 2
-        x: 826
-        y: 3369
-        width: 62
-        height: 62
+        x: 825
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2001,12 +2001,12 @@ TextureImporter:
       name: BolderBackground5_3
       rect:
         serializedVersion: 2
-        x: 796
-        y: 3284
-        width: 72
-        height: 72
+        x: 795
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2023,12 +2023,12 @@ TextureImporter:
       name: BolderBackground4_0
       rect:
         serializedVersion: 2
-        x: 831
-        y: 3509
-        width: 42
-        height: 42
+        x: 830
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2045,12 +2045,12 @@ TextureImporter:
       name: BolderBackground4_1
       rect:
         serializedVersion: 2
-        x: 791
-        y: 3444
-        width: 52
-        height: 52
+        x: 790
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2067,12 +2067,12 @@ TextureImporter:
       name: BolderBackground4_2
       rect:
         serializedVersion: 2
-        x: 751
-        y: 3369
-        width: 62
-        height: 62
+        x: 750
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2089,12 +2089,12 @@ TextureImporter:
       name: BolderBackground4_3
       rect:
         serializedVersion: 2
-        x: 711
-        y: 3284
-        width: 72
-        height: 72
+        x: 710
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2111,12 +2111,12 @@ TextureImporter:
       name: BolderBackground3_0
       rect:
         serializedVersion: 2
-        x: 776
-        y: 3509
-        width: 42
-        height: 42
+        x: 775
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2133,12 +2133,12 @@ TextureImporter:
       name: BolderBackground3_1
       rect:
         serializedVersion: 2
-        x: 726
-        y: 3444
-        width: 52
-        height: 52
+        x: 725
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2155,12 +2155,12 @@ TextureImporter:
       name: BolderBackground3_2
       rect:
         serializedVersion: 2
-        x: 676
-        y: 3369
-        width: 62
-        height: 62
+        x: 675
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2177,12 +2177,12 @@ TextureImporter:
       name: BolderBackground3_3
       rect:
         serializedVersion: 2
-        x: 626
-        y: 3284
-        width: 72
-        height: 72
+        x: 625
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2199,12 +2199,12 @@ TextureImporter:
       name: BolderBackground2_0
       rect:
         serializedVersion: 2
-        x: 721
-        y: 3509
-        width: 42
-        height: 42
+        x: 720
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2221,12 +2221,12 @@ TextureImporter:
       name: BolderBackground2_1
       rect:
         serializedVersion: 2
-        x: 661
-        y: 3444
-        width: 52
-        height: 52
+        x: 660
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2243,12 +2243,12 @@ TextureImporter:
       name: BolderBackground2_2
       rect:
         serializedVersion: 2
-        x: 601
-        y: 3369
-        width: 62
-        height: 62
+        x: 600
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2265,12 +2265,12 @@ TextureImporter:
       name: BolderBackground2_3
       rect:
         serializedVersion: 2
-        x: 541
-        y: 3284
-        width: 72
-        height: 72
+        x: 540
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2287,12 +2287,12 @@ TextureImporter:
       name: BolderBackground1_0
       rect:
         serializedVersion: 2
-        x: 666
-        y: 3509
-        width: 42
-        height: 42
+        x: 665
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2309,12 +2309,12 @@ TextureImporter:
       name: BolderBackground1_1
       rect:
         serializedVersion: 2
-        x: 596
-        y: 3444
-        width: 52
-        height: 52
+        x: 595
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2331,12 +2331,12 @@ TextureImporter:
       name: BolderBackground1_2
       rect:
         serializedVersion: 2
-        x: 526
-        y: 3369
-        width: 62
-        height: 62
+        x: 525
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2353,12 +2353,12 @@ TextureImporter:
       name: BolderBackground1_3
       rect:
         serializedVersion: 2
-        x: 456
-        y: 3284
-        width: 72
-        height: 72
+        x: 455
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2375,12 +2375,12 @@ TextureImporter:
       name: BolderBackground0_0
       rect:
         serializedVersion: 2
-        x: 611
-        y: 3509
-        width: 42
-        height: 42
+        x: 610
+        y: 3508
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2397,12 +2397,12 @@ TextureImporter:
       name: BolderBackground0_1
       rect:
         serializedVersion: 2
-        x: 531
-        y: 3444
-        width: 52
-        height: 52
+        x: 530
+        y: 3443
+        width: 54
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2419,12 +2419,12 @@ TextureImporter:
       name: BolderBackground0_2
       rect:
         serializedVersion: 2
-        x: 451
-        y: 3369
-        width: 62
-        height: 62
+        x: 450
+        y: 3368
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2441,12 +2441,12 @@ TextureImporter:
       name: BolderBackground0_3
       rect:
         serializedVersion: 2
-        x: 371
-        y: 3284
-        width: 72
-        height: 72
+        x: 370
+        y: 3283
+        width: 74
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -2455,6 +2455,798 @@ TextureImporter:
       bones: []
       spriteID: 002de037b003d1241bd1ac49c8456963
       internalID: -2072029142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63434392b3dcab347a3ad24fe7df399c
+      internalID: -253749552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 39
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719512601009f6246a3c7116567e1d9a
+      internalID: 1236211025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 39
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 911bda9d609feeb47903b923a4cf6395
+      internalID: -405448582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 39
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bde21fa6e8a74bf468c4a51134589ee3
+      internalID: -421672484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 39
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2437cf1bbeb14304d8008d1a3c42d4f6
+      internalID: -713109261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 39
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19e56ed90ac2afd4f812be2c3039f9c7
+      internalID: 1824156765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 74
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dea44d178dfba4e9528dc8676cdd41
+      internalID: 1498293842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d178c2863321c469c37290d10044f1
+      internalID: 911781135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 74
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65984249218f05f48a9e721e7b48ac77
+      internalID: 367027539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 74
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72994e71d34e19f4d9fa475004a18395
+      internalID: 2096647479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 74
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83dd6ae831469eb4bbd74608e8ca3119
+      internalID: 567171946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 74
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d57c3b3c4118d246aaefcd0cb821ed3
+      internalID: 2016857803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 109
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 675692e7826af93479cad05c03087989
+      internalID: 896550149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 109
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20167f93b315a904da34c856ca68e11c
+      internalID: 1665370924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 109
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3f97557ec6a59542ac3e23b5d769a0b
+      internalID: 1686683575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 109
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0414baa8f13b7834f97c3df2a01640cf
+      internalID: -895191978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 109
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 206bf27b398445c45b76e8d98791cd60
+      internalID: 311158456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 109
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 975acc6e9eba4204dbdbec682da3c804
+      internalID: 1610962367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 144
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d03004429a41cd045a6de9f1dfba5190
+      internalID: -939784292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 144
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6f406360ab2b384f9e3866c920c8787
+      internalID: 262416680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 144
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ff6f2a8ef971cd4aa3c43b488749ca1
+      internalID: 1055130077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 144
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ee2698d0faadb4f8f8342795859775
+      internalID: -1040242082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 144
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5199edf14723dcb409a5fe5336fa10d0
+      internalID: 892123422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 144
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf46859534ef30741acd8cf56c3ba775
+      internalID: -49884356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 179
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c2fcf9c6fb03fd47b9ff34407f5e109
+      internalID: -569162478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 179
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f22dd0a5c1233140b53ba51d33922ec
+      internalID: -564193873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 179
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cd19278f580fd5498ffce7c7ba18159
+      internalID: 1651532959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 179
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a591e2f4dd812643b17b93d3851adcd
+      internalID: -980658334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 179
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 075305c6a80bd9140bac703cca94b0f2
+      internalID: 494964470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 179
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c175bc458a62964fbc52833941af3bc
+      internalID: -644131796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 214
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1283f0aefae14af42a8a9b5c69eaec28
+      internalID: 680726094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 214
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e67fd87d8545c04eb5a93e02323bbab
+      internalID: -43158862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 214
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4185ac78953bf1d4eae2b91b88779dfd
+      internalID: 1568988067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 214
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76c15eaed238c54e89d28ce3ee118fe
+      internalID: 1842606711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 214
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f4dddc1a7f91ce439fefa6640d7d664
+      internalID: 337360127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 214
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e021341a83e0b141bdd69261a3eae5c
+      internalID: -111862784
       vertices: []
       indices: 
       edges: []
@@ -2474,6 +3266,42 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       7_0: 1242850617
+      Back0.5_0.5: -253749552
+      Back0.5_1: 1236211025
+      Back0.5_1.5: -405448582
+      Back0.5_2: -421672484
+      Back0.5_2.5: -713109261
+      Back0.5_3: 1824156765
+      Back1.5_0.5: 896550149
+      Back1.5_1: 1665370924
+      Back1.5_1.5: 1686683575
+      Back1.5_2: -895191978
+      Back1.5_2.5: 311158456
+      Back1.5_3: 1610962367
+      Back1_0.5: 1498293842
+      Back1_1: 911781135
+      Back1_1.5: 367027539
+      Back1_2: 2096647479
+      Back1_2.5: 567171946
+      Back1_3: 2016857803
+      Back2.5_0.5: -569162478
+      Back2.5_1: -564193873
+      Back2.5_1.5: 1651532959
+      Back2.5_2: -980658334
+      Back2.5_2.5: 494964470
+      Back2.5_3: -644131796
+      Back2_0.5: -939784292
+      Back2_1: 262416680
+      Back2_1.5: 1055130077
+      Back2_2: -1040242082
+      Back2_2.5: 892123422
+      Back2_3: -49884356
+      Back3_0.5: 680726094
+      Back3_1: -43158862
+      Back3_1.5: 1568988067
+      Back3_2: 1842606711
+      Back3_2.5: 337360127
+      Back3_3: -111862784
       BlockSection_0: -6368795526887149595
       BlockSection_1: 57231692859385998
       BlockSection_2: 8567750362893327587

@@ -238,6 +238,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Background
       objectReference: {fileID: 0}
+    - target: {fileID: 6616679651502217467, guid: 9eb912c22c7b8fb48afaa4b91bbbf424, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616679651502217467, guid: 9eb912c22c7b8fb48afaa4b91bbbf424, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616679651502217467, guid: 9eb912c22c7b8fb48afaa4b91bbbf424, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

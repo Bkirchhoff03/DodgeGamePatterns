@@ -150,7 +150,7 @@ public class BombBolderFallerBehavior : IFallerBehavior
         if (sr != null)
         {
             sr.enabled = true;
-            sr.sortingOrder = 2;
+            sr.sortingOrder = 26;
             sr.color = new Color(tint.r, tint.g, tint.b, tint.a);
         }
     }
