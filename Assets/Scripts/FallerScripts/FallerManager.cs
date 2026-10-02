@@ -52,7 +52,6 @@ public class FallerManager
         TWO_AND_HALF = 5,
         THREE = 6
     }
-
     int numberOfSpawns = 0;
     FallerType _fallerType;
     FallerType[] FallersForLevel;
@@ -76,6 +75,8 @@ public class FallerManager
     const float minSpawnGap = 5.0f;
     int bombSpawnFrequency = 10; // Every 10th faller will be a bomb block, if bomb blocks are enabled for the level
     int bombBolderSpawnFrequency = 20; // Every 20th faller will be a bomb bolder, if bomb bolders are enabled for the level
+    // Discrete sizes boulders snap to, mirroring the block size grid but coarser since each size needs its own sprite detail pass
+    static readonly float[] boulderSizeSteps = { 1f, 2f, 3f, 4f };
     public static FallerManager instance() => instance_;
     public void init(FallerType[] fallerTypes, float trapDoorHeight)
     {
@@ -148,6 +149,11 @@ public class FallerManager
             randomSizeX = Mathf.Round(randomSizeX * 2f) / 2f; // Round to nearest 0.5
             randomSizeY = Mathf.Round(randomSizeY * 2f) / 2f; // Round to nearest 0.5
         }
+        else if (_fallerType == FallerType.Boulder || _fallerType == FallerType.BombBolder)
+        {
+            randomSizeX = NearestBoulderSize(Random.Range(boulderSizeSteps.Min(), boulderSizeSteps.Max()));
+            randomSizeY = randomSizeX; // keep boulders square so their sprite never scales non-uniformly
+        }
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         //GameObject fallerObject = new GameObject(nameOfFaller);
@@ -155,6 +161,10 @@ public class FallerManager
         Vector3 size = new Vector3(randomSizeX, randomSizeY, Constants.minFallerSize);
 
         FallerController fallerBehavior = CreateFaller(nameOfFaller, _fallerType, size);
+        if(_fallerType == FallerType.Boulder || _fallerType == FallerType.BombBolder)
+        {
+            size = new Vector3(1f, 1f, 1f);
+        }
         fallerBehavior.Init(spawnPosition, size, Random.Range(Constants.minFallerSpeed, Constants.maxFallerSpeed), fallerBehavior.gameObject);
         fallersInPlay.Add(nameOfFaller, fallerBehavior);
         if (rescueFaller)
@@ -199,6 +209,21 @@ public class FallerManager
         return fallerBehavior;
     }
 
+    private static float NearestBoulderSize(float value)
+    {
+        float closest = boulderSizeSteps[0];
+        float closestDiff = Mathf.Abs(value - closest);
+        for (int i = 1; i < boulderSizeSteps.Length; i++)
+        {
+            float diff = Mathf.Abs(value - boulderSizeSteps[i]);
+            if (diff < closestDiff)
+            {
+                closest = boulderSizeSteps[i];
+                closestDiff = diff;
+            }
+        }
+        return closest;
+    }
     public float GetSpawnXPos()
     {
         //Regular uniform random spawn between walls.
@@ -300,30 +325,6 @@ public class FallerManager
         GameObject fallerObject;
         FallerController fc;
 
-        /*if (type == FallerType.Block)
-        {
-            string xName = Mathf.Round(size.x * 2f) / 2f == size.x
-                ? size.x.ToString("0.#") : size.x.ToString("0.#");
-            string yName = size.y.ToString("0.#");
-            fallerObject = GameObject.Instantiate(
-                Resources.Load<GameObject>("Prefabs/" + xName + "_by_" + yName));
-            fallerObject.layer = LayerMask.NameToLayer("Fallers");
-            fallerObject.name = name;
-            fc = fallerObject.GetComponent<FallerController>();
-        }
-        else
-        {
-            fallerObject = new GameObject(name);
-            fallerObject.layer = LayerMask.NameToLayer("Fallers");
-            fallerObject.AddComponent<FallerController>();
-            fallerObject.AddComponent<FallerCollisionHandler>();
-            fc = fallerObject.GetComponent<FallerController>();
-        }
-
-        IFallerBehavior behaviour = type == FallerType.Block
-            ? (IFallerBehavior)new BlockFallerBehavior()
-            : new BolderFallerBehavior();
-        */
         IFallerBehavior behaviour = fallerBehaviorFactory[type]();
         fallerObject = behaviour.CreateGameObject(name, size);
         fc = fallerObject.GetComponent<FallerController>();

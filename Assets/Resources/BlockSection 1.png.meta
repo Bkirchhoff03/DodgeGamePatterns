@@ -1,0 +1,3429 @@
+fileFormatVersion: 2
+guid: 1f7de97f11fa4ce4882130c0ae8776ef
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6368795526887149595
+    second: BlockSection_0
+  - first:
+      213: 57231692859385998
+    second: BlockSection_1
+  - first:
+      213: 8567750362893327587
+    second: BlockSection_2
+  - first:
+      213: 3314915681029960578
+    second: BlockSection_3
+  - first:
+      213: 181342538097797435
+    second: BlockSection_4
+  - first:
+      213: -6330023384639267428
+    second: BlockSection_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 35
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Faller_2_4
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b39acfdd312448200800000000000000
+      internalID: 181342538097797435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_4
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f994dae001f28ba47bb7274b01dca0b9
+      internalID: 1235902016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_4
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45f403f602974f948a29f8bcc2b3df50
+      internalID: -1751142496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_1
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95353d4bd6d171945a8197d7f0805db3
+      internalID: -943634298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_1
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faa71aececcec8049a87e22d2bbe7c1b
+      internalID: -290271278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_2_1
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5b6111a2ad81746a2d9b1159156ea9
+      internalID: 967177053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_0
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95bbbffdfd99b5c49b915a900b98dcda
+      internalID: 767295903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_2_0
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aac443120b22774bb28586626d0099a
+      internalID: -1105488752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_0
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7e9e0cc7be7ac546928e3d3273afef2
+      internalID: -597360120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_0
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8adfdaa64c692ac448cbfd275f4abc5d
+      internalID: 2028897421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_0
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f226b3128ef4746499cfdd389d9795cb
+      internalID: -218001593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_0
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3505
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75c7cfbcb9dbfc4286dbc4027dc614d
+      internalID: 217068085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_1
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0633167a4c124bb419644e0ce562994f
+      internalID: -783386529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_1
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 381c1231a565d794ea968fa0ff869edd
+      internalID: -1344235916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_1
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3540
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c07301497ee2f344b9c11c450414d67
+      internalID: -906112455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_2
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88ecffe1c56a8a64886fb6533566fa28
+      internalID: 1877594095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_2
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 478053067df7e924a953c88841147e90
+      internalID: -63538755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_2
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51f62bab3f12d0f4cb83f16abd4a5c78
+      internalID: -1758780075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_2_2
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61ebd01b1a9a2674a9a75f2c1c9397f2
+      internalID: -1761767212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_2
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd3de45525ac51646b07fa9bccf0a385
+      internalID: 748336031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_2
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3575
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 169060a039f7602439888ddfcc19bf98
+      internalID: -199899203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_3
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0a4c42ac30ef0f4fa723f93fd1776d4
+      internalID: 2027877625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_3
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56aa9ef188a276e4a9ad34bcccae0836
+      internalID: -1852328305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_2_3
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7506b58d94afdd4d8011a5bae378b8f
+      internalID: 241186528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_3
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56973e890d2205643a83f5a2c6c5fa08
+      internalID: 1059321706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_3
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf3574a8850e5a459bec2e1e4ced29e
+      internalID: 2120736435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_3
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3610
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66d400cf3e612c64d81d33db9a5036ad
+      internalID: 1618603965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_4
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7afe42d2eef8bf04d9b732cb1a2d7921
+      internalID: -1392925379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_4
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35d3bbe673f233e43b24861437d51f1f
+      internalID: 1888813156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_4
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3645
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9d3e040365bf6043b8f6f77cdc7c7a6
+      internalID: 904277930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_5_5
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d19447c4211ad84ea93d1ebd600f22b
+      internalID: -1012726364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_4_5
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 715fef7893b7e214ea80841c1c9c4c85
+      internalID: 1134989621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_3_5
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e7d162f67fa8f44a0fd86c41048aa9
+      internalID: -1940849226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_2_5
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90cb60047b5b9e44a8ae45321286ce97
+      internalID: -418086223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_1_5
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5833bed0391e88247a49130bb01d8c9b
+      internalID: -2011476958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Faller_0_5
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 858307ab92487b54e99001bdfd503f5e
+      internalID: 1267480952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_0
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 985729471f9f1814180876ba6b5f99a8
+      internalID: 672448391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_1
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb4780223b67bc449aaea9cdd7dd6e8
+      internalID: 1540454085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_2
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee5397f8635ab4a44b29c06539f5bbd2
+      internalID: -1670350185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_3
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5f2cfcdd2cec40469fff209764e6eb5
+      internalID: 1252143703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_4
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cdf6e89d81d74644a350167601dbd6f
+      internalID: -1107205870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlockSection_T_5
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 3680
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a077f9f4c696f64191ffd67f388aa32
+      internalID: -604411980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_0
+      rect:
+        serializedVersion: 2
+        x: 1617
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7b95868260159743944f1c0943fdd93
+      internalID: 1771178805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_0
+      rect:
+        serializedVersion: 2
+        x: 1672
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aec72d5a043b7740afeb26f4269d237
+      internalID: 1367127552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_0
+      rect:
+        serializedVersion: 2
+        x: 1727
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f5d62081c8d654489c65fe40e8d81c
+      internalID: 111971199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_0
+      rect:
+        serializedVersion: 2
+        x: 1782
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58593d4f31b17864ba92068befb03a32
+      internalID: 1253986803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_0
+      rect:
+        serializedVersion: 2
+        x: 1837
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce821606c74ea77418e1a75d98e2046b
+      internalID: -1461308412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_0
+      rect:
+        serializedVersion: 2
+        x: 1892
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 449c1fb698762d640a0e3eede8d6d394
+      internalID: -1344076117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_0
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fec28ecbe64eac747bb06f03ff096040
+      internalID: 1242850617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_0
+      rect:
+        serializedVersion: 2
+        x: 2002
+        y: 3455
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd1c3baf0ef03e4ca66d0141be54db0
+      internalID: 1274798190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_1
+      rect:
+        serializedVersion: 2
+        x: 1992
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc322f9b4d75c7547bd6986f3ce6e365
+      internalID: -891327093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_1
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b7b4c1c0972f6499b608d648c8b40f
+      internalID: -212918305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_1
+      rect:
+        serializedVersion: 2
+        x: 1862
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a06fb4d421569e24694f95d32b772a96
+      internalID: -680288836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_1
+      rect:
+        serializedVersion: 2
+        x: 1797
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04aedb21367ebd649ad9dca4bee78c2c
+      internalID: -429947651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_1
+      rect:
+        serializedVersion: 2
+        x: 1732
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f316964f2ecc45e459e5aaf9d5e22a9c
+      internalID: -402526411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_1
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05eb549e9e957da418da7474872b9350
+      internalID: 1684752428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_1
+      rect:
+        serializedVersion: 2
+        x: 1602
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af89919bf5b6ba44baa911579b94e368
+      internalID: 1914969091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_1
+      rect:
+        serializedVersion: 2
+        x: 1537
+        y: 3390
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6db987a21d633ec4b8fb6bba94919363
+      internalID: -1775772831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_2
+      rect:
+        serializedVersion: 2
+        x: 1457
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc0778b40fdbf90469e6b2e3df14a7bf
+      internalID: 1408898864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_2
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6320391507c76c741980fe91bd991417
+      internalID: 1431270368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_2
+      rect:
+        serializedVersion: 2
+        x: 1607
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 036513375a9715e4aa74653440af6674
+      internalID: -332144837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_2
+      rect:
+        serializedVersion: 2
+        x: 1682
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 732be6d5e8f973d4f844b1d5b18f40ff
+      internalID: -1653326163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_2
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 286bc03d8f6ad6545b80db51e67f1cc1
+      internalID: 624075245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_2
+      rect:
+        serializedVersion: 2
+        x: 1832
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f960e1036e6df144a59c23ea8c15d1a
+      internalID: -1572959990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_2
+      rect:
+        serializedVersion: 2
+        x: 1907
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6f00132b9c15ef439b54b335ca2aff3
+      internalID: -1465120585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_2
+      rect:
+        serializedVersion: 2
+        x: 1982
+        y: 3315
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a2e60bef35da64781f766ed2c8f9d3
+      internalID: -28003685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder7_3
+      rect:
+        serializedVersion: 2
+        x: 1972
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 583c7910028523a4b99bac3e8fa0cc1b
+      internalID: 846684550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder6_3
+      rect:
+        serializedVersion: 2
+        x: 1887
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6f62014d56e6ba4ba4961f050b03c5d
+      internalID: -144452440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder5_3
+      rect:
+        serializedVersion: 2
+        x: 1802
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6b58c242a21ec740b1fb63026acd108
+      internalID: 1207860091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder4_3
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b407d56cbc1aa0e4a9f36c493af56f3c
+      internalID: -1163555083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder3_3
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0369f8bcf582eb4f8c248af80a08634
+      internalID: 742312816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder2_3
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d683fa84ef0036478d5d8a25db682ec
+      internalID: -1828406108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder1_3
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f8e37991ddab84d821d6a99a459bd5
+      internalID: -610319447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bolder0_3
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 3230
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f471982df99cf4cbe1cf04633fb72d
+      internalID: -976175110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground7_0
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eca077404a708b4db8c68a483584523
+      internalID: 1857949597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground6_0
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d30a79a0ec2ec845a56ec476b269114
+      internalID: 257982868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground7_1
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72e3f0a37ac81234c85b40151c3af01e
+      internalID: -657547807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground7_2
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f16f9ed527e5399439caa5eead75be3f
+      internalID: 1802484796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground7_3
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91efe797e66ac7742a8f2a01e2afb97e
+      internalID: -1747686521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground6_1
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed5196c7ddfc2c94ab630011d0356470
+      internalID: -361072596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground6_2
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8db2831015eccd438c9e67a624563e0
+      internalID: -1973873873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground6_3
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75fcf9163d1832645bf8b9a4f2d48bb4
+      internalID: 2077289254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground5_0
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00816d2ae7817644e9f00fa0f4554550
+      internalID: 145926615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground5_1
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 892332400511ad843b78df096ac97a4f
+      internalID: -1247406567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground5_2
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16e76b089a6d16349b003a9c130fb55e
+      internalID: -640621480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground5_3
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 711c58ccdbcd8b049bbd3a8a4894ef2d
+      internalID: 737118847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground4_0
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67fdf625625bf574187152432e61ef20
+      internalID: -554749369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground4_1
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c328a47bea3e854b89f249d0037f146
+      internalID: 1155999998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground4_2
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cea6f9af87de8545a0025ed36e7730e
+      internalID: 1077428389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground4_3
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5951a53e26b63d34d8351950216d8734
+      internalID: -1818668544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground3_0
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82ef52cb4b21322489b235915b3ce6d9
+      internalID: -1133337935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground3_1
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eff3014d2732d554996bbe0caf0306ed
+      internalID: 1579291139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground3_2
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 788d0c669dc3a47479f19884667b977e
+      internalID: 169493071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground3_3
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6448eeee95c32de4d9278ce410266423
+      internalID: -747688321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground2_0
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b1b1e3a5576524b819abd5c14f9c33
+      internalID: 41690847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground2_1
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32cae4579ab624a4ca3df8ec07306991
+      internalID: 1588511234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground2_2
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71773ae214abb0b4c8694725a43e2204
+      internalID: 353608156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground2_3
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71219beb983b8e142b33d280718057f1
+      internalID: -1145935489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground1_0
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e980db216ffbd10478b9f4e11e9dca45
+      internalID: 2050970922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground1_1
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c213c1aae607fd54da97a45ef61ac433
+      internalID: -1287834828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground1_2
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c94e031e37206648816c531ddff29f7
+      internalID: -866256481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground1_3
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 034fc80e64b68b94ea11f1368a63e1f9
+      internalID: 670543736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground0_0
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 3508
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57683153406e50747bc8be69ce14ebc9
+      internalID: 939590882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground0_1
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 3443
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 633d9e9a0fb7c864f870acbc5a50959b
+      internalID: 1144209408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground0_2
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 3368
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6745a446f78326e4ba088a1de3a9eea2
+      internalID: -1625153200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BolderBackground0_3
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 3283
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 002de037b003d1241bd1ac49c8456963
+      internalID: -2072029142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63434392b3dcab347a3ad24fe7df399c
+      internalID: -253749552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 39
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719512601009f6246a3c7116567e1d9a
+      internalID: 1236211025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 39
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 911bda9d609feeb47903b923a4cf6395
+      internalID: -405448582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 39
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bde21fa6e8a74bf468c4a51134589ee3
+      internalID: -421672484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 39
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2437cf1bbeb14304d8008d1a3c42d4f6
+      internalID: -713109261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back0.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 39
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19e56ed90ac2afd4f812be2c3039f9c7
+      internalID: 1824156765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 74
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dea44d178dfba4e9528dc8676cdd41
+      internalID: 1498293842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d178c2863321c469c37290d10044f1
+      internalID: 911781135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 74
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65984249218f05f48a9e721e7b48ac77
+      internalID: 367027539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 74
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72994e71d34e19f4d9fa475004a18395
+      internalID: 2096647479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 74
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83dd6ae831469eb4bbd74608e8ca3119
+      internalID: 567171946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 74
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d57c3b3c4118d246aaefcd0cb821ed3
+      internalID: 2016857803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 109
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 675692e7826af93479cad05c03087989
+      internalID: 896550149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 109
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20167f93b315a904da34c856ca68e11c
+      internalID: 1665370924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 109
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3f97557ec6a59542ac3e23b5d769a0b
+      internalID: 1686683575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 109
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0414baa8f13b7834f97c3df2a01640cf
+      internalID: -895191978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 109
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 206bf27b398445c45b76e8d98791cd60
+      internalID: 311158456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back1.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 109
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 975acc6e9eba4204dbdbec682da3c804
+      internalID: 1610962367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 144
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d03004429a41cd045a6de9f1dfba5190
+      internalID: -939784292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 144
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6f406360ab2b384f9e3866c920c8787
+      internalID: 262416680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 144
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ff6f2a8ef971cd4aa3c43b488749ca1
+      internalID: 1055130077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 144
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ee2698d0faadb4f8f8342795859775
+      internalID: -1040242082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 144
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5199edf14723dcb409a5fe5336fa10d0
+      internalID: 892123422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 144
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf46859534ef30741acd8cf56c3ba775
+      internalID: -49884356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 179
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c2fcf9c6fb03fd47b9ff34407f5e109
+      internalID: -569162478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 179
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f22dd0a5c1233140b53ba51d33922ec
+      internalID: -564193873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 179
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cd19278f580fd5498ffce7c7ba18159
+      internalID: 1651532959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 179
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a591e2f4dd812643b17b93d3851adcd
+      internalID: -980658334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 179
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 075305c6a80bd9140bac703cca94b0f2
+      internalID: 494964470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back2.5_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 179
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c175bc458a62964fbc52833941af3bc
+      internalID: -644131796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_0.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3673
+        width: 214
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1283f0aefae14af42a8a9b5c69eaec28
+      internalID: 680726094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3638
+        width: 214
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e67fd87d8545c04eb5a93e02323bbab
+      internalID: -43158862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_1.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3603
+        width: 214
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4185ac78953bf1d4eae2b91b88779dfd
+      internalID: 1568988067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_2
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3568
+        width: 214
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76c15eaed238c54e89d28ce3ee118fe
+      internalID: 1842606711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_2.5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3533
+        width: 214
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f4dddc1a7f91ce439fefa6640d7d664
+      internalID: 337360127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back3_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3498
+        width: 214
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e021341a83e0b141bdd69261a3eae5c
+      internalID: -111862784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7d56cbda8309d2346872c64e03fa9b5e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      7_0: 1242850617
+      Back0.5_0.5: -253749552
+      Back0.5_1: 1236211025
+      Back0.5_1.5: -405448582
+      Back0.5_2: -421672484
+      Back0.5_2.5: -713109261
+      Back0.5_3: 1824156765
+      Back1.5_0.5: 896550149
+      Back1.5_1: 1665370924
+      Back1.5_1.5: 1686683575
+      Back1.5_2: -895191978
+      Back1.5_2.5: 311158456
+      Back1.5_3: 1610962367
+      Back1_0.5: 1498293842
+      Back1_1: 911781135
+      Back1_1.5: 367027539
+      Back1_2: 2096647479
+      Back1_2.5: 567171946
+      Back1_3: 2016857803
+      Back2.5_0.5: -569162478
+      Back2.5_1: -564193873
+      Back2.5_1.5: 1651532959
+      Back2.5_2: -980658334
+      Back2.5_2.5: 494964470
+      Back2.5_3: -644131796
+      Back2_0.5: -939784292
+      Back2_1: 262416680
+      Back2_1.5: 1055130077
+      Back2_2: -1040242082
+      Back2_2.5: 892123422
+      Back2_3: -49884356
+      Back3_0.5: 680726094
+      Back3_1: -43158862
+      Back3_1.5: 1568988067
+      Back3_2: 1842606711
+      Back3_2.5: 337360127
+      Back3_3: -111862784
+      BlockSection_0: -6368795526887149595
+      BlockSection_1: 57231692859385998
+      BlockSection_2: 8567750362893327587
+      BlockSection_3: 3314915681029960578
+      BlockSection_5: -6330023384639267428
+      BlockSection_T_0: 672448391
+      BlockSection_T_1: 1540454085
+      BlockSection_T_2: -1670350185
+      BlockSection_T_3: 1252143703
+      BlockSection_T_4: -1107205870
+      BlockSection_T_5: -604411980
+      Bolder0_0: 1771178805
+      Bolder0_1: -1775772831
+      Bolder0_2: 1408898864
+      Bolder0_3: -976175110
+      Bolder1_0: 1367127552
+      Bolder1_1: 1914969091
+      Bolder1_2: 1431270368
+      Bolder1_3: -610319447
+      Bolder2_0: 111971199
+      Bolder2_1: 1684752428
+      Bolder2_2: -332144837
+      Bolder2_3: -1828406108
+      Bolder3_0: 1253986803
+      Bolder3_1: -402526411
+      Bolder3_2: -1653326163
+      Bolder3_3: 742312816
+      Bolder4_0: -1461308412
+      Bolder4_1: -429947651
+      Bolder4_2: 624075245
+      Bolder4_3: -1163555083
+      Bolder5_0: -1344076117
+      Bolder5_1: -680288836
+      Bolder5_2: -1572959990
+      Bolder5_3: 1207860091
+      Bolder6_0: 1242850617
+      Bolder6_1: -212918305
+      Bolder6_2: -1465120585
+      Bolder6_3: -144452440
+      Bolder7_0: 1274798190
+      Bolder7_1: -891327093
+      Bolder7_2: -28003685
+      Bolder7_3: 846684550
+      BolderBackground0_0: 939590882
+      BolderBackground0_1: 1144209408
+      BolderBackground0_2: -1625153200
+      BolderBackground0_3: -2072029142
+      BolderBackground1_0: 2050970922
+      BolderBackground1_1: -1287834828
+      BolderBackground1_2: -866256481
+      BolderBackground1_3: 670543736
+      BolderBackground2_0: 41690847
+      BolderBackground2_1: 1588511234
+      BolderBackground2_2: 353608156
+      BolderBackground2_3: -1145935489
+      BolderBackground3_0: -1133337935
+      BolderBackground3_1: 1579291139
+      BolderBackground3_2: 169493071
+      BolderBackground3_3: -747688321
+      BolderBackground4_0: -554749369
+      BolderBackground4_1: 1155999998
+      BolderBackground4_2: 1077428389
+      BolderBackground4_3: -1818668544
+      BolderBackground5_0: 145926615
+      BolderBackground5_1: -1247406567
+      BolderBackground5_2: -640621480
+      BolderBackground5_3: 737118847
+      BolderBackground6_0: 257982868
+      BolderBackground6_1: -361072596
+      BolderBackground6_2: -1973873873
+      BolderBackground6_3: 2077289254
+      BolderBackground7_0: 1857949597
+      BolderBackground7_1: -657547807
+      BolderBackground7_2: 1802484796
+      BolderBackground7_3: -1747686521
+      BolderF1: 1017882642
+      BolderF2: 515324289
+      BolderF3: 126118240
+      BolderF4: 1068486379
+      BolderF5: -1810669134
+      BolderF6: 1275519650
+      BolderF7: 704837890
+      BolderF8: -1487900501
+      Faller_0_0: 767295903
+      Faller_0_1: -943634298
+      Faller_0_2: -199899203
+      Faller_0_3: 2027877625
+      Faller_0_4: 1235902016
+      Faller_0_5: 1267480952
+      Faller_1_0: 2028897421
+      Faller_1_1: -290271278
+      Faller_1_2: 748336031
+      Faller_1_3: -1852328305
+      Faller_1_4: -1751142496
+      Faller_1_5: -2011476958
+      Faller_2_0: -1105488752
+      Faller_2_1: 967177053
+      Faller_2_2: -1761767212
+      Faller_2_3: 241186528
+      Faller_2_4: 181342538097797435
+      Faller_2_5: -418086223
+      Faller_3_0: -218001593
+      Faller_3_1: -783386529
+      Faller_3_2: -1758780075
+      Faller_3_3: 1059321706
+      Faller_3_4: -1392925379
+      Faller_3_5: -1940849226
+      Faller_4_0: -597360120
+      Faller_4_1: -1344235916
+      Faller_4_2: -63538755
+      Faller_4_3: 2120736435
+      Faller_4_4: 1888813156
+      Faller_4_5: 1134989621
+      Faller_5_0: 217068085
+      Faller_5_1: -906112455
+      Faller_5_2: 1877594095
+      Faller_5_3: 1618603965
+      Faller_5_4: 904277930
+      Faller_5_5: -1012726364
+      V: 2028897421
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

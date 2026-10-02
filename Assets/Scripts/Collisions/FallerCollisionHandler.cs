@@ -26,7 +26,7 @@ public class FallerCollisionHandler : MonoBehaviour
         }
         if (collision.gameObject.name == "PunchingArm")
         {
-            GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
+            //GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
             thisFaller.HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
         }
 
@@ -61,7 +61,7 @@ public class FallerCollisionHandler : MonoBehaviour
 
         if (thisFaller.IsFrozen) return;
 
-        GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 0);
+        //GameManager.instance().Print($"Collision stay on {gameObject.name} with {collision.gameObject.name}", 0);
 
         if (thisFaller.UseSettleTimer)
         {
@@ -78,8 +78,8 @@ public class FallerCollisionHandler : MonoBehaviour
     }
     public void OnCollisionExit2D(Collision2D collision)
     {
-        GameManager.instance().Print($"Collision EXIT on {gameObject.name} with {collision.gameObject.name}", 0);
-        if (collision.gameObject.name == "Player")
+        //GameManager.instance().Print($"Collision EXIT on {gameObject.name} with {collision.gameObject.name}", 0);
+        if (collision.gameObject.CompareTag("Player"))
         {
             return;
         }
@@ -107,11 +107,11 @@ public class FallerCollisionHandler : MonoBehaviour
             frozenFaller.FallerCollidesWithMe(thisFaller);
             Rigidbody2D otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
             Rigidbody2D thisRb = thisFaller.gameObject.GetComponent<Rigidbody2D>();
-            GameManager.instance().Print("otherRb velocity: " + otherRb.linearVelocity, 0);
-            GameManager.instance().Print("thisRb velocity: " + thisRb.linearVelocity, 0);
+            //GameManager.instance().Print("otherRb velocity: " + otherRb.linearVelocity, 0);
+            //GameManager.instance().Print("thisRb velocity: " + thisRb.linearVelocity, 0);
             if (otherRb != null || Mathf.Abs(otherRb.linearVelocity.x) <= 0.1f)
             {
-                GameManager.instance().Print($"Freezing {gameObject.name} on collision with frozen {collision.gameObject.name}", 0);
+                //GameManager.instance().Print($"Freezing {gameObject.name} on collision with frozen {collision.gameObject.name}", 0);
                 thisFaller.FloorPause();
                 if (thisFaller.UseSettleTimer)
                 {
@@ -127,7 +127,7 @@ public class FallerCollisionHandler : MonoBehaviour
                     Bounds dif = GetDifference(thisBounds, frozenBounds);
                     /*Debug.DrawLine(dif.min, dif.max, Color.red, 5f);
                     Debug.DrawLine(new Vector3(dif.min.x, dif.max.y), new Vector3(dif.max.x, dif.min.y), Color.red, 5f);*/
-                    GameManager.instance().Print("Drew lines", 8);
+                    //GameManager.instance().Print("Drew lines", 8);
                     if (dif.size.x >= dif.size.y)
                     {
                         // Handle Y difference
@@ -148,7 +148,7 @@ public class FallerCollisionHandler : MonoBehaviour
                     Bounds overlap = GetOverlap(thisBounds, frozenBounds); 
                     /*Debug.DrawLine(overlap.min, overlap.max, Color.red, 5f);
                     Debug.DrawLine(new Vector3(overlap.min.x, overlap.max.y), new Vector3(overlap.max.x, overlap.min.y), Color.red, 5f);*/
-                    GameManager.instance().Print("Drew lines", 8);
+                    //GameManager.instance().Print("Drew lines", 8);
                     if (overlap.size.x >= overlap.size.y)
                     {
                         // Handle Y difference
