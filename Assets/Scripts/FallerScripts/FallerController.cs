@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
 using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
@@ -255,6 +256,10 @@ public class FallerController : MonoBehaviour
                 Unfreeze();
             }
         }
+    }
+    public string[] getFallersCollidingWithMe()
+    {
+        return fallersCollidingWithMe.Keys.AsEnumerable().ToArray();
     }
 
 }
