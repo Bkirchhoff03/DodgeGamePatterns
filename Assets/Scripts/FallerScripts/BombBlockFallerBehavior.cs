@@ -113,6 +113,20 @@ public class BombBlockFallerBehavior : IFallerBehavior
             arm.CancelPunch();
         }
     }
+    public void HandleWallCollision(FallerController fc, Collision2D collision)
+    {
+        GameManager.instance().Print("Block handle wall collision", 0);
+        if (fc.IsFrozen)
+        {
+            GameManager.instance().Print("Faller is frozen: " + fc.IsFrozen, 0);
+            return;
+        }
+        Vector3 collisionVel = fc.GetVelocity();
+        if (collisionVel != Vector3.zero && (collisionVel.x < Constants.fallerDestroyHittingWallThreshold || collisionVel.x > Constants.fallerDestroyHittingWallThreshold))
+        {
+            fc.DeleteMe();
+        }
+    }
     public void AddImpulse(FallerController fc, Vector2 direction)
     {
         fc.gameObject.GetComponent<Rigidbody2D>().AddForce(direction * Constants.EMT_Impulse_block, ForceMode2D.Impulse);

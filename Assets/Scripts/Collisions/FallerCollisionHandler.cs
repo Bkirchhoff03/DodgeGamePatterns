@@ -29,7 +29,10 @@ public class FallerCollisionHandler : MonoBehaviour
             //GameManager.instance().Print($"Arm collided with {gameObject.name}", 0);
             thisFaller.HandleArmCollision(collision.gameObject.GetComponent<PunchingArmController>());
         }
-
+        if(collision.gameObject.tag == "Wall")
+        {
+            thisFaller.HandleWallCollision(collision);
+        }
         if (thisFaller.IsFrozen)
         {
             return;

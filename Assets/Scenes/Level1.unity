@@ -1014,6 +1014,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1204781906824735732, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048107725932608828, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551717011157142380, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937530940283921073, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245483050076813465, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691860025558886518, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947227630856380712, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947758399664648124, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 4536462393278565574, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
       propertyPath: m_Name
       value: DesignedWalls
@@ -1057,6 +1089,18 @@ PrefabInstance:
     - target: {fileID: 4815558878302048900, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075219636332010906, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 5136614372595882751, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165361773875811978, guid: 954fc5bf7631a374e91ac5bbb27c3197, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
