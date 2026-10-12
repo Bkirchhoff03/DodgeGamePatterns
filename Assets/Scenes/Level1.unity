@@ -804,15 +804,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2203110270545786100, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2203110270545786100, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
       propertyPath: m_SortingOrder
-      value: 25
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 4429652001127395046, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
       propertyPath: m_Name
       value: EMT
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550237502348804171, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550237502348804171, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 7550237502348804171, guid: 4650279d9a24b0241bb76ff26317323f, type: 3}
       propertyPath: m_LocalPosition.x

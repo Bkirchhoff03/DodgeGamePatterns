@@ -8,6 +8,7 @@ public class BombBlockFallerBehavior : IFallerBehavior
     private int flashCount = 0; // count of flashes before explosion
     private float flashInterval = 0.2f; // interval between flashes
     private int frozenFlashCount = 0; // count of flashes while frozen
+    private GameObject areaChild; // child object to represent the explosion area
     public bool UseSettleTimer => false;
     public bool FreezeRotation => true;
     public void Update(FallerController fc) 
@@ -23,6 +24,14 @@ public class BombBlockFallerBehavior : IFallerBehavior
                 RemoveTint(fc); // Remove tint
             if (fc.IsFrozen)
             {
+                SpriteRenderer sr = areaChild.GetComponent<SpriteRenderer>();
+                areaChild.transform.localPosition = Vector3.zero;
+                sr.enabled = true; // Show the explosion area when frozen
+                if (flashCount % 2 == 0)
+                    sr.color = new Color(1f, 0f, 0f, 0.5f); // Flash red
+                else
+                    sr.color = new Color(1f, 1f, 1f, 0.5f); // Flash white
+
                 flashInterval = 0.1f; // Speed up flashing when frozen
                 frozenFlashCount++;
             }
@@ -50,6 +59,16 @@ public class BombBlockFallerBehavior : IFallerBehavior
         fallerObject.layer = LayerMask.NameToLayer("Fallers");
         fallerObject.name = name;
         AddTint(fallerObject.GetComponent<FallerController>(), new Color(1f, 0f, 0f, 0.5f)); // Add red tint to indicate it's a bomb block
+        areaChild = new GameObject("ExplosionArea");
+        areaChild.AddComponent<SpriteRenderer>();
+        areaChild.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Circle"); 
+        areaChild.GetComponent<SpriteRenderer>().enabled = false; // Hide the explosion area sprite
+        areaChild.GetComponent<SpriteRenderer>().sortingOrder = 26; // Ensure it's rendered above the faller
+        areaChild.transform.parent = fallerObject.transform; 
+        areaChild.transform.localScale = new Vector3(Constants.EMT_Radius / fallerObject.transform.localScale.x, Constants.EMT_Radius / fallerObject.transform.localScale.y, Constants.EMT_Radius / fallerObject.transform.localScale.z);
+        areaChild.transform.localPosition = Vector3.zero;
+
+        Debug.Log("Created BombBlockFaller with explosion area child: " + fallerObject.transform.localScale.y  +"*"+ Constants.EMT_Radius + " x " + fallerObject.transform.localScale.x + "*" + Constants.EMT_Radius + "=" + areaChild.transform.localScale);
         return fallerObject;
     }
     public void BuildVisuals(GameObject fallerObj, Vector2 size) 

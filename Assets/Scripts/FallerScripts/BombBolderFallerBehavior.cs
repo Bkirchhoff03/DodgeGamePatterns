@@ -48,6 +48,8 @@ public class BombBolderFallerBehavior : IFallerBehavior
     private int shapeIndex;
     private Vector2 NameSize = Vector2.zero;
     private GameObject tintGameObject;
+    private GameObject areaChild; // child object to represent the explosion area
+
     public bool UseSettleTimer => true;
     public bool FreezeRotation => false;
     public void Update(FallerController fc)
@@ -63,6 +65,13 @@ public class BombBolderFallerBehavior : IFallerBehavior
                 RemoveTint(fc); // Remove tint
             if (fc.IsFrozen)
             {
+                SpriteRenderer sr = areaChild.GetComponent<SpriteRenderer>();
+                areaChild.transform.localPosition = Vector3.zero;
+                sr.enabled = true; // Show the explosion area when frozen
+                if (flashCount % 2 == 0)
+                    sr.color = new Color(1f, 0f, 0f, 0.5f); // Flash red
+                else
+                    sr.color = new Color(1f, 1f, 1f, 0.5f); // Flash white
                 flashInterval = 0.1f; // Speed up flashing when frozen
                 frozenFlashCount++;
             }
@@ -102,6 +111,14 @@ public class BombBolderFallerBehavior : IFallerBehavior
         }*/
         fallerObject.name = name;
         AddTint(fallerObject.GetComponent<FallerController>(), new Color(1f, 0f, 0f, 0.5f)); // Add red tint to indicate it's a bomb bolder
+        areaChild = new GameObject("ExplosionArea");
+        areaChild.AddComponent<SpriteRenderer>();
+        areaChild.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Circle");
+        areaChild.GetComponent<SpriteRenderer>().enabled = false; // Hide the explosion area sprite
+        areaChild.GetComponent<SpriteRenderer>().sortingOrder = 26; // Ensure it's rendered above the faller
+        areaChild.transform.parent = fallerObject.transform;
+        areaChild.transform.localScale = new Vector3(Constants.EMT_Radius / fallerObject.transform.localScale.x, Constants.EMT_Radius / fallerObject.transform.localScale.y, Constants.EMT_Radius / fallerObject.transform.localScale.z);
+        areaChild.transform.localPosition = Vector3.zero;
         return fallerObject;
     }
     public void BuildVisuals(GameObject fallerObj, Vector2 size)
