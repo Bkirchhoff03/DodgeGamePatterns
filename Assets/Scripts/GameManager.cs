@@ -413,6 +413,7 @@ public class GameManager : MonoBehaviour
         if (amount > 0f)
         {
             AudioManager.instance()?.PlayHurt(delay);
+            playerController.InjureMe();
         }
         if (!unlimitedLives)
             playerLives = Mathf.Max(0f, playerLives - amount);

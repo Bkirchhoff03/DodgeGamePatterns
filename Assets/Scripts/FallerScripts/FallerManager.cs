@@ -305,7 +305,7 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         FallerController fc = CreateFaller(nameOfFaller, _fallerType, data.size);
-        fc.Init(data.position, data.size, -data.currentSpeed, fc.gameObject);
+        fc.Init(data.position, data.size, data.currentSpeed, fc.gameObject);
         fc.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, data.rotation);
         // If the faller was frozen when saved, freeze it again after spawning
         if (data.isFrozen)

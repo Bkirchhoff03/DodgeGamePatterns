@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public PlayerAnimationManager animationManager;
     public SpriteRenderer animationSpriteRenderer { get; private set; }
     private float leftOrRightOrNone = 0f;
+    private float redTimer = 0f;
     public Rigidbody2D rb { get; private set; }
     private Vector3 pendingDirection = Vector3.zero;
     //private bool running = false;
@@ -61,6 +62,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
+        if (redTimer > 0f && animationSpriteRenderer.color == Color.red)
+        {
+            redTimer -= Time.deltaTime;
+        }else if (redTimer <= 0f && animationSpriteRenderer.color == Color.red)
+        {
+            animationSpriteRenderer.color = Color.white;
+        }
         //ChangeColorBasedOnState();
     }
     private void FixedUpdate()
@@ -310,5 +318,10 @@ public class PlayerController : MonoBehaviour
         }
         gameObject.transform.position = newPosition;
         rb.position = new Vector2(newPosition.x, newPosition.y);
+    }
+    public void InjureMe()
+    {
+        animationSpriteRenderer.color = Color.red;
+        redTimer = 0.25f;
     }
 }
