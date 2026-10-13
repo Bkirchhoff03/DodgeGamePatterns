@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -56,6 +57,8 @@ public class EMT : MonoBehaviour
             {
                 isEMTed = false; // Reached the target
                 GameManager.instance().SetEMT(); // Trigger the EMT event in the GameManager
+
+
                 this.GetComponent<SpriteRenderer>().enabled = false; // Hide the EMT sprite
                 GetComponent<SpriteRenderer>().color = Color.red; // Reset color to red
                 flashDuration = 0f;

@@ -305,7 +305,7 @@ public class FallerManager
         numberOfSpawns++;
         string nameOfFaller = Constants.fallerNamePrefix + numberOfSpawns.ToString();
         FallerController fc = CreateFaller(nameOfFaller, _fallerType, data.size);
-        fc.Init(data.position, data.size, -data.currentSpeed, fc.gameObject);
+        fc.Init(data.position, data.size, data.currentSpeed, fc.gameObject);
         fc.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, data.rotation);
         // If the faller was frozen when saved, freeze it again after spawning
         if (data.isFrozen)
@@ -815,6 +815,28 @@ public class FallerManager
             }
         }
         return fallersOutRadius;
+    }
+    public int GetNumberOfFallersAboveMeColliding(FallerController faller)
+    {
+        int count = 0;
+
+        string[] fallersCollidingWithMe = faller.getFallersCollidingWithMe();
+
+        foreach (string fallerName in fallersCollidingWithMe)
+        {
+            if (fallersInPlay.ContainsKey(fallerName))
+            {
+                FallerController otherFaller = fallersInPlay[fallerName];
+                if (otherFaller != null && otherFaller.IsFrozen && fallerName != faller.gameObject.name 
+                    && (otherFaller.transform.position.y - (otherFaller.gameObject.transform.localScale.y/2f)) > (faller.transform.position.y+(faller.gameObject.transform.localScale.y/2f)))
+                {
+                    count++;
+                    count+= GetNumberOfFallersAboveMeColliding(otherFaller); // Recursively count fallers above the other faller
+                }
+            }
+        }
+
+        return count;
     }
     public int GetFrozenFallersAbove(FallerController faller)
     {

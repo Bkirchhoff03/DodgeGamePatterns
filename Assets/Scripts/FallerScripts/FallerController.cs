@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
 using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
@@ -187,6 +188,10 @@ public class FallerController : MonoBehaviour
         behavior?.HandleArmCollision(this, arm);
         
     }
+    public void HandleWallCollision(Collision2D collision)
+    {
+        behavior?.HandleWallCollision(this, collision);
+    }
     public void Collided()
     {
         //Debug.Log(gameObject.name+"collided with something, collision count is now " + collisionCount);
@@ -256,5 +261,12 @@ public class FallerController : MonoBehaviour
             }
         }
     }
-
+    public string[] getFallersCollidingWithMe()
+    {
+        return fallersCollidingWithMe.Keys.AsEnumerable().ToArray();
+    }
+    public Vector3 GetVelocity()
+    {
+        return rb != null ? rb.linearVelocity : Vector3.zero;
+    }
 }

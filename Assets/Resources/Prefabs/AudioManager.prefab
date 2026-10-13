@@ -56,7 +56,7 @@ MonoBehaviour:
   punchCrunchClip: {fileID: 8300000, guid: cb69ceb96baf90c48b95ce7516d91d25, type: 3}
   explosionClip: {fileID: 8300000, guid: f17b099b67f72e84ba960b1632020304, type: 3}
   defaultMusic: {fileID: 8300000, guid: 9089b606d87329749bc0f60e2ea66e11, type: 3}
-  musicVolume: 0.5
+  musicVolume: 1
   sfxVolume: 1
 --- !u!82 &8768874096593635468
 AudioSource:

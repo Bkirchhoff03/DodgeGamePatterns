@@ -92,6 +92,7 @@ public class BlockFallerBehavior : IFallerBehavior
             float shift = punchDir * Constants.frozenBlockShiftAmount / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
             shift = Mathf.Max(Mathf.Abs(shift), 0.05f) * punchDir;
             float sixSections = fc.FallerSize.y / 6f;
+            sixSections *= 0.99f; // slightly reduce to avoid edge cases where the raycast hits the very edge of a collider
             for (int i = -3; i <= 3; i += 1)
             {
                 if(Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y + (sixSections * i)), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f))
@@ -129,6 +130,20 @@ public class BlockFallerBehavior : IFallerBehavior
                 AudioManager.instance().PlayPunchConnect();
             }
             arm.CancelPunch();
+        }
+    }
+    public void HandleWallCollision(FallerController fc, Collision2D collision)
+    {
+        GameManager.instance().Print("Block handle wall collision", 0);
+        if (fc.IsFrozen)
+        {
+            GameManager.instance().Print("Faller is frozen: " + fc.IsFrozen, 0);
+            return;
+        }
+        Vector3 collisionVel = fc.GetVelocity();
+        if (collisionVel != Vector3.zero && (collisionVel.x < Constants.fallerDestroyHittingWallThreshold || collisionVel.x > Constants.fallerDestroyHittingWallThreshold))
+        {
+            fc.DeleteMe();
         }
     }
     public void AddImpulse(FallerController fc, Vector2 direction)

@@ -413,6 +413,7 @@ public class GameManager : MonoBehaviour
         if (amount > 0f)
         {
             AudioManager.instance()?.PlayHurt(delay);
+            playerController.InjureMe();
         }
         if (!unlimitedLives)
             playerLives = Mathf.Max(0f, playerLives - amount);
@@ -681,7 +682,7 @@ public class GameManager : MonoBehaviour
     }
     public void ImpulsePlayer(FallerController faller)
     {
-        if(Mathf.Abs((player.transform.position - faller.transform.position).magnitude) <= Constants.EMT_Radius)
+        if(Mathf.Abs((player.transform.position - faller.transform.position).magnitude) <= Constants.EMT_Radius/2f)
         {
             if(playerController.state.getName() == Constants.ridingFallerStateName)
             {
