@@ -18,7 +18,8 @@ public class MainMenuController : MonoBehaviour
     private float flashDuration = 0.5f;
     private Sprite[] keyboardSpriteSheet;
     private Vector4 anchors;
-    private bool[] whichLevelToPlay = new bool[4] { true, false, false, false }; // Default to Level 1
+    private bool[] whichLevelToPlay = new bool[5] { true, false, false, false, false }; // Default to Level 1
+    private static readonly string[] levelToggleNames = { "Level1Toggle", "Level2Toggle", "Level3Toggle", "Level4Toggle", "Level5Toggle" };
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -460,10 +461,11 @@ public class MainMenuController : MonoBehaviour
     private void OpenRunAsTesterPanelFromFile(string filePath)
     {
         runAsTesterPanel.SetActive(true);
-        GameObject.Find("Level1Toggle").GetComponent<Toggle>().interactable = false;
-        GameObject.Find("Level2Toggle").GetComponent<Toggle>().interactable = false;
-        GameObject.Find("Level3Toggle").GetComponent<Toggle>().interactable = false;
-        GameObject.Find("Level4Toggle").GetComponent<Toggle>().interactable = false;
+        foreach (string toggleName in levelToggleNames)
+        {
+            Toggle toggle = FindLevelToggle(toggleName);
+            if (toggle != null) toggle.interactable = false;
+        }
         var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
         if (loadBtn != null)
         {
@@ -474,68 +476,38 @@ public class MainMenuController : MonoBehaviour
     {
         runAsTesterPanel.SetActive(false);
     }
-    public void PlayLevel1(bool value)
+    public void PlayLevel1(bool value) => SelectLevel(0, value);
+    public void PlayLevel2(bool value) => SelectLevel(1, value);
+    public void PlayLevel3(bool value) => SelectLevel(2, value);
+    public void PlayLevel4(bool value) => SelectLevel(3, value);
+    public void PlayLevel5(bool value) => SelectLevel(4, value);
+    // Turns off every other level toggle so only one level is selected at a time
+    private void SelectLevel(int levelIndex, bool value)
     {
         if(!value) return;
-        GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn = false;
-        whichLevelToPlay[0] = true;
-        whichLevelToPlay[1] = false;
-        whichLevelToPlay[2] = false;
-        whichLevelToPlay[3] = false;
-
-        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn + " lvl4 :" + GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn);
-
+        for (int i = 0; i < whichLevelToPlay.Length; i++)
+        {
+            whichLevelToPlay[i] = i == levelIndex;
+            Toggle toggle = FindLevelToggle(levelToggleNames[i]);
+            if (toggle != null && i != levelIndex) toggle.isOn = false;
+        }
+        Debug.Log("Selected level " + (levelIndex + 1) + " to play as tester");
     }
-    public void PlayLevel2(bool value)
+    // Returns null if the toggle isn't in the scene, so a missing toggle doesn't break the menu
+    private Toggle FindLevelToggle(string toggleName)
     {
-        if(!value) return;
-        GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn = false;
-        whichLevelToPlay[0] = false;
-        whichLevelToPlay[1] = true;
-        whichLevelToPlay[2] = false;
-        whichLevelToPlay[3] = false;
-        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn + " lvl4 :" + GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn);
-    }
-    public void PlayLevel3(bool value)
-    {
-        if(!value) return;
-        GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn = false;
-        whichLevelToPlay[0] = false;
-        whichLevelToPlay[1] = false;
-        whichLevelToPlay[2] = true;
-        whichLevelToPlay[3] = false;
-        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn + " lvl4 :" + GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn);
-    }
-    public void PlayLevel4(bool value)
-    {
-        if(!value) return;
-        GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn = false;
-        GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn = false;
-        whichLevelToPlay[0] = false;
-        whichLevelToPlay[1] = false;
-        whichLevelToPlay[2] = false;
-        whichLevelToPlay[3] = true;
-        Debug.Log("lvl1 :" + GameObject.Find("Level1Toggle").GetComponent<Toggle>().isOn + " lvl2 :" + GameObject.Find("Level2Toggle").GetComponent<Toggle>().isOn + " lvl3 :" + GameObject.Find("Level3Toggle").GetComponent<Toggle>().isOn + " lvl4 :" + GameObject.Find("Level4Toggle").GetComponent<Toggle>().isOn);
+        GameObject toggleObject = GameObject.Find(toggleName);
+        return toggleObject != null ? toggleObject.GetComponent<Toggle>() : null;
     }
     private void OpenRunAsTesterPanel()
     {
         runAsTesterPanel.SetActive(true);
-        GameObject l1t = GameObject.Find("Level1Toggle");
-        l1t.GetComponent<Toggle>().interactable = true;
-        l1t.GetComponent<Toggle>().isOn = true;
-        GameObject l2t = GameObject.Find("Level2Toggle");
-        l2t.GetComponent<Toggle>().interactable = true;
-        GameObject l3t = GameObject.Find("Level3Toggle");
-        l3t.GetComponent<Toggle>().interactable = true;
-        GameObject l4t = GameObject.Find("Level4Toggle");
-        l4t.GetComponent<Toggle>().interactable = true;
+        foreach (string toggleName in levelToggleNames)
+        {
+            Toggle toggle = FindLevelToggle(toggleName);
+            if (toggle != null) toggle.interactable = true;
+        }
+        FindLevelToggle(levelToggleNames[0]).isOn = true;
         var loadBtn = runAsTesterPanel.transform.Find("PlayButton");
         if (loadBtn != null)
         {
@@ -545,12 +517,14 @@ public class MainMenuController : MonoBehaviour
     public void PlayGameAsTester()
     {
         string selectedScene = "Level1";
-        if (whichLevelToPlay[1])
-            selectedScene = "Level2";
-        else if (whichLevelToPlay[2])
-            selectedScene = "Level3";
-        else if (whichLevelToPlay[3])
-            selectedScene = "Level4";
+        for (int i = 0; i < whichLevelToPlay.Length; i++)
+        {
+            if (whichLevelToPlay[i])
+            {
+                selectedScene = "Level" + (i + 1);
+                break;
+            }
+        }
         TimeManager.Instance.ResetTime();
 
         PlayerPrefs.SetString("pendingSaveFile", ""); // Clear pending save file to start fresh

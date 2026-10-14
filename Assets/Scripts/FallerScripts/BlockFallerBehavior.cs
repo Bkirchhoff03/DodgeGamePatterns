@@ -91,18 +91,19 @@ public class BlockFallerBehavior : IFallerBehavior
             GameManager.instance().Print("Frozen fallers above: " + stackCount, 0);
             float shift = punchDir * Constants.frozenBlockShiftAmount / (1f + stackCount * Constants.frozenPunchStackWeightFactor);
             shift = Mathf.Max(Mathf.Abs(shift), 0.05f) * punchDir;
+            int notBats = Physics2D.DefaultRaycastLayers & ~LayerMask.GetMask(Constants.batLayerName); // a passing bat shouldn't block the shift
             float sixSections = fc.FallerSize.y / 6f;
             sixSections *= 0.99f; // slightly reduce to avoid edge cases where the raycast hits the very edge of a collider
             for (int i = -3; i <= 3; i += 1)
             {
-                if(Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y + (sixSections * i)), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f))
+                if(Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y + (sixSections * i)), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f, notBats))
                 {
                     GameManager.instance().Print("Block punch would move block onto something at height offset: " + (sixSections * i) + ", cancelling punch", 3);
                     arm.CancelPunch();
                     return;
                 }
             }
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f);
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(fc.gameObject.transform.position.x + (((fc.FallerSize.x / 2f) +0.01f)*punchDir), fc.gameObject.transform.position.y), new Vector2(shift, 0f), Mathf.Abs(shift) + 0.01f, notBats);
             if (hit && hit.collider.name != fc.gameObject.name)
             {
                 GameManager.instance().Print("Block punch would move block onto "+hit.collider.name+", cancelling punch", 3);

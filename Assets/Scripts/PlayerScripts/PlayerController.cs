@@ -124,7 +124,9 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
                 GameManager.instance().Print("Checking above me (" + (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + ")", 3);
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f);
+                // Bats are excluded so one flying overhead doesn't block the jump
+                int notBats = Physics2D.DefaultRaycastLayers & ~LayerMask.GetMask(Constants.batLayerName);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, GetComponent<BoxCollider2D>().bounds.max.y + 0.5f, notBats);
                 if(hit.collider != null && hit.collider.gameObject != gameObject)
                 {
                     GameManager.instance().Print("Hit something above me ("+ (GetComponent<BoxCollider2D>().bounds.max.y + 0.5f).ToString() + "), can't jump " + hit.collider.name, 3);

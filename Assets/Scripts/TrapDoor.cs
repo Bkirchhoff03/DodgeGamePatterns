@@ -50,6 +50,12 @@ public class TrapDoor : MonoBehaviour
                 SceneManager.LoadScene("Level4");
                 GameManager.instance().UpdateSaveSession();
             }
+            else if(SceneManager.GetActiveScene().name == "Level4")
+            {
+                PlayerPrefs.SetFloat("PlayerLivesFromLevel1", GameManager.instance().GetPlayerLives());
+                SceneManager.LoadScene("Level5");
+                GameManager.instance().UpdateSaveSession();
+            }
             else
             {
                 PlayerPrefs.SetFloat("PlayerLivesFromLevel1", 3f);

@@ -407,7 +407,18 @@ public class GameManager : MonoBehaviour
             //playerController.BounceOff(faller, collisionType);
         }
     }
-    
+    // Bats hurt the player in every state except Crushed, so jumping and falling don't protect against them
+    public void HandlePlayerBatCollision(BatController bat)
+    {
+        if (playerController.state.getName() == Constants.crushedStateName)
+        {
+            return; // Bat passes through while the player is already stunned
+        }
+        Print("FROM GAME MANAGER: Player in " + playerController.state.getName() + " at " + playerController.transform.position + " was hit by " + bat.name, 1);
+        TakeDamage(Constants.batLifeCost);
+        bat.DeleteMe();
+    }
+
     public void TakeDamage(float amount, float delay = 0f)
     {
         if (amount > 0f)

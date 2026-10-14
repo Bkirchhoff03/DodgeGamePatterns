@@ -55,6 +55,9 @@ namespace Assets.Scripts
         public const float EMTLifeCost = 15f;
         public const float jumpCutMultiplier = 0.5f;
         public const float fallerDestroyHittingWallThreshold = 0.25f;
+        public const float batLifeCost = 10f;
+        public const float batSpawnX = 14f; // Off-screen past the walls
+        public const float batWarningX = 11.5f; // Just inside the walls, where the entry warning shows
         public static readonly Vector2 defaultFallerSize = new(1.5f, 1.5f);
         public const string heightTrackerText = "ft from the top!";
         public const string timeTrackerText = " seconds in this run";
@@ -66,6 +69,8 @@ namespace Assets.Scripts
         public const string fallerPhysicsMaterialPath = "Physics/FallerPhysicsMaterial"; 
         public const string fallerPhysicsMaterial2DPath = "Physics/FallerPhysicsMaterial2D";
         public const string fallerNamePrefix = "Faller_";
+        public const string batNamePrefix = "Bat_";
+        public const string batLayerName = "Bats";
         public static string fallerDataSavePath => Application.persistentDataPath + "/FallerSaveData/";
         public static string playerDataSavePath => Application.persistentDataPath + "/PlayerSaveData/";
         public static string saveFilePath => Application.persistentDataPath + "/SaveFiles/";

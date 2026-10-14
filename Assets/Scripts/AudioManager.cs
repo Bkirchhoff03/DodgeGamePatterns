@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip punchConnectClip;
     public AudioClip punchCrunchClip;
     public AudioClip explosionClip;
+    public AudioClip batClip;
     public AudioClip defaultMusic;
 
     [Range(0f, 1f)] public float musicVolume = 0.5f;
@@ -87,4 +88,5 @@ public class AudioManager : MonoBehaviour
     public void PlayPunchCrush() => PlaySFX(punchCrunchClip, 0.1f); // slight pitch variation keeps repeats from sounding robotic
     public void PlaySwing() => PlaySFX(swingClip, 0.1f); // slight pitch variation keeps repeats from sounding robotic
     public void PlayExplosion() => PlaySFX(explosionClip, 0.1f); // slight pitch variation keeps repeats from sounding robotic
+    public void PlayBatScreech() => PlaySFX(batClip, 0.15f);
 }
