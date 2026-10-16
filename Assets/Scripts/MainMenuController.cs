@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -268,6 +269,7 @@ public class MainMenuController : MonoBehaviour
             var tmp = noSavesObj.AddComponent<TMPro.TextMeshProUGUI>();
             tmp.text = "No save files found.";
             tmp.fontSize = 28;
+            tmp.font = Resources.Load<TMP_FontAsset>("im-fell-english.sc SDF");
             tmp.alignment = TMPro.TextAlignmentOptions.Center;
             return;
         }
@@ -300,6 +302,7 @@ public class MainMenuController : MonoBehaviour
             var tmp = textObj.AddComponent<TMPro.TextMeshProUGUI>();
             tmp.text = label;
             tmp.fontSize = 28;
+            tmp.font = Resources.Load<TMP_FontAsset>("im-fell-english.sc SDF");
             tmp.alignment = TMPro.TextAlignmentOptions.Center;
             var textRect = textObj.GetComponent<RectTransform>();
             textRect.anchorMin = Vector2.zero;
@@ -379,6 +382,7 @@ public class MainMenuController : MonoBehaviour
         var tmp = textObj.AddComponent<TMPro.TextMeshProUGUI>();
         tmp.text = label;
         tmp.fontSize = 28;
+        tmp.font = Resources.Load<TMP_FontAsset>("im-fell-english.sc SDF");
         tmp.alignment = TMPro.TextAlignmentOptions.Center;
         var textRect = textObj.GetComponent<RectTransform>();
         textRect.anchorMin = Vector2.zero;
