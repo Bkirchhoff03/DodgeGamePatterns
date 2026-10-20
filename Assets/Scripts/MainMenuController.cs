@@ -50,8 +50,7 @@ public class MainMenuController : MonoBehaviour
         var howBtn = GameObject.Find("HowToPlayButton");
         howBtn.GetComponent<Button>().onClick.AddListener(ShowHowToPlay);
 
-        var quitBtn = GameObject.Find("QuitButton");
-        quitBtn.GetComponent<Button>().onClick.AddListener(QuitGame);
+        
 
         var backBtn = GameObject.Find("BackFromHowToPlayButton");
         backBtn.GetComponent<Button>().onClick.AddListener(HideHowToPlay);
