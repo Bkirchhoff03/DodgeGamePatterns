@@ -70,6 +70,12 @@ public class FallerManager
     private readonly string FallerDirectory = Constants.fallerDataSavePath + GameManager.instance().currentFallerSaveFileName;
     private readonly string PlayerDirectory = Constants.playerDataSavePath + GameManager.instance().currentPlayerSaveFileName;
     private List<FallerController> exposedFallers = new List<FallerController>();
+    private struct FallerSurface
+    {
+        public FallerController faller;
+        public float x, topY, bottomY, leftX, rightX;
+    }
+    private List<FallerSurface> surfaceCache = new List<FallerSurface>();
 
     // Minimum vertical distance above the highest existing faller before spawning a new one
     const float minSpawnGap = 5.0f;
@@ -632,22 +638,35 @@ public class FallerManager
     private void GetExposedTopSurfaces()
     {
         exposedFallers.Clear();
+        // Read each transform once up front; the pair loop below is O(n²) and transform access isn't free
+        surfaceCache.Clear();
         foreach (var kvp in fallersInPlay)
         {
             if (kvp.Value == null) continue;
-            float topY = kvp.Value.transform.position.y + (kvp.Value.transform.localScale.y / 2);
-            bool isExposed = true;
-            foreach (var otherKvp in fallersInPlay)
+            Vector3 pos = kvp.Value.transform.position;
+            Vector3 scale = kvp.Value.transform.localScale;
+            surfaceCache.Add(new FallerSurface
             {
-                if (otherKvp.Value == null || otherKvp.Key == kvp.Key) continue;
-                float otherBottomY = otherKvp.Value.transform.position.y - (otherKvp.Value.transform.localScale.y / 2);
-                
-                //float otherLeftX = otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2);
-                //float otherRightX = otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2);
-                if (otherBottomY >= topY - 0.1f && // Allow small tolerance
-                    otherBottomY <= topY + 0.1f &&
-                    kvp.Value.transform.position.x >= (otherKvp.Value.transform.position.x - (otherKvp.Value.transform.localScale.x / 2)) &&
-                    kvp.Value.transform.position.x <= (otherKvp.Value.transform.position.x + (otherKvp.Value.transform.localScale.x / 2)))
+                faller = kvp.Value,
+                x = pos.x,
+                topY = pos.y + scale.y / 2,
+                bottomY = pos.y - scale.y / 2,
+                leftX = pos.x - scale.x / 2,
+                rightX = pos.x + scale.x / 2
+            });
+        }
+        for (int i = 0; i < surfaceCache.Count; i++)
+        {
+            FallerSurface me = surfaceCache[i];
+            bool isExposed = true;
+            for (int j = 0; j < surfaceCache.Count; j++)
+            {
+                if (j == i) continue;
+                FallerSurface other = surfaceCache[j];
+                if (other.bottomY >= me.topY - 0.1f && // Allow small tolerance
+                    other.bottomY <= me.topY + 0.1f &&
+                    me.x >= other.leftX &&
+                    me.x <= other.rightX)
                 {
                     isExposed = false;
                     //kvp.Value.RemoveRedTint(); // Not exposed, remove any tint in case it was previously marked as reachable
@@ -656,7 +675,7 @@ public class FallerManager
             }
             if (isExposed)
             {
-                exposedFallers.Add(kvp.Value);
+                exposedFallers.Add(me.faller);
             }
         }
         //GameManager.instance().Print($"Exposed fallers: {string.Join(", ", exposedFallers.ConvertAll(f => f.name))}", verbosity);

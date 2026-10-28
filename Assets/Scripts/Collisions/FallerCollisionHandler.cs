@@ -55,8 +55,8 @@ public class FallerCollisionHandler : MonoBehaviour
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        // Frozen blocks have nothing to do on stay — exit before any string comparisons or singleton calls
-        if (thisFaller != null && thisFaller.IsFrozen && !thisFaller.UseSettleTimer) return;
+        // Frozen fallers have nothing to do on stay — exit before any string comparisons or singleton calls
+        if (thisFaller != null && thisFaller.IsFrozen) return;
 
         if (collision.gameObject.name == "Player") return;
 
@@ -89,6 +89,13 @@ public class FallerCollisionHandler : MonoBehaviour
         FallerController otherFaller = collision.gameObject.GetComponent<FallerController>();
         if (otherFaller != null && thisFaller != null)
         {
+            // Two Static bodies can't touch, so this exit came from a boulder freezing (going Static) next to
+            // another frozen one, not from anything moving apart. Ignore it so it doesn't unfreeze its neighbour.
+            if (collision.otherRigidbody != null && collision.otherRigidbody.bodyType == RigidbodyType2D.Static
+                && collision.rigidbody != null && collision.rigidbody.bodyType == RigidbodyType2D.Static)
+            {
+                return;
+            }
             thisFaller.FallerStopsCollidingWithMe(otherFaller);
             otherFaller.FallerStopsCollidingWithMe(thisFaller);
         }

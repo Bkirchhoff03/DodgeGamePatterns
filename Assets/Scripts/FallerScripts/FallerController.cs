@@ -155,7 +155,7 @@ public class FallerController : MonoBehaviour
 
     public void FloorPause()
     {
-        GameManager.instance().Print($"Floor pausing {gameObject.name}", 0);
+        //GameManager.instance().Print($"Floor pausing {gameObject.name}", 0);
         justFrozenCooldown = freezeCooldownDuration;
         //Debug.Log("Faller " + gameObject.name + " is now frozen after colliding " + collisionCount + " times");
         behavior?.OnFloorPause(FallerObject, FallerSize);
@@ -246,12 +246,12 @@ public class FallerController : MonoBehaviour
         {
             fallersCollidingWithMe.Add(otherController.FallerObject.name, otherController);
         }
-        GameManager.instance().Print("Fallers Colliding with me ("+gameObject.name+"): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
+        //GameManager.instance().Print("Fallers Colliding with me ("+gameObject.name+"): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
     }
     public void FallerStopsCollidingWithMe(FallerController otherController)
     {
         fallersCollidingWithMe.Remove(otherController.FallerObject.name);
-        GameManager.instance().Print("Fallers Colliding with me (" + gameObject.name + "): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
+        //GameManager.instance().Print("Fallers Colliding with me (" + gameObject.name + "): " + string.Join(", ", fallersCollidingWithMe.Keys), 0);
         if(otherController.FallerObject.transform.position.y < FallerObject.transform.position.y)
         { 
             //If the faller that stopped colliding with me is below me, I should check if I need to unfreeze since I may have been frozen due to being on top of them

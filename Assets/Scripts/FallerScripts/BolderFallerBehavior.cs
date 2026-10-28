@@ -96,9 +96,11 @@ public class BolderFallerBehavior : IFallerBehavior
     {
         Rigidbody2D rb = fallerObj.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        rb.gravityScale = 0f;
-        rb.mass = 10000f;
+        rb.angularVelocity = 0f;
+        // Static (not Dynamic + FreezeAll) takes settled boulders out of the solver. Static bodies don't
+        // contact each other, so the pile is no longer one big island re-solved every step something touches it.
+        // Unfreeze() switches back to Dynamic and restores constraints, gravity and mass.
+        rb.bodyType = RigidbodyType2D.Static;
         fallerObj.transform.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
         //GameManager.instance().BoulderSettledSprites[shapeIndex];
     }
